@@ -40,6 +40,11 @@ public class BoxKeyService {
     static {
         keys = populateDummyBoxKeys();
     }
+    
+    public List<BoxKey> reset() {
+        keys = populateDummyBoxKeys();
+        return keys;
+    }
 
     public List<BoxKey> findAllBoxKeys() {
         return keys;
