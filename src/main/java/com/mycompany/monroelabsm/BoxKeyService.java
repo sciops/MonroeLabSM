@@ -33,17 +33,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.websystique.springmvc.model.BoxKey;
-
-@Service("boxkeyService")
-@Transactional
-public class BoxKeyServiceImpl implements BoxKeyService {
-
+public class BoxKeyService {
     private static final AtomicLong counter = new AtomicLong();
-
     private static List<BoxKey> keys;
 
     static {
