@@ -27,6 +27,7 @@ package com.mycompany.monroelabsm;
  *
  * @author Stephen R. Williams
  */
+import com.google.gson.Gson;
 import java.util.List;
 
 /**
@@ -40,7 +41,7 @@ public class BoxKey {
     private String datetime;
     private String currtype;
     private String denom;
-    private boolean denomone;
+    private boolean denomone;//TODO: there's probably a better data structure than this
     private boolean denomtwo;
     private boolean denomfive;
     private boolean denomten;
@@ -50,6 +51,23 @@ public class BoxKey {
     
     public BoxKey() {
         id=0;
+    }
+    
+    //copy constructor
+    public BoxKey(BoxKey key) {
+        this.id = key.getId();
+        this.serial = key.getSerial();
+        this.opnum = key.getOpnum();
+        this.datetime = key.getDatetime();
+        this.currtype = key.getCurrtype();
+        this.denom = key.getDenom();
+        this.denomone = key.isDenomone();
+        this.denomtwo = key.isDenomtwo();
+        this.denomfive = key.isDenomfive();
+        this.denomten = key.isDenomten();
+        this.denomtwenty = key.isDenomtwenty();
+        this.denomfifty = key.isDenomfifty();
+        this.denomhundred = key.isDenomhundred();
     }
 
     public BoxKey(long id, String serial, String opnum, String datetime, String currtype, String denom, boolean denomone, boolean denomtwo, boolean denomfive, boolean denomten, boolean denomtwenty, boolean denomfifty, boolean denomhundred) {
@@ -66,6 +84,11 @@ public class BoxKey {
         this.denomtwenty = denomtwenty;
         this.denomfifty = denomfifty;
         this.denomhundred = denomhundred;
+    }
+    
+    //uses copy constructor
+    public BoxKey(String json) {
+        this(new Gson().fromJson(json, BoxKey.class));
     }
 
     public long getId() {

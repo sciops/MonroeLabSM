@@ -32,10 +32,14 @@ package com.mycompany.monroelabsm;
  */
 
 import com.google.gson.Gson;
+import java.lang.reflect.Type;
 import spark.ResponseTransformer;
 
 public class JsonUtil {
-
+        public static Object toObj(String json) {
+            return new Gson().fromJson(json, Object.class);
+        }
+    
 	public static String toJson(Object object) {
 		return new Gson().toJson(object);
 	}
