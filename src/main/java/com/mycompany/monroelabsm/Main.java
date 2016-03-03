@@ -19,8 +19,10 @@ import spark.servlet.SparkApplication;
 public class Main implements SparkApplication {
     //must move all verbs to init method, out of main
     public void init() {
+        new BoxKeyController(new BoxKeyService());
         get("/hello", (req, res) -> "Hello World. This is the /hello response in MonroeLabSM");
         get("/hello123", (req, res) -> "Hello World, test 123. This is the /hello123 response in MonroeLabSM");
+        //get("/listkeys", (req, res) -> bkc.listAllBoxKeys(req, res));
     }   
     
     public static void main(String[] args) {

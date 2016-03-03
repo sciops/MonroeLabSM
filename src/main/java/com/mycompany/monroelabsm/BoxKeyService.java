@@ -63,32 +63,52 @@ public class BoxKeyService {
         return null;
     }
 
-    public void saveBoxKey(BoxKey key) {
+    public BoxKey saveBoxKey(BoxKey key) throws AlreadyExistsException {
+        //check for pre-existing key first
+        if(this.isBoxKeyExist(key)) throw new AlreadyExistsException();
         key.setId(counter.incrementAndGet());
         keys.add(key);
+        return key;
+    }
+    
+    public BoxKey saveBoxKey(String json) throws AlreadyExistsException {
+        //convert string json to boxkey and then save it with previous method.
+        return saveBoxKey(new BoxKey(json));
     }
 
-    public void updateBoxKey(BoxKey key) {
-        int index = keys.indexOf(key);
-        keys.set(index, key);
+    public BoxKey updateBoxKey(BoxKey key) throws NotFoundException {
+        if(!this.isBoxKeyExist(key)) throw new NotFoundException();
+        keys.set(keys.indexOf(key), key);
+        return key;
+    }
+    
+    public BoxKey updateBoxKey(String json) throws NotFoundException {
+        return updateBoxKey(new BoxKey(json));
     }
 
-    public void deleteBoxKeyById(long id) {
-
+    public BoxKey deleteBoxKeyById(long id) throws NotFoundException {
+        BoxKey key = null;
+        BoxKey deletedKey = null;
         for (Iterator<BoxKey> iterator = keys.iterator(); iterator.hasNext();) {
-            BoxKey key = iterator.next();
+            key = iterator.next();
             if (key.getId() == id) {
                 iterator.remove();
+                deletedKey = key;
+            }
+            else if (key == null){
+                throw new NotFoundException();
             }
         }
+        return deletedKey;
     }
 
     public boolean isBoxKeyExist(BoxKey key) {
         return findBySerial(key.getSerial()) != null;
     }
 
-    public void deleteAllBoxKeys() {
+    public List<BoxKey> deleteAllBoxKeys() {
         keys.clear();
+        return keys;
     }
 
     private static List<BoxKey> populateDummyBoxKeys() {
