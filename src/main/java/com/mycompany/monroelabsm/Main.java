@@ -18,11 +18,13 @@ import spark.servlet.SparkApplication;
 
 public class Main implements SparkApplication {
     //must move all verbs to init method, out of main
+    @Override
     public void init() {
-        new BoxKeyController(new BoxKeyService());
+        BoxKeyController bkc = new BoxKeyController(new BoxKeyService());
+        get("/", (req, res) -> "<html>Hello World. This is the / (root) response in MonroeLabSM <br><br><img src=\"http://img.memecdn.com/square-root_o_895898.jpg\" /></html>");
         get("/hello", (req, res) -> "Hello World. This is the /hello response in MonroeLabSM");
         get("/hello123", (req, res) -> "Hello World, test 123. This is the /hello123 response in MonroeLabSM");
-        //get("/listkeys", (req, res) -> bkc.listAllBoxKeys(req, res));
+        
     }   
     
     public static void main(String[] args) {

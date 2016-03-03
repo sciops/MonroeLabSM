@@ -36,7 +36,7 @@ public class BoxKeyController {
     //http://www.mscharhag.com/java/building-rest-api-with-spark
     //bks: Service which will do all data retrieval/manipulation work
     public BoxKeyController(BoxKeyService service) {
-        get("/keys", (req, res) -> service.findAllBoxKeys());
+        get("/keys", (req, res) -> service.findAllBoxKeys(), JsonUtil.json());
         get("/key/:id", (req, res) -> {
             String id_s = req.params(":id");
             long id = Long.parseLong(id_s);
