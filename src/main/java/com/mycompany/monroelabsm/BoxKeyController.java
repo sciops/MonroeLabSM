@@ -50,8 +50,20 @@ public class BoxKeyController {
         //I use https://www.hurl.it/ to test deployed REST APIs
         post("/key", (req, res) -> service.saveBoxKey(req.queryParams("key")), JsonUtil.json());
         post("/reset", (req, res) -> service.reset(), JsonUtil.json());//TODO:404ing
-        put("/key", (req,res) -> service.updateBoxKey(req.queryParams("key")), JsonUtil.json());
-        delete("/key/:id", (req,res)-> service.deleteBoxKeyById(Long.parseLong(req.queryParams(":id"))), JsonUtil.json());//TODO:500ing (internal error)
+        get("/reset", (req, res) -> service.reset(), JsonUtil.json());
+        put("/key", (req, res) -> service.updateBoxKey(req.queryParams("key")), JsonUtil.json());
+        delete("/key/:id", (req, res) -> {            
+            String id_s = req.params(":id");
+            long id = Long.parseLong(id_s);
+            BoxKey keyToDel = service.findById(id);
+            if (keyToDel != null) {
+                BoxKey temp = new BoxKey(keyToDel);
+                service.deleteBoxKeyById(id);
+                return temp;
+            }
+            res.status(404);
+            return new ResponseError("No key with id '%s' found", id_s);
+        }, JsonUtil.json());
         delete("/keys", (req, res) -> service.deleteAllBoxKeys());
 
         exception(NotFoundException.class, (e, request, response) -> {

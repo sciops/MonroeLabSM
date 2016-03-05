@@ -38,12 +38,7 @@ public class BoxKeyService {
     private static List<BoxKey> keys;
 
     static {
-        keys = populateDummyBoxKeys();
-    }
-    
-    public List<BoxKey> reset() {
-        keys = populateDummyBoxKeys();
-        return keys;
+        keys = reset();
     }
 
     public List<BoxKey> findAllBoxKeys() {
@@ -116,8 +111,9 @@ public class BoxKeyService {
         return keys;
     }
 
-    private static List<BoxKey> populateDummyBoxKeys() {
-        List<BoxKey> keys = new ArrayList<BoxKey>();
+    public static List<BoxKey> reset() {
+        keys.clear();
+        keys = new ArrayList<BoxKey>();
         keys.add(new BoxKey(counter.incrementAndGet(), "HWzj4eCP", "kg3Wr5cN", "1449864824", "US Dollars", null,
                 true, false, false, false, false, false, false));
         keys.add(new BoxKey(counter.incrementAndGet(), "S7AyQck9", "SLDwGajJ", "1449868424", "Mexican Pesos", null,

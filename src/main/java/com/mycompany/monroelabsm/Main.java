@@ -21,7 +21,7 @@ public class Main implements SparkApplication {
     @Override
     public void init() {
         BoxKeyController bkc = new BoxKeyController(new BoxKeyService());
-        get("/", (req, res) -> "<html>Hello World. This is the / (root) response in MonroeLabSM <br><br><img src=\"http://img.memecdn.com/square-root_o_895898.jpg\" /></html>");
+        get("/", (req, res) -> "<html>Hello World. This is the / (root) response in MonroeLabSM <br><br><img src=\"http://img.memecdn.com/square-root_o_895898.jpg\" /></html>");        
         get("/hello", (req, res) -> "Hello World. This is the /hello response in MonroeLabSM");
         get("/hello123", (req, res) -> "Hello World, test 123. This is the /hello123 response in MonroeLabSM");
         
