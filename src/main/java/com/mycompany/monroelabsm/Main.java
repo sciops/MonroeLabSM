@@ -20,6 +20,8 @@ public class Main implements SparkApplication {
     //must move all verbs to init method, out of main
     @Override
     public void init() {
+        //http://sparkjava.com/documentation.html#static-files
+        staticFileLocation("/public"); // Static files
         BoxKeyController bkc = new BoxKeyController(new BoxKeyService());
         get("/", (req, res) -> "<html>Hello World. This is the / (root) response in MonroeLabSM <br><br><img src=\"http://img.memecdn.com/square-root_o_895898.jpg\" /></html>");        
         get("/hello", (req, res) -> "Hello World. This is the /hello response in MonroeLabSM");

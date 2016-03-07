@@ -45,11 +45,11 @@ public class BoxKeyController {
                 return key;
             }
             res.status(404);
-            return new ResponseError("No key with id '%s' found", id_s);
+            return new ResponseError("No key with id: \'%s\' found", id_s);
         }, JsonUtil.json());
         //I use https://www.hurl.it/ to test deployed REST APIs
         post("/key", (req, res) -> service.saveBoxKey(req.queryParams("key")), JsonUtil.json());
-        post("/reset", (req, res) -> service.reset(), JsonUtil.json());//TODO:404ing
+        post("/reset", (req, res) -> service.reset(), JsonUtil.json());
         get("/reset", (req, res) -> service.reset(), JsonUtil.json());
         put("/key", (req, res) -> service.updateBoxKey(req.queryParams("key")), JsonUtil.json());
         delete("/key/:id", (req, res) -> {            

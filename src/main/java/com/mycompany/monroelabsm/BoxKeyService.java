@@ -112,7 +112,7 @@ public class BoxKeyService {
     }
 
     public static List<BoxKey> reset() {
-        keys.clear();
+        if (keys != null) keys.clear();
         keys = new ArrayList<BoxKey>();
         keys.add(new BoxKey(counter.incrementAndGet(), "HWzj4eCP", "kg3Wr5cN", "1449864824", "US Dollars", null,
                 true, false, false, false, false, false, false));
