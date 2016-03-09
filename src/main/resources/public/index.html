@@ -1,146 +1,158 @@
-<html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>MonroeBox</title>
 
-<div ng-app="ngRouteExample">
-    <div ng-controller="MainController">
-        <div id="wrapper">
-            <!-- Navigation -->
-            <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <div class="navbar-inner">
-                        <div class="container">
-                            <a class="brand" href="/"> <img src="images/cube-logo.jpg" height="50" width="250"></a>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.navbar-header -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.2.0/metisMenu.min.css">
+        <!-- DataTables CSS --> <link href="css/plugins/social-buttons.css" rel="stylesheet">
+        <!-- Custom CSS --> <link href="css/sb-admin-2.css" rel="stylesheet">
+        <!-- Custom Fonts --> <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link href="<c:url value='css/app.css' />" rel="stylesheet" />
+        <style>
+            .username.ng-valid {
+                background-color: lightgreen;
+            }
+            .username.ng-dirty.ng-invalid-required {
+                background-color: red;
+            }
+            .username.ng-dirty.ng-invalid-minlength {
+                background-color: yellow;
+            }
+            .email.ng-valid {
+                background-color: lightgreen;
+            }
+            .email.ng-dirty.ng-invalid-required {
+                background-color: red;
+            }
+            .email.ng-dirty.ng-invalid-email {
+                background-color: yellow;
+            }
+        </style>
 
-                <ul class="nav navbar-top-links navbar-right">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                            </li>
-                        </ul>
-                        <!-- /.dropdown-user -->
-                    </li>
-                    <!-- /.dropdown -->
-                </ul>
-                <!-- /.navbar-top-links -->
-
-                <div class="navbar-default sidebar" role="navigation">
-                    <div class="sidebar-nav navbar-collapse">
-                        <ul class="nav" id="side-menu">
-                            <li class="sidebar-search">
-                                <div class="input-group custom-search-form">
-                                    <input type="text" class="form-control" placeholder="Search...">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </span>
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <!-- jQuery Version 1.11.0 --> <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <!-- Bootstrap Core JavaScript --> <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <!-- Metis Menu Plugin JavaScript --> <script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.2.0/metisMenu.min.js"></script>
+        <!-- Custom Theme JavaScript --> <script src="js/sb-admin-2.js"></script>
+        <!-- Angular.js -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-resource.min.js"></script>        
+        <!-- App routing -->
+        <script src = "js/app/app.js" ></script>
+        <script src = "js/controller/controllers.js"></script>
+        <script src = "js/service/service.js"></script>
+    </head>
+    <body>
+        <div ng-app="ngRouteExample">
+            <div ng-controller="MainController">
+                <div id="wrapper">
+                    <!-- Navigation -->
+                    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <div class="navbar-inner">
+                                <div class="container">
+                                    <a class="brand" href="/"> <img src="images/cube-logo.jpg" height="50" width="250"></a>
                                 </div>
-                                <!-- /input-group -->
-                            </li>
-                            <li>
-                                <a class="active" href="services"><i class="fa fa-tags fa-fw"></i>Services</a>
-                            </li>
-                            <li>
-                                <a class="active" href="contact"><i class="fa fa-phone fa-fw"></i>Contact</a>
-                            </li>
-                            <li>
-                                <a class="active" href="about"><i class="fa fa-info fa-fw"></i>About</a>
-                            </li>
-                            <li>
-                                <a class="active" href="input"><i class="fa fa-book fa-fw"></i>Input</a>
-                            </li>
-                            <!--
-                            <li>
-                                <a class="active" href="index"><i class="fa fa-book fa-fw"></i> Import Data REST API</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-file-archive-o fa-fw"></i> Export Data REST API<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="#event/:Event">Witin REDCap</a>
-                                    </li>
-                                    <li>
-                                        <a href="#event">External Applications</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#sale"><i class="fa fa-database fa-fw"></i>Administrative Tool</a>
-                            </li>
-                            <li>
-                                <a href="#posts"><i class="fa fa-edit fa-fw"></i> Posts Issues</a>
-                            </li>
-
-
-                            <li>
-                                <a href="#"><i class="fa fa-files-o fa-fw"></i> Technical Materials<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="blank.html">Blank Page</a>
-                                    </li>
-                                    <li>
-                                        <a href="login.html">Login Page</a>
-                                    </li>
-                                </ul>
-
-                            </li>-->
-                        </ul>
-                    </div>
-                    <!-- /.sidebar-collapse -->
-                </div>
-            </nav>
-
-            <!-- Content -->
-            <div id="page-wrapper">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1><span class="text-danger">Mon</span>roe Box Services Corp.</h1>
-                        <!--<h1 class="page-header" ng-bind="header"></h1>
-                        <!--</div>-->
-                        <!-- /.col-lg-12 -->
-                    </div>
-                    <!-- Put the body of the message here/.row -->
-                    <div class="row">
-                        <br>
-                        <div id="main">
-                            <div ng-view></div>
+                            </div>
                         </div>
+                        <!-- /.navbar-header -->
 
-                        <hr />
-                        <!--debug text for angular routing
-                    <pre>$location.path() = {{$location.path()}}</pre>
-                    <pre>$route.current.templateUrl = {{$route.current.templateUrl}}</pre>
-                    <pre>$route.current.params = {{$route.current.params}}</pre>
-                    <pre>$route.current.scope.name = {{$route.current.scope.name}}</pre>
-                    <pre>$routeParams = {{$routeParams}}</pre>
-                        -->
+                        <ul class="nav navbar-top-links navbar-right">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                                    </li>
+                                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                                    </li>
+                                </ul>
+                                <!-- /.dropdown-user -->
+                            </li>
+                            <!-- /.dropdown -->
+                        </ul>
+                        <!-- /.navbar-top-links -->
+
+                        <div class="navbar-default sidebar" role="navigation">
+                            <div class="sidebar-nav navbar-collapse">
+                                <ul class="nav" id="side-menu">
+                                    <li class="sidebar-search">
+                                        <div class="input-group custom-search-form">
+                                            <input type="text" class="form-control" placeholder="Search...">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button">
+                                                    <i class="fa fa-search"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                        <!-- /input-group -->
+                                    </li>
+                                    <li>
+                                        <a class="active" href="services"><i class="fa fa-tags fa-fw"></i>Services</a>
+                                    </li>
+                                    <li>
+                                        <a class="active" href="contact"><i class="fa fa-phone fa-fw"></i>Contact</a>
+                                    </li>
+                                    <li>
+                                        <a class="active" href="about"><i class="fa fa-info fa-fw"></i>About</a>
+                                    </li>
+                                    <li>
+                                        <a class="active" href="input"><i class="fa fa-book fa-fw"></i>Input</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- /.sidebar-collapse -->
+                        </div>
+                    </nav>
+
+                    <!-- Content -->
+                    <div id="page-wrapper">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h1><span class="text-danger">Mon</span>roe Box Services Corp.</h1>
+                            </div>
+                            <!-- Put the body of the message here/.row -->
+                            <div class="row">
+                                <br>
+                                <div id="main">
+                                    <div ng-view></div>
+                                </div>
+
+                                <hr />
+                                <!--debug text for angular routing
+                                <pre>$location.path() = {{$location.path()}}</pre>
+                                <pre>$route.current.templateUrl = {{$route.current.templateUrl}}</pre>
+                                <pre>$route.current.params = {{$route.current.params}}</pre>
+                                <pre>$route.current.scope.name = {{$route.current.scope.name}}</pre>
+                                <pre>$routeParams = {{$routeParams}}</pre>
+                                -->
+                            </div>
+                        </div>
                     </div>
-                    <!-- /.row -->
                 </div>
-                <!-- /#page-wrapper -->
-                <!-- /#wrapper -->
-
-
             </div>
-        </div></div>
-
-</div>
-
+        </div>
+    </body>
 </html>
