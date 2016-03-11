@@ -1,5 +1,9 @@
 <html lang="en">
     <head>
+        <!-- update this base tag to your deployment path context -->
+        <!-- https://docs.angularjs.org/error/$location/nobase -->
+        <base href="/"> 
+        
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +17,7 @@
         <!-- DataTables CSS --> <link href="css/plugins/social-buttons.css" rel="stylesheet">
         <!-- Custom CSS --> <link href="css/sb-admin-2.css" rel="stylesheet">
         <!-- Custom Fonts --> <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-        <link href="<c:url value='css/app.css' />" rel="stylesheet" />
+        <link href="css/app.css" rel="stylesheet" />
         <style>
             .username.ng-valid {
                 background-color: lightgreen;
@@ -141,13 +145,13 @@
                                 </div>
 
                                 <hr />
-                                <!--debug text for angular routing
+                                <!--debug text for angular routing-->
                                 <pre>$location.path() = {{$location.path()}}</pre>
                                 <pre>$route.current.templateUrl = {{$route.current.templateUrl}}</pre>
                                 <pre>$route.current.params = {{$route.current.params}}</pre>
                                 <pre>$route.current.scope.name = {{$route.current.scope.name}}</pre>
                                 <pre>$routeParams = {{$routeParams}}</pre>
-                                -->
+                                
                             </div>
                         </div>
                     </div>
