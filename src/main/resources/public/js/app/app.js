@@ -175,7 +175,7 @@
             .factory('BoxKeyService', ['$http', '$q', function ($http, $q) {
                     return {
                         fetchAllBoxKeys: function () {
-                            return $http.get('http://localhost:8080/MonroeWeb/boxkey/')
+                            return $http.get('/keys')
                                     .then(
                                             function (response) {
                                                 return response.data;
@@ -187,7 +187,7 @@
                                     );
                         },
                         createBoxKey: function (key) {
-                            return $http.post('http://localhost:8080/MonroeWeb/boxkey/', key)
+                            return $http.post('/key', key)
                                     .then(
                                             function (response) {
                                                 return response.data;
@@ -199,7 +199,7 @@
                                     );
                         },
                         updateBoxKey: function (key, id) {
-                            return $http.put('http://localhost:8080/MonroeWeb/boxkey/' + id, key)
+                            return $http.put('/key' + id, key)
                                     .then(
                                             function (response) {
                                                 return response.data;
@@ -211,7 +211,7 @@
                                     );
                         },
                         deleteBoxKey: function (id) {
-                            return $http.delete('http://localhost:8080/MonroeWeb/boxkey/' + id)
+                            return $http.delete('/key' + id)
                                     .then(
                                             function (response) {
                                                 return response.data;
