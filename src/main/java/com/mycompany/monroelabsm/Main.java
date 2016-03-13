@@ -22,16 +22,13 @@ public class Main implements SparkApplication {
     //must move all verbs to init method, out of main
     @Override
     public void init() {
-        //http://sparkjava.com/documentation.html#static-files
-        staticFileLocation("/public"); 
-
         BoxKeyController bkc = new BoxKeyController(new BoxKeyService());
-        
-        //get("/", (req, res) -> "<html>Hello World. This is the / (root) response in MonroeLabSM <br><br><img src=\"http://img.memecdn.com/square-root_o_895898.jpg\" /></html>"); 
-
-        get("/hello", (req, res) -> "Hello World. This is the /hello response in MonroeLabSM");
-        //get("/hello123", (req, res) -> "Hello World, test 123. This is the /hello123 response in MonroeLabSM");
-
+        get("/", (req, res) -> {
+            res.redirect("/index.html");
+            return null;
+        });
+        get("/hello", (req, res) -> "Hello World. This is the /hello response in MonroeLabSM. 3");
+        staticFileLocation("/public"); //http://sparkjava.com/documentation.html#static-files  
     }
 
     public static void main(String[] args) {
