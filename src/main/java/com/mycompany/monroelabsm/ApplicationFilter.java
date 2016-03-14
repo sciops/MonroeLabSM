@@ -48,7 +48,7 @@ public class ApplicationFilter extends SparkFilter
         String requestUrl = ((HttpServletRequest) request).getRequestURI().toString();
 
         Map<String, String> mimeMapping = new HashMap<>();
-        mimeMapping.put("/","text/html");
+        mimeMapping.put("/","text/html");//this line fixes the issue of the root response returning text/plain
         mimeMapping.put(".css","text/css");
         mimeMapping.put(".js","text/javascript");
         mimeMapping.put(".html","text/html");

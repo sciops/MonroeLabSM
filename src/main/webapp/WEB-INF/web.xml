@@ -3,9 +3,7 @@
   <display-name>SparkTomcat</display-name>
 
   <filter>
-    <!--<filter-name>SparkFilter</filter-name>-->
     <filter-name>ApplicationFilter</filter-name>
-    <!--<filter-class>spark.servlet.SparkFilter</filter-class>-->
     <filter-class>com.mycompany.monroelabsm.ApplicationFilter</filter-class>
     <init-param>
         <param-name>applicationClass</param-name>
@@ -14,7 +12,6 @@
   </filter>
 
   <filter-mapping>
-    <!--<filter-name>SparkFilter</filter-name>-->
     <filter-name>ApplicationFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
