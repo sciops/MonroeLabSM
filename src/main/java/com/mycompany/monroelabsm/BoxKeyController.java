@@ -35,24 +35,22 @@ public class BoxKeyController {
 
     //http://www.mscharhag.com/java/building-rest-api-with-spark
     //bks: Service which will do all data retrieval/manipulation work
+    //https://www.hurl.it/ to test deployed REST APIs
     public BoxKeyController(BoxKeyService service) {
-        get("/keys", (req, res) -> service.findAllBoxKeys(), JsonUtil.json());
         get("/key/:id", (req, res) -> {
             String id_s = req.params(":id");
             long id = Long.parseLong(id_s);
             BoxKey key = service.findById(id);
             if (key != null) {
-                return key;
+                return key;//found it            
             }
             res.status(404);
             return new ResponseError("No key with id: \'%s\' found", id_s);
         }, JsonUtil.json());
-        //I use https://www.hurl.it/ to test deployed REST APIs
-        post("/key", (req, res) -> service.saveBoxKey(req.queryParams("key")), JsonUtil.json());
-        post("/reset", (req, res) -> service.reset(), JsonUtil.json());
-        get("/reset", (req, res) -> service.reset(), JsonUtil.json());
-        put("/key", (req, res) -> service.updateBoxKey(req.queryParams("key")), JsonUtil.json());
-        delete("/key/:id", (req, res) -> {            
+        get("/keys", (req, res) -> service.findAllBoxKeys(), JsonUtil.json());
+        post("/key/boxkey", (req, res) -> service.saveBoxKey(req.queryParams("boxkey")), JsonUtil.json());
+        put("/key/boxkey", (req, res) -> service.updateBoxKey(req.queryParams("boxkey")), JsonUtil.json());
+        delete("/key/:id", (req, res) -> {
             String id_s = req.params(":id");
             long id = Long.parseLong(id_s);
             BoxKey keyToDel = service.findById(id);
@@ -64,7 +62,10 @@ public class BoxKeyController {
             res.status(404);
             return new ResponseError("No key with id '%s' found", id_s);
         }, JsonUtil.json());
+        //delete("/key/boxkey", (req, res) -> { //search by object
         delete("/keys", (req, res) -> service.deleteAllBoxKeys());
+        get("/reset", (req, res) -> service.reset(), JsonUtil.json());
+        post("/reset", (req, res) -> service.reset(), JsonUtil.json());
 
         exception(NotFoundException.class, (e, request, response) -> {
             response.status(404);

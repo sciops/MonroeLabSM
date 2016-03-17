@@ -39,8 +39,8 @@
                                         }
                                 );
                     };
-                    self.updateBoxKey = function (key, id) {
-                        BoxKeyService.updateBoxKey(key, id)
+                    self.updateBoxKey = function (key) {
+                        BoxKeyService.updateBoxKey(key)
                                 .then(
                                         self.fetchAllBoxKeys,
                                         function (errResponse) {
@@ -63,8 +63,8 @@
                             console.log('Saving New Key', self.key);
                             self.createBoxKey(self.key);
                         } else {
-                            self.updateBoxKey(self.key, self.key.id);
-                            console.log('Key updated with id ', self.key.id);
+                            self.updateBoxKey(self.key);
+                            console.log('Key updated with id: ', self.key.id);
                         }
                         self.reset();
                     };
@@ -187,7 +187,7 @@
                                     );
                         },
                         createBoxKey: function (key) {
-                            return $http.post('/key', key)
+                            return $http.post('/key/', key)
                                     .then(
                                             function (response) {
                                                 return response.data;
@@ -198,8 +198,8 @@
                                             }
                                     );
                         },
-                        updateBoxKey: function (key, id) {
-                            return $http.put('/key' + id, key)
+                        updateBoxKey: function (key) {
+                            return $http.put('/key/' + key)
                                     .then(
                                             function (response) {
                                                 return response.data;
@@ -211,7 +211,7 @@
                                     );
                         },
                         deleteBoxKey: function (id) {
-                            return $http.delete('/key' + id)
+                            return $http.delete('/key/' + id)
                                     .then(
                                             function (response) {
                                                 return response.data;
