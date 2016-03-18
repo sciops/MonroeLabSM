@@ -46,8 +46,8 @@ public class BoxKeyController {
             return new ResponseError("No key with id: \'%s\' found", id_s);
         }, JsonUtil.json());
         get("/keys", (req, res) -> service.findAllBoxKeys(), JsonUtil.json());
-        post("/key/:boxkey", (req, res) -> service.saveBoxKey(req.queryParams("boxkey")), JsonUtil.json());
-        put("/key/:boxkey", (req, res) -> service.updateBoxKey(req.queryParams("boxkey")), JsonUtil.json());
+        post("/key/:boxkey", (req, res) -> service.saveBoxKey(req.queryParams(":boxkey")), JsonUtil.json());
+        put("/key/:boxkey", (req, res) -> service.updateBoxKey(req.queryParams(":boxkey")), JsonUtil.json());
         delete("/key/:id", (req, res) -> {
             String id_s = req.params(":id");
             long id = Long.parseLong(id_s);

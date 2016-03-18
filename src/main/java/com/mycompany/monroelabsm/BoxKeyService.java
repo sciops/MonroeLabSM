@@ -72,10 +72,10 @@ public class BoxKeyService {
         return key;
     }
     
-    public BoxKey saveBoxKey(String json) throws AlreadyExistsException {
+    public BoxKey saveBoxKey(String json) throws AlreadyExistsException, JsonPojoMismatchException {
         //convert string json to boxkey and then save it with previous method.
         BoxKey key = new Gson().fromJson(json, BoxKey.class);
-        if (key==null) return key;//TODO: instead, throw json mismatch error of some kind
+        if (key==null) throw new JsonPojoMismatchException();
         return saveBoxKey(key);
     }
 
@@ -85,9 +85,9 @@ public class BoxKeyService {
         return key;
     }
     
-    public BoxKey updateBoxKey(String json) throws NotFoundException {
+    public BoxKey updateBoxKey(String json) throws NotFoundException, JsonPojoMismatchException {
         BoxKey key = new Gson().fromJson(json, BoxKey.class);
-        if (key==null) return key;//TODO: instead, throw json mismatch error of some kind
+        if (key==null) throw new JsonPojoMismatchException();
         return updateBoxKey(key);
     }
 
