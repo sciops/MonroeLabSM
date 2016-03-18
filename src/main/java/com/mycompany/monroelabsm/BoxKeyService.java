@@ -28,6 +28,7 @@ package com.mycompany.monroelabsm;
  * @author Stephen R. Williams
  */
 
+import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -60,7 +61,7 @@ public class BoxKeyService {
                 return key;
             }
         }
-        return null;
+        return null;// if not found
     }
 
     public BoxKey saveBoxKey(BoxKey key) throws AlreadyExistsException {
@@ -73,7 +74,9 @@ public class BoxKeyService {
     
     public BoxKey saveBoxKey(String json) throws AlreadyExistsException {
         //convert string json to boxkey and then save it with previous method.
-        return saveBoxKey(new BoxKey(json));
+        BoxKey key = new Gson().fromJson(json, BoxKey.class);
+        if (key==null) return key;//TODO: instead, throw json mismatch error of some kind
+        return saveBoxKey(key);
     }
 
     public BoxKey updateBoxKey(BoxKey key) throws NotFoundException {
@@ -83,7 +86,9 @@ public class BoxKeyService {
     }
     
     public BoxKey updateBoxKey(String json) throws NotFoundException {
-        return updateBoxKey(new BoxKey(json));
+        BoxKey key = new Gson().fromJson(json, BoxKey.class);
+        if (key==null) return key;//TODO: instead, throw json mismatch error of some kind
+        return updateBoxKey(key);
     }
 
     public BoxKey deleteBoxKeyById(long id) throws NotFoundException {
@@ -102,8 +107,13 @@ public class BoxKeyService {
         return deletedKey;
     }
 
+    //TODO: 3/16 null ptr exc
     public boolean isBoxKeyExist(BoxKey key) {
-        return findBySerial(key.getSerial()) != null;
+        if (key.getSerial() == null) return false;//npe line
+        BoxKey foundkey = null;
+        foundkey = findBySerial(key.getSerial());
+        if (foundkey != null) return true;
+        else return false;
     }
 
     public List<BoxKey> deleteAllBoxKeys() {

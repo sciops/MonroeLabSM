@@ -70,7 +70,21 @@ public class BoxKey {
         this.denomhundred = key.isDenomhundred();
     }
 
-    public BoxKey(long id, String serial, String opnum, String datetime, String currtype, String denom, boolean denomone, boolean denomtwo, boolean denomfive, boolean denomten, boolean denomtwenty, boolean denomfifty, boolean denomhundred) {
+    public BoxKey(
+            long id, 
+            String serial, 
+            String opnum, 
+            String datetime, 
+            String currtype, 
+            String denom, 
+            boolean denomone, 
+            boolean denomtwo, 
+            boolean denomfive, 
+            boolean denomten, 
+            boolean denomtwenty, 
+            boolean denomfifty, 
+            boolean denomhundred
+    ) {
         this.id = id;
         this.serial = serial;
         this.opnum = opnum;
@@ -84,11 +98,6 @@ public class BoxKey {
         this.denomtwenty = denomtwenty;
         this.denomfifty = denomfifty;
         this.denomhundred = denomhundred;
-    }
-    
-    //uses copy constructor
-    public BoxKey(String json) {
-        this(new Gson().fromJson(json, BoxKey.class));
     }
 
     public long getId() {

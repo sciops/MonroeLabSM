@@ -27,9 +27,7 @@ package com.mycompany.monroelabsm;
  *
  * @author Stephen R. Williams
  */
-import java.util.List;
 import static spark.Spark.*;
-import com.mycompany.monroelabsm.JsonUtil;
 
 public class BoxKeyController {
 
@@ -48,8 +46,8 @@ public class BoxKeyController {
             return new ResponseError("No key with id: \'%s\' found", id_s);
         }, JsonUtil.json());
         get("/keys", (req, res) -> service.findAllBoxKeys(), JsonUtil.json());
-        post("/key/boxkey", (req, res) -> service.saveBoxKey(req.queryParams("boxkey")), JsonUtil.json());
-        put("/key/boxkey", (req, res) -> service.updateBoxKey(req.queryParams("boxkey")), JsonUtil.json());
+        post("/key/:boxkey", (req, res) -> service.saveBoxKey(req.queryParams("boxkey")), JsonUtil.json());
+        put("/key/:boxkey", (req, res) -> service.updateBoxKey(req.queryParams("boxkey")), JsonUtil.json());
         delete("/key/:id", (req, res) -> {
             String id_s = req.params(":id");
             long id = Long.parseLong(id_s);
@@ -67,11 +65,11 @@ public class BoxKeyController {
         get("/reset", (req, res) -> service.reset(), JsonUtil.json());
         post("/reset", (req, res) -> service.reset(), JsonUtil.json());
 
-        exception(NotFoundException.class, (e, request, response) -> {
-            response.status(404);
-            response.body("Resource not found");
+        exception(NotFoundException.class, (e, req, res) -> {
+            res.status(404);
+            res.body("Resource not found");
         });
-        exception(AlreadyExistsException.class, (e, request, response) -> {
+        exception(AlreadyExistsException.class, (e, req, response) -> {
             response.status(409);
             response.body("Resource already exists");
         });
