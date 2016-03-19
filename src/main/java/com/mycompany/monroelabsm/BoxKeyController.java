@@ -35,30 +35,27 @@ public class BoxKeyController {
     //bks: Service which will do all data retrieval/manipulation work
     //https://www.hurl.it/ to test deployed REST APIs
     public BoxKeyController(BoxKeyService service) {
-        get("/key/:id", (req, res) -> {
-            String id_s = req.params(":id");
-            long id = Long.parseLong(id_s);
-            BoxKey key = service.findById(id);
+        get("/key/:id", (req, res) -> {            
+            BoxKey key = service.findById(req.params(":id"));
             if (key != null) {
                 return key;//found it            
             }
             res.status(404);
-            return new ResponseError("No key with id: \'%s\' found", id_s);
+            return new ResponseError("404: No key with that id found");
         }, JsonUtil.json());
         get("/keys", (req, res) -> service.findAllBoxKeys(), JsonUtil.json());
-        post("/key/:boxkey", (req, res) -> service.saveBoxKey(req.queryParams(":boxkey")), JsonUtil.json());
-        put("/key/:boxkey", (req, res) -> service.updateBoxKey(req.queryParams(":boxkey")), JsonUtil.json());
+        post("/key/*", (req, res) -> service.saveBoxKey(req.splat()[0]), JsonUtil.json());
+        put("/key/*", (req, res) -> service.updateBoxKey(req.splat()[0]), JsonUtil.json());
         delete("/key/:id", (req, res) -> {
-            String id_s = req.params(":id");
-            long id = Long.parseLong(id_s);
+            String id = req.params(":id");
             BoxKey keyToDel = service.findById(id);
-            if (keyToDel != null) {
+            if (keyToDel != null) {//juggle and return the key after deleting it
                 BoxKey temp = new BoxKey(keyToDel);
                 service.deleteBoxKeyById(id);
                 return temp;
             }
             res.status(404);
-            return new ResponseError("No key with id '%s' found", id_s);
+            return new ResponseError("404: No key with that id found");
         }, JsonUtil.json());
         //delete("/key/boxkey", (req, res) -> { //search by object
         delete("/keys", (req, res) -> service.deleteAllBoxKeys());

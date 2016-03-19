@@ -28,6 +28,7 @@ public class Main implements SparkApplication {
             return null;
         });
         get("/hello", (req, res) -> "Hello World. This is the /hello response in MonroeLabSM. 3");
+        get("/hello/:name", (req, res) -> "Hello "+req.params(":name")+". This is the /hello response in MonroeLabSM. 3");
         staticFileLocation("/public"); //http://sparkjava.com/documentation.html#static-files  
     }
 

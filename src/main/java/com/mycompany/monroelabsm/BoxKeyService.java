@@ -46,13 +46,19 @@ public class BoxKeyService {
         return keys;
     }
 
+    //simply lookup the key by id
     public BoxKey findById(long id) {
         for (BoxKey key : keys) {
             if (key.getId() == id) {
-                return key;
+                return key;//found
             }
         }
-        return null;
+        return null; //404: not found
+    }
+    
+    //parse long value from string and use the other method
+    public BoxKey findById(String id_s) {
+        return this.findById(Long.parseLong(id_s));
     }
 
     public BoxKey findBySerial(String serial) {
@@ -105,6 +111,11 @@ public class BoxKeyService {
             }
         }
         return deletedKey;
+    }
+    
+    //parse id and use the other method
+    public BoxKey deleteBoxKeyById(String id_s) throws NotFoundException {
+        return this.deleteBoxKeyById(Long.parseLong(id_s)); 
     }
 
     //TODO: 3/16 null ptr exc
