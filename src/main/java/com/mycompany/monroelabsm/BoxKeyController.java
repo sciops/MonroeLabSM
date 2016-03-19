@@ -26,16 +26,14 @@ package com.mycompany.monroelabsm;
 /**
  *
  * @author Stephen R. Williams
+ * //http://www.mscharhag.com/java/building-rest-api-with-spark
  */
 import static spark.Spark.*;
 
 public class BoxKeyController {
-
-    //http://www.mscharhag.com/java/building-rest-api-with-spark
-    //bks: Service which will do all data retrieval/manipulation work
-    //https://www.hurl.it/ to test deployed REST APIs
+    //BoxKeyService: Service which will do all data retrieval/manipulation work
     public BoxKeyController(BoxKeyService service) {
-        get("/key/:id", (req, res) -> {            
+        get("/key/:id", (req, res) -> {
             BoxKey key = service.findById(req.params(":id"));
             if (key != null) {
                 return key;//found it            
@@ -58,7 +56,7 @@ public class BoxKeyController {
             return new ResponseError("404: No key with that id found");
         }, JsonUtil.json());
         //delete("/key/boxkey", (req, res) -> { //search by object
-        delete("/keys", (req, res) -> service.deleteAllBoxKeys());
+        delete("/keys", (req, res) -> service.deleteAllBoxKeys(), JsonUtil.json());
         get("/reset", (req, res) -> service.reset(), JsonUtil.json());
         post("/reset", (req, res) -> service.reset(), JsonUtil.json());
 
