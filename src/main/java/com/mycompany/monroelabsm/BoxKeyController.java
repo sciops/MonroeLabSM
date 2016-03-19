@@ -42,7 +42,14 @@ public class BoxKeyController {
             return new ResponseError("404: No key with that id found");
         }, JsonUtil.json());
         get("/keys", (req, res) -> service.findAllBoxKeys(), JsonUtil.json());
+        //id is ignored and service generates an incremental id instead.
+        //serial must be unique. will not process if already existing.
+        //TODO: is this best practice for general post endpoint?
         post("/key/*", (req, res) -> service.saveBoxKey(req.splat()[0]), JsonUtil.json());
+        //given id and serial must both match on both records before edit.
+        //as such, serial cannot be edited.
+        //TODO: edit form to make it clear that serial cannot be edited (grey it out)
+        //TODO: is this best practice for put endpoint?
         put("/key/*", (req, res) -> service.updateBoxKey(req.splat()[0]), JsonUtil.json());
         delete("/key/:id", (req, res) -> {
             String id = req.params(":id");
