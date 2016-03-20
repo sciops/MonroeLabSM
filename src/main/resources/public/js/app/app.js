@@ -175,7 +175,8 @@
             .factory('BoxKeyService', ['$http', '$q', function ($http, $q) {
                     return {
                         fetchAllBoxKeys: function () {
-                            return $http.get('/keys')
+                            var url = '/keys';
+                            return $http.get(url)
                                     .then(
                                             function (response) {
                                                 return response.data;
@@ -187,7 +188,8 @@
                                     );
                         },
                         createBoxKey: function (key) {
-                            return $http.post('/key/', key)
+                            var url = '/key/'+ JSON.stringify(key);
+                            return $http.post(url)
                                     .then(
                                             function (response) {
                                                 return response.data;
@@ -199,7 +201,8 @@
                                     );
                         },
                         updateBoxKey: function (key) {
-                            return $http.put('/key/' + key)
+                            var url = '/key/'+ JSON.stringify(key);
+                            return $http.put(url)
                                     .then(
                                             function (response) {
                                                 return response.data;
@@ -211,7 +214,8 @@
                                     );
                         },
                         deleteBoxKey: function (id) {
-                            return $http.delete('/key/' + id)
+                            var url = '/key/'+ id;
+                            return $http.delete(url)
                                     .then(
                                             function (response) {
                                                 return response.data;
