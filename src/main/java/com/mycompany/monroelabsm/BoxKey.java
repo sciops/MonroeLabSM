@@ -28,187 +28,273 @@ package com.mycompany.monroelabsm;
  * @author Stephen R. Williams
  */
 import com.google.gson.Gson;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
 
 /**
  *
  * @author stephen.williams@monco.info
  */
 public class BoxKey {
-    private long id;
-    private String serial;
-    private String opnum;
-    private String datetime;
-    private String currtype;
-    private String denom;
-    private boolean denomone;//TODO: there's probably a better data structure than this
-    private boolean denomtwo;
-    private boolean denomfive;
-    private boolean denomten;
-    private boolean denomtwenty;
-    private boolean denomfifty;
-    private boolean denomhundred;
-    
-    public BoxKey() {
-        id=0;
-    }
-    
+
+    //this serial number identifies the unit.
+    //it should begin with FF to avoid leading zeroes problem in the box's algo.
+    private byte[] serial = new byte[13];
+    //the operator (owner) of the box
+    private byte[] operator = new byte[3];
+    //heading and location data if a gps device is implemented.
+    private byte[] heading = new byte[1];
+    private byte[] locationX = new byte[3];
+    private byte[] locationY = new byte[3];
+    //crypto-currency type (e.g. bitcoin, litecoin, etc.)
+    private byte[] cryptoCurrency = new byte[2];
+    //inserted currency (e.g. USD)
+    private byte[] fiatCurrency = new byte[2];
+    private byte[] denomination = new byte[1];
+    //rounded time it will be dispensed
+    private byte[] dispenseTime = new byte[4];
+    private byte[] digest = new byte[32];
+
     //copy constructor
-    public BoxKey(BoxKey key) {
-        this.id = key.getId();
-        this.serial = key.getSerial();
-        this.opnum = key.getOpnum();
-        this.datetime = key.getDatetime();
-        this.currtype = key.getCurrtype();
-        this.denom = key.getDenom();
-        this.denomone = key.isDenomone();
-        this.denomtwo = key.isDenomtwo();
-        this.denomfive = key.isDenomfive();
-        this.denomten = key.isDenomten();
-        this.denomtwenty = key.isDenomtwenty();
-        this.denomfifty = key.isDenomfifty();
-        this.denomhundred = key.isDenomhundred();
+    public BoxKey(BoxKey key) throws NoSuchAlgorithmException {
+        this.serial = key.serial;
+        this.operator = key.operator;
+        this.heading = key.heading;
+        this.locationX = key.locationX;
+        this.locationY = key.locationY;
+        this.cryptoCurrency = key.cryptoCurrency;
+        this.fiatCurrency = key.fiatCurrency;
+        this.denomination = key.denomination;
+        this.dispenseTime = key.dispenseTime;
+        this.setDigest();
+    }
+
+    public BoxKey(byte[] seed) throws NoSuchAlgorithmException {
+        this.setSeed(seed);
+        this.setDigest();
     }
 
     public BoxKey(
-            long id, 
-            String serial, 
-            String opnum, 
-            String datetime, 
-            String currtype, 
-            String denom, 
-            boolean denomone, 
-            boolean denomtwo, 
-            boolean denomfive, 
-            boolean denomten, 
-            boolean denomtwenty, 
-            boolean denomfifty, 
-            boolean denomhundred
-    ) {
-        this.id = id;
-        this.serial = serial;
-        this.opnum = opnum;
-        this.datetime = datetime;
-        this.currtype = currtype;
-        this.denom = denom;
-        this.denomone = denomone;
-        this.denomtwo = denomtwo;
-        this.denomfive = denomfive;
-        this.denomten = denomten;
-        this.denomtwenty = denomtwenty;
-        this.denomfifty = denomfifty;
-        this.denomhundred = denomhundred;
+            String serial,
+            String operator,
+            String heading,
+            String locationX,
+            String locationY,
+            String cryptoCurrency,
+            String fiatCurrency,
+            String denomination,
+            String dispenseTime
+    ) throws NoSuchAlgorithmException, DecoderException {
+        this.serial = hexToBytes(serial);
+        this.operator = hexToBytes(operator);
+        this.heading = hexToBytes(heading);
+        this.locationX = hexToBytes(locationX);
+        this.locationY = hexToBytes(locationY);
+        this.setCryptoCurrency(cryptoCurrency);
+        this.fiatCurrency = hexToBytes(fiatCurrency);
+        this.denomination = hexToBytes(denomination);
+        this.dispenseTime = hexToBytes(dispenseTime);
+        this.setDigest();
     }
 
-    public long getId() {
-        return id;
+    //default values for heading and location if disabled
+    public BoxKey(
+            String serial,
+            String operator,
+            String cryptoCurrency,
+            String fiatCurrency,
+            String denomination,
+            String dispenseTime
+    ) throws NoSuchAlgorithmException, DecoderException {
+        this(serial, operator, "66", "66", "66", cryptoCurrency, fiatCurrency, denomination, dispenseTime);
     }
 
-    public void setId(long id) {
-        this.id = id;
+    private byte[] getSeed() {
+        byte[] seed = new byte[32];
+        for (byte i = 0; i <= 12; i++) {
+            seed[i] = this.serial[i];
+        }
+        for (byte i = 13; i <= 15; i++) {
+            seed[i] = this.operator[i - 13];
+        }
+        seed[16] = heading[0];
+        for (byte i = 17; i <= 19; i++) {
+            seed[i] = locationX[i - 17];
+        }
+        for (byte i = 20; i <= 22; i++) {
+            seed[i] = locationY[i - 20];
+        }
+        for (byte i = 23; i <= 24; i++) {
+            seed[i] = cryptoCurrency[i - 23];
+        }
+        for (byte i = 25; i <= 26; i++) {
+            seed[i] = fiatCurrency[i - 25];
+        }
+        seed[27] = denomination[0] = seed[27];
+        for (byte i = 28; i <= 31; i++) {
+            seed[i] = dispenseTime[i - 28];
+        }
+        return seed;
     }
 
-    public String getSerial() {
+    private void setSeed(byte[] seed) {
+        for (byte i = 0; i <= 12; i++) {
+            this.serial[i] = seed[i];
+        }
+        for (byte i = 13; i <= 15; i++) {
+            this.operator[i - 13] = seed[i];
+        }
+        heading[0] = seed[16];
+        for (byte i = 17; i <= 19; i++) {
+            locationX[i - 17] = seed[i];
+        }
+        for (byte i = 20; i <= 22; i++) {
+            locationY[i - 20] = seed[i];
+        }
+        for (byte i = 23; i <= 24; i++) {
+            cryptoCurrency[i - 23] = seed[i];
+        }
+        for (byte i = 25; i <= 26; i++) {
+            fiatCurrency[i - 25] = seed[i];
+        }
+        denomination[0] = seed[27];
+        for (byte i = 28; i <= 31; i++) {
+            dispenseTime[i - 28] = seed[i];
+        }
+    }
+
+    public byte[] getSerial() {
         return serial;
     }
 
-    public void setSerial(String serial) {
+    public String getSerialString() {
+        return bytesToHex(this.serial);
+    }
+
+    public void setSerial(byte[] serial) throws NoSuchAlgorithmException {
         this.serial = serial;
+        this.setDigest();
     }
 
-    public String getOpnum() {
-        return opnum;
+    public byte[] getOperator() {
+        return operator;
     }
 
-    public void setOpnum(String opnum) {
-        this.opnum = opnum;
+    public void setOperator(byte[] operator) throws NoSuchAlgorithmException {
+        this.operator = operator;
+        this.setDigest();
     }
 
-    public String getDatetime() {
-        return datetime;
+    public byte[] getHeading() {
+        return heading;
     }
 
-    public void setDatetime(String datetime) {
-        this.datetime = datetime;
+    public void setHeading(byte[] heading) throws NoSuchAlgorithmException {
+        this.heading = heading;
+        this.setDigest();
     }
 
-    public String getCurrtype() {
-        return currtype;
+    public byte[] getLocationX() {
+        return locationX;
     }
 
-    public void setCurrtype(String currtype) {
-        this.currtype = currtype;
+    public void setLocationX(byte[] locationX) throws NoSuchAlgorithmException {
+        this.locationX = locationX;
+        this.setDigest();
     }
 
-    public String getDenom() {
-        return denom;
+    public byte[] getLocationY() {
+        return locationY;
     }
 
-    public void setDenom(String denom) {
-        this.denom = denom;
+    public void setLocationY(byte[] locationY) throws NoSuchAlgorithmException {
+        this.locationY = locationY;
+        this.setDigest();
     }
 
-    public boolean isDenomone() {
-        return denomone;
+    public byte[] getCryptoCurrency() {
+        return cryptoCurrency;
     }
 
-    public void setDenomone(boolean denomone) {
-        this.denomone = denomone;
+    public void setCryptoCurrency(byte[] cryptoCurrency) throws NoSuchAlgorithmException {
+        this.cryptoCurrency = cryptoCurrency;
+        this.setDigest();
     }
 
-    public boolean isDenomtwo() {
-        return denomtwo;
+    //todo:throw exception for currency not supported
+    public void setCryptoCurrency(String cryptoCurrency) throws NoSuchAlgorithmException, DecoderException {
+        if (cryptoCurrency.equals("Bitcoin")) {
+            cryptoCurrency = "01";
+        } else if (cryptoCurrency.equals("BTC")) {
+            cryptoCurrency = "01";
+        } else if (cryptoCurrency.equals("Litecoin")) {
+            cryptoCurrency = "02";
+        } else if (cryptoCurrency.equals("LTC")) {
+            cryptoCurrency = "02";
+        }
+        this.cryptoCurrency = hexToBytes(cryptoCurrency);
+        this.setDigest();
     }
 
-    public void setDenomtwo(boolean denomtwo) {
-        this.denomtwo = denomtwo;
+    public byte[] getFiatCurrency() {
+        return fiatCurrency;
     }
 
-    public boolean isDenomfive() {
-        return denomfive;
+    public void setFiatCurrency(byte[] fiatCurrency) throws NoSuchAlgorithmException {
+        this.fiatCurrency = fiatCurrency;
+        this.setDigest();
     }
 
-    public void setDenomfive(boolean denomfive) {
-        this.denomfive = denomfive;
+    //todo:throw exception for currency not supported
+    public void setFiatCurrency(String fiatCurrency) throws NoSuchAlgorithmException, DecoderException {
+        if (fiatCurrency.equals("US Dollars")) {
+            fiatCurrency = "0348";//840d, ISO4217
+        } else if (fiatCurrency.equals("USD")) {
+            fiatCurrency = "0348";//840d, ISO4217
+        } else if (fiatCurrency.equals("Euro")) {
+            fiatCurrency = "03D2";//978d, ISO4217
+        } else if (fiatCurrency.equals("EUR")) {
+            fiatCurrency = "03D2";//978d, ISO4217
+        } else {
+            this.fiatCurrency = hexToBytes(fiatCurrency);            
+        }
+        this.setDigest();
     }
 
-    public boolean isDenomten() {
-        return denomten;
+    public byte[] getDenomination() {
+        return denomination;
     }
 
-    public void setDenomten(boolean denomten) {
-        this.denomten = denomten;
+    public void setDenomination(byte[] denomination) throws NoSuchAlgorithmException {
+        this.denomination = denomination;
+        this.setDigest();
     }
 
-    public boolean isDenomtwenty() {
-        return denomtwenty;
+    public byte[] getDispenseTime() {
+        return dispenseTime;
     }
 
-    public void setDenomtwenty(boolean denomtwenty) {
-        this.denomtwenty = denomtwenty;
+    public void setDispenseTime(byte[] dispenseTime) throws NoSuchAlgorithmException {
+        this.dispenseTime = dispenseTime;
+        this.setDigest();
     }
 
-    public boolean isDenomfifty() {
-        return denomfifty;
+    public byte[] getDigest() {
+        return digest;
     }
 
-    public void setDenomfifty(boolean denomfifty) {
-        this.denomfifty = denomfifty;
-    }
-
-    public boolean isDenomhundred() {
-        return denomhundred;
-    }
-
-    public void setDenomhundred(boolean denomhundred) {
-        this.denomhundred = denomhundred;
+    private void setDigest() throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(this.getSeed());
+        this.digest = md.digest();
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 19 * hash + (int) (this.id ^ (this.id >>> 32));
-        return hash;
+        return digest[31];
     }
 
     @Override
@@ -220,12 +306,18 @@ public class BoxKey {
             return false;
         }
         final BoxKey other = (BoxKey) obj;
-        if (this.id != other.id) {
+        if (this.hashCode() != other.hashCode()) {
             return false;
         }
         return true;
     }
+
+    public static byte[] hexToBytes(String s) throws DecoderException {
+        return Hex.decodeHex(s.toCharArray());
+    }
     
-    
+    public static String bytesToHex(byte[] b) {
+        return Hex.encodeHexString(b);
+    }
     
 }

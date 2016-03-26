@@ -29,17 +29,27 @@ package com.mycompany.monroelabsm;
  */
 
 import com.google.gson.Gson;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.codec.DecoderException;
 
 public class BoxKeyService {
     private static final AtomicLong counter = new AtomicLong();
     private static List<BoxKey> keys;
 
     static {
-        keys = reset();
+        try {
+            keys = reset();
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(BoxKeyService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DecoderException ex) {
+            Logger.getLogger(BoxKeyService.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public List<BoxKey> findAllBoxKeys() {
@@ -49,7 +59,7 @@ public class BoxKeyService {
     //simply lookup the key by id
     public BoxKey findById(long id) {
         for (BoxKey key : keys) {
-            if (key.getId() == id) {
+            if (key.hashCode() == id) {
                 return key;//found
             }
         }
@@ -61,19 +71,19 @@ public class BoxKeyService {
         return this.findById(Long.parseLong(id_s));
     }
 
-    public BoxKey findBySerial(String serial) {
+    public List<BoxKey> findBySerial(String serial) {
+        List<BoxKey> foundKeys = null;
         for (BoxKey key : keys) {
-            if (key.getSerial().equalsIgnoreCase(serial)) {
-                return key;
+            if (key.getSerialString().equalsIgnoreCase(serial)) {
+                foundKeys.add(key);
             }
         }
-        return null;// if not found
-    }
+        return foundKeys;
+    }//returns null if nothing found
 
     public BoxKey saveBoxKey(BoxKey key) throws AlreadyExistsException {
         //check for pre-existing key first
-        if(this.isBoxKeyExist(key)) throw new AlreadyExistsException();
-        key.setId(counter.incrementAndGet());
+        if(this.keys.contains(key)) throw new AlreadyExistsException();
         keys.add(key);
         return key;
     }
@@ -86,7 +96,7 @@ public class BoxKeyService {
     }
 
     public BoxKey updateBoxKey(BoxKey key) throws NotFoundException {
-        if(!this.isBoxKeyExist(key)) throw new NotFoundException();
+        if(!this.keys.contains(key)) throw new NotFoundException();
         keys.set(keys.indexOf(key), key);
         return key;
     }
@@ -97,34 +107,20 @@ public class BoxKeyService {
         return updateBoxKey(key);
     }
 
-    public BoxKey deleteBoxKeyById(long id) throws NotFoundException {
-        BoxKey key = null;
+    public BoxKey deleteBoxKeyById(long id) throws NotFoundException, NoSuchAlgorithmException {
         BoxKey deletedKey = null;
-        for (Iterator<BoxKey> iterator = keys.iterator(); iterator.hasNext();) {
-            key = iterator.next();
-            if (key.getId() == id) {
-                iterator.remove();
-                deletedKey = key;
-            }
-            else if (key == null){
-                throw new NotFoundException();
+        for (BoxKey key : keys) {
+            if (key.hashCode() == id) {
+                deletedKey = new BoxKey(key);
+                keys.remove(key);
             }
         }
         return deletedKey;
     }
     
     //parse id and use the other method
-    public BoxKey deleteBoxKeyById(String id_s) throws NotFoundException {
+    public BoxKey deleteBoxKeyById(String id_s) throws NotFoundException, NoSuchAlgorithmException {
         return this.deleteBoxKeyById(Long.parseLong(id_s)); 
-    }
-
-    //TODO: 3/16 null ptr exc
-    public boolean isBoxKeyExist(BoxKey key) {
-        if (key.getSerial() == null) return false;//npe line
-        BoxKey foundkey = null;
-        foundkey = findBySerial(key.getSerial());
-        if (foundkey != null) return true;
-        else return false;
     }
 
     public List<BoxKey> deleteAllBoxKeys() {
@@ -132,15 +128,21 @@ public class BoxKeyService {
         return keys;
     }
 
-    public static List<BoxKey> reset() {
+    public static List<BoxKey> reset() throws NoSuchAlgorithmException, DecoderException {
         if (keys != null) keys.clear();
         keys = new ArrayList<BoxKey>();
-        keys.add(new BoxKey(counter.incrementAndGet(), "HWzj4eCP", "kg3Wr5cN", "1449864824", "US Dollars", null,
-                true, false, false, false, false, false, false));
-        keys.add(new BoxKey(counter.incrementAndGet(), "S7AyQck9", "SLDwGajJ", "1449868424", "Mexican Pesos", null,
-                false, false, true, false, false, false, false));
-        keys.add(new BoxKey(counter.incrementAndGet(), "tZ4UX9Ak", "s5Q5DBJQ", "1449951224", "British Pounds", "quid",
-                false, false, false, false, false, false, false));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "1","56F6BB45"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "5","56F6BB45"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "10","56F6BB45"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "20","56F6BB45"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "1","56F6BB46"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "5","56F6BB46"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "10","56F6BB46"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "20","56F6BB46"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "1","56F6BB47"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "5","56F6BB47"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "10","56F6BB47"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "20","56F6BB47"));
         return keys;
     }
 
