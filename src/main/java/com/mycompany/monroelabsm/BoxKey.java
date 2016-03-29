@@ -27,10 +27,8 @@ package com.mycompany.monroelabsm;
  *
  * @author Stephen R. Williams
  */
-import com.google.gson.Gson;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
@@ -88,15 +86,15 @@ public class BoxKey {
             String denomination,
             String dispenseTime
     ) throws NoSuchAlgorithmException, DecoderException {
-        this.serial = hexToBytes(serial);
-        this.operator = hexToBytes(operator);
-        this.heading = hexToBytes(heading);
-        this.locationX = hexToBytes(locationX);
-        this.locationY = hexToBytes(locationY);
+        this.serial = B58.hexToBytes(serial);
+        this.operator = B58.hexToBytes(operator);
+        this.heading = B58.hexToBytes(heading);
+        this.locationX = B58.hexToBytes(locationX);
+        this.locationY = B58.hexToBytes(locationY);
         this.setCryptoCurrency(cryptoCurrency);
-        this.fiatCurrency = hexToBytes(fiatCurrency);
-        this.denomination = hexToBytes(denomination);
-        this.dispenseTime = hexToBytes(dispenseTime);
+        this.fiatCurrency = B58.hexToBytes(fiatCurrency);
+        this.denomination = B58.hexToBytes(denomination);
+        this.dispenseTime = B58.hexToBytes(dispenseTime);
         this.setDigest();
     }
 
@@ -171,7 +169,7 @@ public class BoxKey {
     }
 
     public String getSerialString() {
-        return bytesToHex(this.serial);
+        return B58.bytesToHex(this.serial);
     }
 
     public void setSerial(byte[] serial) throws NoSuchAlgorithmException {
@@ -235,7 +233,7 @@ public class BoxKey {
         } else if (cryptoCurrency.equals("LTC")) {
             cryptoCurrency = "02";
         }
-        this.cryptoCurrency = hexToBytes(cryptoCurrency);
+        this.cryptoCurrency = B58.hexToBytes(cryptoCurrency);
         this.setDigest();
     }
 
@@ -259,7 +257,7 @@ public class BoxKey {
         } else if (fiatCurrency.equals("EUR")) {
             fiatCurrency = "03D2";//978d, ISO4217
         } else {
-            this.fiatCurrency = hexToBytes(fiatCurrency);            
+            this.fiatCurrency = B58.hexToBytes(fiatCurrency);            
         }
         this.setDigest();
     }
@@ -310,14 +308,6 @@ public class BoxKey {
             return false;
         }
         return true;
-    }
-
-    public static byte[] hexToBytes(String s) throws DecoderException {
-        return Hex.decodeHex(s.toCharArray());
-    }
-    
-    public static String bytesToHex(byte[] b) {
-        return Hex.encodeHexString(b);
     }
     
 }
