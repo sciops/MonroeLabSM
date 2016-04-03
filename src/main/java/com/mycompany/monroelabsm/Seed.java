@@ -9,12 +9,12 @@ package com.mycompany.monroelabsm;
  *
  * @author Stephen R. Williams (c) 2014
  */
-
 import org.apache.commons.codec.DecoderException;
 
 public class Seed {
+
     private byte[] seed;//combined seed array
-    
+
     //seed components
     private byte[] serialNo;//identity of machine. start with "ff" byte to avoid rounding issues
     private byte[] operatorNo;//operator of machine
@@ -26,8 +26,9 @@ public class Seed {
     private byte[] denom;//fiat denomination
     private byte[] utcDiv60;//box generation time divided by 60 for one key per minute
 
-    Seed() { }
-    
+    Seed() {
+    }
+
     Seed(byte[] seed_b) {
         this.seed = seed_b;
         //TODO: set all the components, validate
@@ -106,7 +107,17 @@ public class Seed {
         return this.seed;
     }
 
-    public byte[] getSeed(String serialNo_s, String operatorNo_s, String gpsHeading_s, String gpsLocX_s, String gpsLocY_s, int cryptoCurrencyType_int, int fiatCurrencyType_int, int denom_int, long utcDiv60_L) throws DecoderException {
+    public byte[] getSeed(
+            String serialNo_s,
+            String operatorNo_s,
+            String gpsHeading_s,
+            String gpsLocX_s,
+            String gpsLocY_s,
+            int cryptoCurrencyType_int,
+            int fiatCurrencyType_int,
+            int denom_int,
+            int utcDiv60
+    ) throws DecoderException {
         this.serialNo = B58.hexToBytes(serialNo_s);
         this.operatorNo = B58.hexToBytes(operatorNo_s);
         this.gpsHeading = B58.hexToBytes(gpsHeading_s);
@@ -119,7 +130,7 @@ public class Seed {
         this.fiatCurrencyType = temp;
         temp[0] = (byte) denom_int;
         this.denom = temp;
-        temp = B58.toByteArray(utcDiv60_L);
+        temp = B58.toByteArray(utcDiv60);
         this.utcDiv60 = temp;
 
         for (int i = 0; i <= 12; i++) {
