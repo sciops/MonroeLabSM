@@ -21,8 +21,8 @@ public class Seed {
     private byte[] gpsHeading;//future implementation
     private byte[] gpsLocX;//future implementation
     private byte[] gpsLocY;//future implementation
-    private byte[] cryptoCurrencyType;//BTC
-    private byte[] fiatCurrencyType;//USD
+    private byte[] cryptoCurrencyType;//i.e. BTC
+    private byte[] fiatCurrencyType;//i.e. USD
     private byte[] denom;//fiat denomination
     private byte[] utcDiv60;//box generation time divided by 60 for one key per minute
 

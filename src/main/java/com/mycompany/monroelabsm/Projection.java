@@ -23,42 +23,13 @@
  */
 package com.mycompany.monroelabsm;
 
+import java.util.List;
+
 /**
  *
  * @author Stephen R. Williams
  */
-public class Denomination {
+public class Projection {
 
-    private Currency currency;
-    private double value;
-
-    public Denomination(Currency currency, double value) {
-        this.currency = currency;
-        this.value = value;
-    }
-
-    public Denomination(String currency, double value) {
-        //TODO: validate the string
-        this.currency = Currency.valueOf(currency.toLowerCase());
-        this.value = value;
-    }
-
-    public Denomination(int countryCode, double value) {
-        for (Currency c : Currency.values()) {
-            if (c.countryCode == countryCode) {
-                this.currency = c;
-                break;
-            }
-        }
-        this.value = value;
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public double getValue() {
-        return value;
-    }
-
+    private List<BoxKey> keys;
 }

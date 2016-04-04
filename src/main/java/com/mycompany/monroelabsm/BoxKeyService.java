@@ -27,20 +27,21 @@ package com.mycompany.monroelabsm;
  *
  * @author Stephen R. Williams
  */
-
 import com.google.gson.Gson;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.codec.DecoderException;
 
 public class BoxKeyService {
-    private static final AtomicLong counter = new AtomicLong();
+
+    //private static final AtomicLong counter = new AtomicLong();
+    //storing all keys here in memory until user authentication / persistence is implemented
     private static List<BoxKey> keys;
+    //this BoxKey seed will store the default values for all the values that stay the same
+    private static Seed protoSeed;
 
     static {
         try {
@@ -65,7 +66,7 @@ public class BoxKeyService {
         }
         return null; //404: not found
     }
-    
+
     //parse long value from string and use the other method
     public BoxKey findById(String id_s) {
         return this.findById(Long.parseLong(id_s));
@@ -83,27 +84,35 @@ public class BoxKeyService {
 
     public BoxKey saveBoxKey(BoxKey key) throws AlreadyExistsException {
         //check for pre-existing key first
-        if(this.keys.contains(key)) throw new AlreadyExistsException();
+        if (this.keys.contains(key)) {
+            throw new AlreadyExistsException();
+        }
         keys.add(key);
         return key;
     }
-    
+
     public BoxKey saveBoxKey(String json) throws AlreadyExistsException, JsonPojoMismatchException {
         //convert string json to boxkey and then save it with previous method.
         BoxKey key = new Gson().fromJson(json, BoxKey.class);
-        if (key==null) throw new JsonPojoMismatchException();
+        if (key == null) {
+            throw new JsonPojoMismatchException();
+        }
         return saveBoxKey(key);
     }
 
     public BoxKey updateBoxKey(BoxKey key) throws NotFoundException {
-        if(!this.keys.contains(key)) throw new NotFoundException();
+        if (!this.keys.contains(key)) {
+            throw new NotFoundException();
+        }
         keys.set(keys.indexOf(key), key);
         return key;
     }
-    
+
     public BoxKey updateBoxKey(String json) throws NotFoundException, JsonPojoMismatchException {
         BoxKey key = new Gson().fromJson(json, BoxKey.class);
-        if (key==null) throw new JsonPojoMismatchException();
+        if (key == null) {
+            throw new JsonPojoMismatchException();
+        }
         return updateBoxKey(key);
     }
 
@@ -117,10 +126,10 @@ public class BoxKeyService {
         }
         return deletedKey;
     }
-    
+
     //parse id and use the other method
     public BoxKey deleteBoxKeyById(String id_s) throws NotFoundException, NoSuchAlgorithmException {
-        return this.deleteBoxKeyById(Long.parseLong(id_s)); 
+        return this.deleteBoxKeyById(Long.parseLong(id_s));
     }
 
     public List<BoxKey> deleteAllBoxKeys() {
@@ -129,21 +138,35 @@ public class BoxKeyService {
     }
 
     public static List<BoxKey> reset() throws NoSuchAlgorithmException, DecoderException {
-        if (keys != null) keys.clear();
+        if (keys != null) {
+            keys.clear();
+        }
         keys = new ArrayList<BoxKey>();
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "1","56F6BB45"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "5","56F6BB45"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "10","56F6BB45"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "20","56F6BB45"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "1","56F6BB46"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "5","56F6BB46"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "10","56F6BB46"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "20","56F6BB46"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "1","56F6BB47"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "5","56F6BB47"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "10","56F6BB47"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "20","56F6BB47"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "1", "56F6BB45"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "5", "56F6BB45"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "10", "56F6BB45"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "20", "56F6BB45"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "1", "56F6BB46"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "5", "56F6BB46"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "10", "56F6BB46"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "20", "56F6BB46"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "1", "56F6BB47"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "5", "56F6BB47"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "10", "56F6BB47"));
+        keys.add(new BoxKey("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "20", "56F6BB47"));
         return keys;
     }
 
+    public static List<BoxKey> projection(ProjectionRequest request) {
+        
+        return keys;
+    }
+
+    public static List<BoxKey> projection(String json) throws JsonPojoMismatchException {
+        ProjectionRequest request = new Gson().fromJson(json, ProjectionRequest.class);
+        if (request == null) {
+            throw new JsonPojoMismatchException();
+        }
+        return projection(request);
+    }
 }

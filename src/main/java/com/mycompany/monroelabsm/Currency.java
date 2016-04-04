@@ -194,13 +194,13 @@ public enum Currency {
     zar(710, "South African rand", 2),
     zmw(967, "Zambian kwacha", 2);
 
-    private int code;
+    int countryCode;
     private String country;
     private int decimals;
     private double[] denoms;
 
-    private Currency(int code, String country, int decimals, double... denoms) {
-        this.code = code;
+    private Currency(int countryCode, String country, int decimals, double... denoms) {
+        this.countryCode = countryCode;
         this.country = country;
         this.decimals = decimals;
         this.denoms = denoms;
