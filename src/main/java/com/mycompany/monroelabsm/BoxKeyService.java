@@ -75,7 +75,7 @@ public class BoxKeyService {
     public List<BoxKey> findBySerial(String serial) {
         List<BoxKey> foundKeys = null;
         for (BoxKey key : keys) {
-            if (key.getSerialString().equalsIgnoreCase(serial)) {
+            if (key.getSeed().getSerialString().equalsIgnoreCase(serial)) {
                 foundKeys.add(key);
             }
         }
@@ -142,23 +142,23 @@ public class BoxKeyService {
             keys.clear();
         }
         keys = new ArrayList<BoxKey>();
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "1", "56F6BB45"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "5", "56F6BB45"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "10", "56F6BB45"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "20", "56F6BB45"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "1", "56F6BB46"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "5", "56F6BB46"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "10", "56F6BB46"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "20", "56F6BB46"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "1", "56F6BB47"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "5", "56F6BB47"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "10", "56F6BB47"));
-        keys.add(new BoxKey("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "20", "56F6BB47"));
+        //keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "1", "56F6BB45"));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "1", "56F6BB45")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "5", "56F6BB45")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "10", "56F6BB45")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "20", "56F6BB45")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "1", "56F6BB46")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "5", "56F6BB46")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "10", "56F6BB46")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "20", "56F6BB46")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "1", "56F6BB47")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "5", "56F6BB47")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "10", "56F6BB47")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "20", "56F6BB47")));
         return keys;
     }
 
     public static List<BoxKey> projection(ProjectionRequest request) {
-        
         return keys;
     }
 

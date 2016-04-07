@@ -23,6 +23,7 @@
  */
 package com.mycompany.monroelabsm;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import org.apache.commons.codec.DecoderException;
 
@@ -37,7 +38,7 @@ public class Projection {
     private List<BoxKey> keys;
     private List<Seed> seeds;
 
-    public Projection(ProjectionRequest request) throws DecoderException {
+    public Projection(ProjectionRequest request) throws DecoderException, NoSuchAlgorithmException {
         byte[] serial = new byte[13];
         byte[] opnum = B58.hexToBytes(request.getOperatorNo());
         byte[] gpsHeading = B58.hexToBytes(request.getGpsHeading());//future implementation
