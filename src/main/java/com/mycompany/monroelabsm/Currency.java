@@ -74,10 +74,37 @@ public enum Currency {
     egp(818, "Egyptian pound", 2),
     ern(232, "Eritrean nakfa", 2),
     etb(230, "Ethiopian birr", 2),
-    eur(978, "Euro", 2, 0.01, 0.02, 0.05, 0.10, 0.20, 0.50, 1.00, 5.00, 10.00, 20.00, 50.00, 100.00, 200.00, 500.00),
+    //negative values represent fractional denomations.
+    //could use double, but would rather squeeze these inside a signed byte.
+    eur(978, "Euro", 2, 
+            (byte) -1, 
+            (byte) -2, 
+            (byte) -5, 
+            (byte) -10, 
+            (byte) -20, 
+            (byte) -50, 
+            (byte) 1, 
+            (byte) 5, 
+            (byte) 10, 
+            (byte) 20, 
+            (byte) 50, 
+            (byte) 100, 
+            (byte) 200  ),//missing 500 euro note, is this a problem?
     fjd(242, "Fiji dollar", 2),
     fkp(238, "Falkland Islands pound", 2),
-    gbp(826, "Pound sterling", 2, 0.01, 0.02, 0.05, 0.10, 0.20, 0.50, 1.00, 2.00, 5.00, 10.00, 20.00, 50.00),
+    gbp(826, "Pound sterling", 2, 
+            (byte) -1, 
+            (byte) -2, 
+            (byte) -5, 
+            (byte) -10, 
+            (byte) -20, 
+            (byte) -50, 
+            (byte) 1, 
+            (byte) 2, 
+            (byte) 5, 
+            (byte) 10, 
+            (byte) 20, 
+            (byte) 50),
     gel(981, "Georgian lari", 2),
     ghs(936, "Ghanaian cedi", 2),
     gip(292, "Gibraltar pound", 2),
@@ -172,7 +199,19 @@ public enum Currency {
     tzs(834, "Tanzanian shilling", 2),
     uah(980, "Ukrainian hryvnia", 2),
     ugx(800, "Ugandan shilling", 0),
-    usd(840, "United States dollar", 2, 0.01, 0.05, 0.10, 0.25, 0.50, 1.00, 2.00, 5.00, 10.00, 20.00, 50.00, 100.00),
+    usd(840, "United States dollar", 2, 
+            (byte) -1, 
+            (byte) -5, 
+            (byte) -10, 
+            (byte) -25, 
+            (byte) -50, 
+            (byte) 1, 
+            (byte) 2, 
+            (byte) 5, 
+            (byte) 10, 
+            (byte) 20, 
+            (byte) 50, 
+            (byte) 100),
     uyu(858, "Uruguayan peso", 2),
     uzs(860, "Uzbekistan som", 2),
     vef(937, "Venezuelan bolívar", 2),
@@ -197,9 +236,9 @@ public enum Currency {
     int countryCode;
     private String country;
     private int decimals;
-    private double[] denoms;
+    private byte[] denoms;
 
-    private Currency(int countryCode, String country, int decimals, double... denoms) {
+    private Currency(int countryCode, String country, int decimals, byte... denoms) {
         this.countryCode = countryCode;
         this.country = country;
         this.decimals = decimals;
