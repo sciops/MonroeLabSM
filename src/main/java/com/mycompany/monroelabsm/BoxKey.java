@@ -109,6 +109,10 @@ public class BoxKey {
         this(serial, operator, "66", "66", "66", cryptoCurrency, fiatCurrency, denomination, dispenseTime);
     }
 
+    BoxKey(Seed seed) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     private byte[] getSeed() {
         byte[] seed = new byte[32];
         for (byte i = 0; i <= 12; i++) {

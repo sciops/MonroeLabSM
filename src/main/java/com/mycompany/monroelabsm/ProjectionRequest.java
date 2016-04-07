@@ -28,6 +28,8 @@ import java.util.List;
 /**
  *
  * @author Stephen R. Williams
+ * 
+ * This model is used for submitting requests to this server for a projection of keys
  */
 public class ProjectionRequest {
     //seed components
@@ -36,11 +38,11 @@ public class ProjectionRequest {
     private String gpsHeading;//future implementation
     private String gpsLocX;//future implementation
     private String gpsLocY;//future implementation
-    private String cryptoCurrencyType;//i.e. BTC
-    private String fiatCurrencyType;//i.e. USD
-    private List<Denomination> denominations;
-    private long dispenseStart;
-    private long dispenseEnd;
+    private short cryptoCurrencyType;//i.e. BTC
+    private short fiatCurrencyType;//i.e. USD
+    private List<Byte> denominations;
+    private int dispenseStart;
+    private int dispenseEnd;
     private int dispenseFrequency;
 
     public List<String> getSerialNo() {
@@ -83,43 +85,43 @@ public class ProjectionRequest {
         this.gpsLocY = gpsLocY;
     }
 
-    public String getCryptoCurrencyType() {
+    public short getCryptoCurrencyType() {
         return cryptoCurrencyType;
     }
 
-    public void setCryptoCurrencyType(String cryptoCurrencyType) {
+    public void setCryptoCurrencyType(short cryptoCurrencyType) {
         this.cryptoCurrencyType = cryptoCurrencyType;
     }
 
-    public String getFiatCurrencyType() {
+    public short getFiatCurrencyType() {
         return fiatCurrencyType;
     }
 
-    public void setFiatCurrencyType(String fiatCurrencyType) {
+    public void setFiatCurrencyType(short fiatCurrencyType) {
         this.fiatCurrencyType = fiatCurrencyType;
     }
 
-    public List<Denomination> getDenominations() {
+    public List<Byte> getDenominations() {
         return denominations;
     }
 
-    public void setDenominations(List<Denomination> denominations) {
+    public void setDenominations(List<Byte> denominations) {
         this.denominations = denominations;
     }
 
-    public long getDispenseStart() {
+    public int getDispenseStart() {
         return dispenseStart;
     }
 
-    public void setDispenseStart(long dispenseStart) {
+    public void setDispenseStart(int dispenseStart) {
         this.dispenseStart = dispenseStart;
     }
 
-    public long getDispenseEnd() {
+    public int getDispenseEnd() {
         return dispenseEnd;
     }
 
-    public void setDispenseEnd(long dispenseEnd) {
+    public void setDispenseEnd(int dispenseEnd) {
         this.dispenseEnd = dispenseEnd;
     }
 
@@ -129,7 +131,5 @@ public class ProjectionRequest {
 
     public void setDispenseFrequency(int dispenseFrequency) {
         this.dispenseFrequency = dispenseFrequency;
-    }
-    
-    
+    }   
 }

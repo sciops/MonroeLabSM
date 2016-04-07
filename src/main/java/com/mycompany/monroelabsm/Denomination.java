@@ -30,20 +30,20 @@ package com.mycompany.monroelabsm;
 public class Denomination {
 
     private Currency currency;
-    private double value;
+    private byte value;
 
-    public Denomination(Currency currency, double value) {
+    public Denomination(Currency currency, byte value) {
         this.currency = currency;
         this.value = value;
     }
 
-    public Denomination(String currency, double value) {
+    public Denomination(String currency, byte value) {
         //TODO: validate the string
         this.currency = Currency.valueOf(currency.toLowerCase());
         this.value = value;
     }
 
-    public Denomination(int countryCode, double value) {
+    public Denomination(int countryCode, byte value) {
         for (Currency c : Currency.values()) {
             if (c.countryCode == countryCode) {
                 this.currency = c;
@@ -57,7 +57,7 @@ public class Denomination {
         return currency;
     }
 
-    public double getValue() {
+    public byte getValue() {
         return value;
     }
 

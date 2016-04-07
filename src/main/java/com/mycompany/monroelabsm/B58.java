@@ -20,14 +20,14 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class B58 {
 
     public static String encode(byte[] toEncode, byte prefix) {
-        
+
         //validate prefix against known prefixes
         byte[] validPrefixes = {0, 5, 21, 52, -128, 111, -60, -17};
         Arrays.sort(validPrefixes);
-        if (Arrays.binarySearch(validPrefixes, prefix)<0) {//not found. see https://docs.oracle.com/javase/7/docs/api/java/util/Arrays.html
+        if (Arrays.binarySearch(validPrefixes, prefix) < 0) {//not found. see https://docs.oracle.com/javase/7/docs/api/java/util/Arrays.html
             return "Base58 error: Invalid address prefix byte specified.";
         }
-        
+
         byte[] step1 = new byte[33];
         //step1[0] = 0;//mainnet
         //step1[0] = 111;//testnet
@@ -81,6 +81,14 @@ public class B58 {
         returnedBytes[2] = (byte) (givenValue >> (1 * 8) & 0xFF);
         returnedBytes[1] = (byte) (givenValue >> (2 * 8) & 0xFF);
         returnedBytes[0] = (byte) (givenValue >> (3 * 8) & 0xFF);
+        return returnedBytes;
+    }
+
+    //converts 16-bit integer to 2-byte array via evil bitwise logic
+    public static byte[] toByteArray(short givenValue) {
+        byte[] returnedBytes = new byte[2];
+        returnedBytes[1] = (byte) (givenValue >> (0 * 8) & 0xFF);
+        returnedBytes[0] = (byte) (givenValue >> (1 * 8) & 0xFF);
         return returnedBytes;
     }
 

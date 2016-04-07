@@ -24,12 +24,53 @@
 package com.mycompany.monroelabsm;
 
 import java.util.List;
+import org.apache.commons.codec.DecoderException;
 
 /**
  *
- * @author Stephen R. Williams
+ * @author Stephen R. Williams This class generates keys for given time and seed
+ * values.
  */
 public class Projection {
 
+    //list of keys generated
     private List<BoxKey> keys;
+    private List<Seed> seeds;
+
+    public Projection(ProjectionRequest request) throws DecoderException {
+        byte[] serial = new byte[13];
+        byte[] opnum = B58.hexToBytes(request.getOperatorNo());
+        byte[] gpsHeading = B58.hexToBytes(request.getGpsHeading());//future implementation
+        byte[] gpsLocX = B58.hexToBytes(request.getGpsLocX());//future implementation
+        byte[] gpsLocY = B58.hexToBytes(request.getGpsLocY());//future implementation
+        byte[] cryptoCurrencyType = B58.toByteArray(request.getCryptoCurrencyType());//i.e. BTC
+        byte[] fiatCurrencyType = B58.toByteArray(request.getFiatCurrencyType());//i.e. USD
+        byte[]denom = new byte[1];
+        byte[]time = new byte[4];
+        
+        //make seeds from the request. we'll need a key for every serial, denomination and time value
+        for (Byte denom_B : request.getDenominations()) {
+            denom[0]=denom_B.byteValue();
+            for (int i = request.getDispenseStart(); i <= request.getDispenseEnd(); i += request.getDispenseFrequency()) {
+                time = B58.toByteArray(i);
+                for (String s : request.getSerialNo()) {
+                    serial = B58.hexToBytes(s);
+                    Seed seed = new Seed(serial,opnum,gpsHeading,gpsLocX,gpsLocY,cryptoCurrencyType,fiatCurrencyType,denom,time);
+                    seeds.add(seed);
+                    BoxKey key = new BoxKey(seed);
+                    keys.add(key);
+                }
+            }
+        }
+    }
+
+    public List<BoxKey> getKeys() {
+        return keys;
+    }
+
+    public List<Seed> getSeeds() {
+        return seeds;
+    }
+    
+    
 }
