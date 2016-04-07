@@ -9,6 +9,7 @@ package com.mycompany.monroelabsm;
  *
  * @author Stephen R. Williams (c) 2014
  */
+import java.security.NoSuchAlgorithmException;
 import org.apache.commons.codec.DecoderException;
 
 public class Seed {
@@ -72,6 +73,70 @@ public class Seed {
         this.utcDiv60 = temp;
     }
 
+    public Seed(byte[] seed) {
+        //TODO:plug in big array into all seed values.
+        for (int i = 0; i <= 12; i++) {
+            serialNo[i]=seed[i];
+        }
+        for (int i = 13; i <= 15; i++) {
+            operatorNo[i - 13]=seed[i];
+        }
+        for (int i = 16; i <= 16; i++) {
+            gpsHeading[i - 16]=seed[i];
+        }
+        for (int i = 17; i <= 19; i++) {
+            gpsLocX[i - 17]=seed[i];
+        }
+        for (int i = 20; i <= 22; i++) {
+            gpsLocY[i - 20]=seed[i];
+        }
+        for (int i = 23; i <= 24; i++) {
+            cryptoCurrencyType[i - 23]=seed[i];
+        }
+        for (int i = 25; i <= 26; i++) {
+            fiatCurrencyType[i - 25]=seed[i];
+        }
+        for (int i = 27; i <= 27; i++) {
+            denom[i - 27]=seed[i];
+        }
+        for (int i = 28; i <= 31; i++) {
+            utcDiv60[i - 28]=seed[i];
+        }
+    }
+
+    public Seed(
+            String serial,
+            String operator,
+            String heading,
+            String gpsX,
+            String gpsY,
+            String crypto,
+            String fiat,
+            String denom,
+            String time) throws DecoderException {
+        this.serialNo = B58.hexToBytes(serial);
+        this.operatorNo = B58.hexToBytes(operator);
+        this.gpsHeading = B58.hexToBytes(heading);
+        this.gpsLocX = B58.hexToBytes(gpsX);
+        this.gpsLocY = B58.hexToBytes(gpsY);
+        this.cryptoCurrencyType = B58.hexToBytes(crypto);
+        this.fiatCurrencyType = B58.hexToBytes(fiat);
+        this.denom = B58.hexToBytes(denom);
+        this.utcDiv60 = B58.hexToBytes(time);
+    }
+
+    //default values for heading and location if disabled. calls the constructor above
+    public Seed(
+            String serial,
+            String operator,
+            String cryptoCurrency,
+            String fiatCurrency,
+            String denomination,
+            String dispenseTime
+    ) throws NoSuchAlgorithmException, DecoderException {
+        this(serial, operator, "66", "66", "66", cryptoCurrency, fiatCurrency, denomination, dispenseTime);
+    }
+
     public byte[] getSeed() {
         byte[] seed = new byte[32];
         for (int i = 0; i <= 12; i++) {
@@ -106,6 +171,10 @@ public class Seed {
 
     public byte[] getSerialNo() {
         return serialNo;
+    }
+
+    public String getSerialString() {
+        return B58.bytesToHex(serialNo);
     }
 
     public byte[] getOperatorNo() {
@@ -164,8 +233,37 @@ public class Seed {
         this.cryptoCurrencyType = cryptoCurrencyType;
     }
 
+    //TODO: throw exception for currency not supported
+    public void setCryptoCurrency(String cryptoCurrency) throws NoSuchAlgorithmException, DecoderException {
+        if (cryptoCurrency.equals("Bitcoin")) {
+            cryptoCurrency = "01";
+        } else if (cryptoCurrency.equals("BTC")) {
+            cryptoCurrency = "01";
+        } else if (cryptoCurrency.equals("Litecoin")) {
+            cryptoCurrency = "02";
+        } else if (cryptoCurrency.equals("LTC")) {
+            cryptoCurrency = "02";
+        }
+        this.cryptoCurrencyType = B58.hexToBytes(cryptoCurrency);
+    }
+
     public void setFiatCurrencyType(byte[] fiatCurrencyType) {
         this.fiatCurrencyType = fiatCurrencyType;
+    }
+
+    //todo:throw exception for currency not supported
+    public void setFiatCurrency(String fiatCurrency) throws NoSuchAlgorithmException, DecoderException {
+        if (fiatCurrency.equals("US Dollars")) {
+            fiatCurrency = "0348";//840d, ISO4217
+        } else if (fiatCurrency.equals("USD")) {
+            fiatCurrency = "0348";//840d, ISO4217
+        } else if (fiatCurrency.equals("Euro")) {
+            fiatCurrency = "03D2";//978d, ISO4217
+        } else if (fiatCurrency.equals("EUR")) {
+            fiatCurrency = "03D2";//978d, ISO4217
+        } else {
+            this.fiatCurrencyType = B58.hexToBytes(fiatCurrency);
+        }
     }
 
     public void setDenom(byte[] denom) {
@@ -187,5 +285,4 @@ public class Seed {
         Bitwise.putInt((int) utvDiv60, temp, 0);
         this.utcDiv60 = temp;
     }
-
 }

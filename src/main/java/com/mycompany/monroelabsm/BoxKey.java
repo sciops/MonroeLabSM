@@ -26,14 +26,14 @@ package com.mycompany.monroelabsm;
 /**
  *
  * @author Stephen R. Williams
+ * 
+ * This class holds the seed class and handles requests for encryption
+ * 
+ * TODO: add more encryption methods here for other cryptocurrency types.
  */
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/**
- *
- * @author stephen.williams@monco.info
- */
 public class BoxKey {
 
     private Seed seed;
@@ -89,7 +89,7 @@ public class BoxKey {
             return false;
         }
         final BoxKey other = (BoxKey) obj;
-        if (this.hashCode() != other.hashCode()) {
+        if (this.getDigest()!= other.getDigest()) {
             return false;
         }
         return true;
