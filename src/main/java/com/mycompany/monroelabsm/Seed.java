@@ -13,11 +13,8 @@ import org.apache.commons.codec.DecoderException;
 
 public class Seed {
 
-    private byte[] seed;//combined seed array
-
-    //seed components
-    private byte[] serialNo;//identity of machine. start with "ff" byte to avoid rounding issues
-    private byte[] operatorNo;//operator of machine
+    private byte[] serialNo;//13-byte identity of machine. start with "ff" byte to avoid rounding issues
+    private byte[] operatorNo;//3-byte operator of machine
     private byte[] gpsHeading;//future implementation
     private byte[] gpsLocX;//future implementation
     private byte[] gpsLocY;//future implementation
@@ -26,16 +23,57 @@ public class Seed {
     private byte[] denom;//fiat denomination
     private byte[] utcDiv60;//box generation time divided by 60 for one key per minute
 
-    Seed() {
+    public Seed(
+            byte[] serialNo,
+            byte[] operatorNo,
+            byte[] gpsHeading,
+            byte[] gpsLocX,
+            byte[] gpsLocY,
+            byte[] cryptoCurrencyType,
+            byte[] fiatCurrencyType,
+            byte[] denom,
+            byte[] utcDiv60
+    ) {
+        this.serialNo = serialNo;
+        this.operatorNo = operatorNo;
+        this.gpsHeading = gpsHeading;
+        this.gpsLocX = gpsLocX;
+        this.gpsLocY = gpsLocY;
+        this.cryptoCurrencyType = cryptoCurrencyType;
+        this.fiatCurrencyType = fiatCurrencyType;
+        this.denom = denom;
+        this.utcDiv60 = utcDiv60;
     }
 
-    Seed(byte[] seed_b) {
-        this.seed = seed_b;
-        //TODO: set all the components, validate
+    public Seed(
+            String serialNo_s,
+            String operatorNo_s,
+            String gpsHeading_s,
+            String gpsLocX_s,
+            String gpsLocY_s,
+            int cryptoCurrencyType_int,
+            int fiatCurrencyType_int,
+            int denom_int,
+            int utcDiv60
+    ) throws DecoderException {
+        this.serialNo = B58.hexToBytes(serialNo_s);
+        this.operatorNo = B58.hexToBytes(operatorNo_s);
+        this.gpsHeading = B58.hexToBytes(gpsHeading_s);
+        this.gpsLocX = B58.hexToBytes(gpsLocX_s);
+        this.gpsLocY = B58.hexToBytes(gpsLocY_s);
+        byte[] temp = null;
+        temp[0] = (byte) cryptoCurrencyType_int;
+        this.cryptoCurrencyType = temp;
+        temp[0] = (byte) fiatCurrencyType_int;
+        this.fiatCurrencyType = temp;
+        temp[0] = (byte) denom_int;
+        this.denom = temp;
+        temp = B58.toByteArray(utcDiv60);
+        this.utcDiv60 = temp;
     }
 
     public byte[] getSeed() {
-        this.seed = new byte[32];
+        byte[] seed = new byte[32];
         for (int i = 0; i <= 12; i++) {
             seed[i] = serialNo[i];
         }
@@ -63,104 +101,7 @@ public class Seed {
         for (int i = 28; i <= 31; i++) {
             seed[i] = utcDiv60[i - 28];
         }
-        return this.seed;
-    }
-
-    public byte[] getSeed(byte[] serialNo, byte[] operatorNo, byte[] gpsHeading, byte[] gpsLocX, byte[] gpsLocY, byte[] cryptoCurrencyType, byte[] fiatCurrencyType, byte[] denom, byte[] utcDiv60) {
-        this.serialNo = serialNo;
-        this.operatorNo = operatorNo;
-        this.gpsHeading = gpsHeading;
-        this.gpsLocX = gpsLocX;
-        this.gpsLocY = gpsLocY;
-        this.cryptoCurrencyType = cryptoCurrencyType;
-        this.fiatCurrencyType = fiatCurrencyType;
-        this.denom = denom;
-        this.utcDiv60 = utcDiv60;
-
-        for (int i = 0; i <= 12; i++) {
-            this.seed[i] = serialNo[i];
-        }
-        for (int i = 13; i <= 15; i++) {
-            this.seed[i] = operatorNo[i - 13];
-        }
-        for (int i = 16; i <= 16; i++) {
-            this.seed[i] = gpsHeading[i - 16];
-        }
-        for (int i = 17; i <= 19; i++) {
-            this.seed[i] = gpsLocX[i - 17];
-        }
-        for (int i = 20; i <= 22; i++) {
-            this.seed[i] = gpsLocY[i - 20];
-        }
-        for (int i = 23; i <= 24; i++) {
-            this.seed[i] = cryptoCurrencyType[i - 23];
-        }
-        for (int i = 25; i <= 26; i++) {
-            this.seed[i] = fiatCurrencyType[i - 25];
-        }
-        for (int i = 27; i <= 27; i++) {
-            this.seed[i] = denom[i - 27];
-        }
-        for (int i = 28; i <= 31; i++) {
-            this.seed[i] = utcDiv60[i - 28];
-        }
-        return this.seed;
-    }
-
-    public byte[] getSeed(
-            String serialNo_s,
-            String operatorNo_s,
-            String gpsHeading_s,
-            String gpsLocX_s,
-            String gpsLocY_s,
-            int cryptoCurrencyType_int,
-            int fiatCurrencyType_int,
-            int denom_int,
-            int utcDiv60
-    ) throws DecoderException {
-        this.serialNo = B58.hexToBytes(serialNo_s);
-        this.operatorNo = B58.hexToBytes(operatorNo_s);
-        this.gpsHeading = B58.hexToBytes(gpsHeading_s);
-        this.gpsLocX = B58.hexToBytes(gpsLocX_s);
-        this.gpsLocY = B58.hexToBytes(gpsLocY_s);
-        byte[] temp = null;
-        temp[0] = (byte) cryptoCurrencyType_int;
-        this.cryptoCurrencyType = temp;
-        temp[0] = (byte) fiatCurrencyType_int;
-        this.fiatCurrencyType = temp;
-        temp[0] = (byte) denom_int;
-        this.denom = temp;
-        temp = B58.toByteArray(utcDiv60);
-        this.utcDiv60 = temp;
-
-        for (int i = 0; i <= 12; i++) {
-            this.seed[i] = this.serialNo[i];
-        }
-        for (int i = 13; i <= 15; i++) {
-            this.seed[i] = this.operatorNo[i - 13];
-        }
-        for (int i = 16; i <= 16; i++) {
-            this.seed[i] = this.gpsHeading[i - 16];
-        }
-        for (int i = 17; i <= 19; i++) {
-            this.seed[i] = this.gpsLocX[i - 17];
-        }
-        for (int i = 20; i <= 22; i++) {
-            this.seed[i] = this.gpsLocY[i - 20];
-        }
-        for (int i = 23; i <= 24; i++) {
-            this.seed[i] = this.cryptoCurrencyType[i - 23];
-        }
-        for (int i = 25; i <= 26; i++) {
-            this.seed[i] = this.fiatCurrencyType[i - 25];
-        }
-        for (int i = 27; i <= 27; i++) {
-            this.seed[i] = this.denom[i - 27];
-        }
-        for (int i = 28; i <= 31; i++) {
-            this.seed[i] = this.utcDiv60[i - 28];
-        }
-        return this.seed;
+        return seed;
     }
 
     public byte[] getSerialNo() {
