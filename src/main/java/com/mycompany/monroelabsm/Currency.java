@@ -125,7 +125,8 @@ public enum Currency {
     isk(352, "Icelandic króna", 0),
     jmd(388, "Jamaican dollar", 2),
     jod(400, "Jordanian dinar", 3),
-    jpy(392, "Japanese yen", 0),
+    //to represent yen, postive values are multiples of 1000, negative values represent 1-100 coins, 500 not supported
+    jpy(392, "Japanese yen", 0, (byte) -1, (byte) -5, (byte) -10, (byte) -50, (byte) -100, (byte) 1, (byte) 5, (byte) 10),
     kes(404, "Kenyan shilling", 2),
     kgs(417, "Kyrgyzstani som", 2),
     khr(116, "Cambodian riel", 2),
