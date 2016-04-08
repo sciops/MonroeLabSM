@@ -12,6 +12,11 @@ package com.mycompany.monroelabsm;
  * Started with git clone of SparkTomcat by Leonan Luppi
  * https://github.com/leonanluppi/SparkTomcat
  * https://github.com/leonanluppi/SparkTomcat/blob/master/src/main/java/com/sparkjava/tomcat/Main.java
+ * 
+ * This main class gets things started. 
+ * Netbeans makes it really easy to deploy to AWS Tomcat servers (click of the run button) but the process is a little clunkier for far-jars.
+ * So I am deploying this on a Tomcat server instead of using Spark Framework's embedded Jetty.
+ * I'm also including a pretty basic AngularJS front-end
  */
 import static spark.Spark.*;
 import static spark.Spark.staticFileLocation;

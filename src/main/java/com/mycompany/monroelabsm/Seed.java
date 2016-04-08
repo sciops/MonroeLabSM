@@ -8,21 +8,24 @@ package com.mycompany.monroelabsm;
 /**
  *
  * @author Stephen R. Williams (c) 2014
+ * 
+ * This Seed class is modified from my MonroeLab desktop app.
+ * It holds all the components in byte arrays, then concats them together into a larger array when requested.
+ * The seed used in the SHA algo is a 32-byte/256-bit number.
  */
 import java.security.NoSuchAlgorithmException;
 import org.apache.commons.codec.DecoderException;
 
 public class Seed {
-
-    private byte[] serialNo;//13-byte identity of machine. start with "ff" byte to avoid rounding issues
-    private byte[] operatorNo;//3-byte operator of machine
-    private byte[] gpsHeading;//future implementation
-    private byte[] gpsLocX;//future implementation
-    private byte[] gpsLocY;//future implementation
-    private byte[] cryptoCurrencyType;//i.e. BTC
-    private byte[] fiatCurrencyType;//i.e. USD
-    private byte[] denom;//fiat denomination
-    private byte[] utcDiv60;//box generation time divided by 60 for one key per minute
+    private byte[] serialNo = new byte[13];//13-byte identity of machine. start with "ff" byte to avoid rounding issues
+    private byte[] operatorNo = new byte[3];//3-byte operator of machine
+    private byte[] gpsHeading = new byte[1];//future implementation
+    private byte[] gpsLocX = new byte[3];//future implementation
+    private byte[] gpsLocY = new byte[3];//future implementation
+    private byte[] cryptoCurrencyType = new byte[2];//i.e. BTC
+    private byte[] fiatCurrencyType = new byte[2];//i.e. USD
+    private byte[] denom = new byte[1];//fiat denomination
+    private byte[] utcDiv60 = new byte[4];//box generation time divided by 60 for one key per minute
 
     public Seed(
             byte[] serialNo,

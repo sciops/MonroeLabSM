@@ -16,6 +16,8 @@ import org.apache.commons.codec.digest.DigestUtils;
  * @author Stephen R. Williams
  *
  * https://en.bitcoin.it/wiki/Base58Check_encoding
+ * 
+ * This static utility class handles Base58Check encoding as well as converting numbers between byte arrays and hex strings
  */
 public class B58 {
 

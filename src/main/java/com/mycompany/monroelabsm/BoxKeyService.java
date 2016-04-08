@@ -26,6 +26,8 @@ package com.mycompany.monroelabsm;
 /**
  *
  * @author Stephen R. Williams
+ * 
+ * This class performs the actions requested by the controller.
  */
 import com.google.gson.Gson;
 import java.security.NoSuchAlgorithmException;
@@ -57,7 +59,7 @@ public class BoxKeyService {
         return keys;
     }
 
-    //simply lookup the key by id
+    //lookup the key by id
     public BoxKey findById(long id) {
         for (BoxKey key : keys) {
             if (key.hashCode() == id) {
@@ -137,11 +139,13 @@ public class BoxKeyService {
         return keys;
     }
 
+    //this method will clear the memory and insert hard-coded values for testing the front-end
     public static List<BoxKey> reset() throws NoSuchAlgorithmException, DecoderException {
         if (keys != null) {
             keys.clear();
         }
         keys = new ArrayList<BoxKey>();
+        //old hard-coded key
         //keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "1", "56F6BB45"));
         keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "1", "56F6BB45")));
         keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "5", "56F6BB45")));

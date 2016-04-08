@@ -29,8 +29,9 @@ import org.apache.commons.codec.DecoderException;
 
 /**
  *
- * @author Stephen R. Williams This class generates keys for given time and seed
- * values.
+ * @author Stephen R. Williams 
+ * This class generates keys for given time and seed values.
+ *
  */
 public class Projection {
 
@@ -39,6 +40,8 @@ public class Projection {
     private List<Seed> seeds;
 
     public Projection(ProjectionRequest request) throws DecoderException, NoSuchAlgorithmException {
+        
+        //temp vars to hold values for each seed. most are the same for all keys
         byte[] serial = new byte[13];
         byte[] opnum = B58.hexToBytes(request.getOperatorNo());
         byte[] gpsHeading = B58.hexToBytes(request.getGpsHeading());//future implementation
@@ -46,8 +49,8 @@ public class Projection {
         byte[] gpsLocY = B58.hexToBytes(request.getGpsLocY());//future implementation
         byte[] cryptoCurrencyType = B58.toByteArray(request.getCryptoCurrencyType());//i.e. BTC
         byte[] fiatCurrencyType = B58.toByteArray(request.getFiatCurrencyType());//i.e. USD
-        byte[]denom = new byte[1];
-        byte[]time = new byte[4];
+        byte[] denom = new byte[1];
+        byte[] time = new byte[4];
         
         //make seeds from the request. we'll need a key for every serial, denomination and time value
         for (Byte denom_B : request.getDenominations()) {

@@ -29,10 +29,11 @@ package com.mycompany.monroelabsm;
  * 
  * http://www.mscharhag.com/java/building-rest-api-with-spark
  * https://github.com/mscharhag/blog-examples/blob/master/sparkdemo/src/main/java/com/mscharhag/sparkdemo/JsonUtil.java
+ * 
+ * This static utility class helps convert objects to json and back.
  */
 
 import com.google.gson.Gson;
-import java.lang.reflect.Type;
 import spark.ResponseTransformer;
 
 public class JsonUtil {

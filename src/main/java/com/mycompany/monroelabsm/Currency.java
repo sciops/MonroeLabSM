@@ -26,6 +26,8 @@ package com.mycompany.monroelabsm;
 /**
  *
  * @author Stephen R. Williams
+ * 
+ * This enum describes various currencies.
  */
 public enum Currency {
 

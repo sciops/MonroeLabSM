@@ -32,7 +32,7 @@ import java.util.List;
  * This model is used for submitting requests to this server for a projection of keys
  */
 public class ProjectionRequest {
-    //seed components
+    //seed components. mostly Strings here taken from the JSON
     private List<String> serialNo;//identity of machine. start with "ff" byte to avoid rounding issues
     private String operatorNo;//operator of machine
     private String gpsHeading;//future implementation
