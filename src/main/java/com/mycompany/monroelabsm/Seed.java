@@ -106,9 +106,7 @@ public class Seed {
         this.gpsHeading = B58.hexToBytes(heading);
         this.gpsLocX = B58.hexToBytes(gpsX);
         this.gpsLocY = B58.hexToBytes(gpsY);
-        //this.cryptoCurrencyType = B58.hexToBytes(crypto);
         setCryptoCurrency(crypto);
-        //this.fiatCurrencyType = B58.hexToBytes(fiat);
         setFiatCurrency(fiat);
         this.denom[0] = Byte.parseByte(denom);
         this.utcDiv60 = B58.hexToBytes(time);
