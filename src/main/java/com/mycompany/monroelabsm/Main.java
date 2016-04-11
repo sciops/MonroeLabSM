@@ -23,7 +23,7 @@ import static spark.Spark.staticFileLocation;
 import spark.servlet.SparkApplication;
 
 public class Main implements SparkApplication {
-
+    final String VERSION = "v1.005";
     //must move all verbs to init method, out of main
     @Override
     public void init() {
@@ -32,8 +32,8 @@ public class Main implements SparkApplication {
             res.redirect("/index.html");
             return null;
         });
-        get("/hello", (req, res) -> "Hello World. This is the /hello response in MonroeLabSM. 3");
-        get("/hello/:name", (req, res) -> "Hello "+req.params(":name")+". This is the /hello response in MonroeLabSM. 3");
+        get("/hello", (req, res) -> "Hello World. This is the /hello response in MonroeLabSM "+VERSION);
+        get("/hello/:name", (req, res) -> "Hello "+req.params(":name")+". This is the /hello response in MonroeLabSM. "+VERSION);
         staticFileLocation("/public"); //http://sparkjava.com/documentation.html#static-files  
     }
 
