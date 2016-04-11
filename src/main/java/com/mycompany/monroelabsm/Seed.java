@@ -79,34 +79,16 @@ public class Seed {
     }
 
     public Seed(byte[] seed) {
-        //TODO:plug in big array into all seed values.
-        for (int i = 0; i <= 12; i++) {
-            serialNo[i] = seed[i];
-        }
-        for (int i = 13; i <= 15; i++) {
-            operatorNo[i - 13] = seed[i];
-        }
-        for (int i = 16; i <= 16; i++) {
-            gpsHeading[i - 16] = seed[i];
-        }
-        for (int i = 17; i <= 19; i++) {
-            gpsLocX[i - 17] = seed[i];
-        }
-        for (int i = 20; i <= 22; i++) {
-            gpsLocY[i - 20] = seed[i];
-        }
-        for (int i = 23; i <= 24; i++) {
-            cryptoCurrencyType[i - 23] = seed[i];
-        }
-        for (int i = 25; i <= 26; i++) {
-            fiatCurrencyType[i - 25] = seed[i];
-        }
-
-        denom[0] = seed[27];
-
-        for (int i = 28; i <= 31; i++) {
-            utcDiv60[i - 28] = seed[i];
-        }
+        //plug in big array into all seed values.
+        serialNo = ArrayUtils.subarray(seed, 0, 13);
+        operatorNo = ArrayUtils.subarray(seed, 13, 16);
+        gpsHeading = ArrayUtils.subarray(seed, 16, 17);
+        gpsLocX = ArrayUtils.subarray(seed, 17,20);
+        gpsLocY = ArrayUtils.subarray(seed, 20, 23);
+        cryptoCurrencyType = ArrayUtils.subarray(seed, 23,25);
+        fiatCurrencyType = ArrayUtils.subarray(seed, 25,27);
+        denom = ArrayUtils.subarray(seed, 27,28);
+        utcDiv60 = ArrayUtils.subarray(seed, 28,32);
     }
 
     public Seed(
