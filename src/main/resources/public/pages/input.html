@@ -114,7 +114,6 @@ and open the template in the editor.
                     <thead>
                         <tr>
                             <!--Heading row for list of box keys table -->
-                            <th>ID.</th>
                             <th>Serial</th>
                             <th>Operator</th>
                             <th>Date/Time</th>
@@ -123,10 +122,9 @@ and open the template in the editor.
                     </thead>
                     <tbody>
                         <tr ng-repeat="k in ctrl.keys">
-                            <td><span ng-bind="k.id"></span></td>
-                            <td><span ng-bind="k.serial"></span></td>
-                            <td><span ng-bind="k.opnum"></span></td>
-                            <td><span ng-bind="k.datetime"></span></td>
+                            <td><span ng-bind="k.seed.serial"></span></td>
+                            <td><span ng-bind="k.seed.operator"></span></td>
+                            <td><span ng-bind="k.seed.time"></span></td>
                             <td>
                                 <button type="button" ng-click="ctrl.edit(k.id)" class="btn btn-success custom-width">Edit</button>  <button type="button" ng-click="ctrl.remove(k.id)" class="btn btn-danger custom-width">Remove</button>
                             </td>
