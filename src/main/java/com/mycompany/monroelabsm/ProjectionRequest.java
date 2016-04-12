@@ -33,72 +33,72 @@ import java.util.List;
  */
 public class ProjectionRequest {
     //seed components. mostly Strings here taken from the JSON
-    private List<String> serialNo;//identity of machine. start with "ff" byte to avoid rounding issues
-    private String operatorNo;//operator of machine
-    private String gpsHeading;//future implementation
-    private String gpsLocX;//future implementation
-    private String gpsLocY;//future implementation
-    private short cryptoCurrencyType;//i.e. BTC
-    private short fiatCurrencyType;//i.e. USD
+    private List<String> serials;//identity of machine. start with "ff" byte to avoid rounding issues
+    private String operator;//operator of machine
+    private String heading;//future implementation
+    private String gpsx;//future implementation
+    private String gpsy;//future implementation
+    private short crypto;//i.e. BTC
+    private short fiat;//i.e. USD
     private List<Byte> denominations;
-    private int dispenseStart;
-    private int dispenseEnd;
-    private int dispenseFrequency;
+    private int start;//start time for dispensing
+    private int dispenseEnd;//end time for dispensing
+    private int frequency;//number of keys per time period
 
     public List<String> getSerialNo() {
-        return serialNo;
+        return serials;
     }
 
     public void setSerialNo(List<String> serialNo) {
-        this.serialNo = serialNo;
+        this.serials = serialNo;
     }
 
     public String getOperatorNo() {
-        return operatorNo;
+        return operator;
     }
 
     public void setOperatorNo(String operatorNo) {
-        this.operatorNo = operatorNo;
+        this.operator = operatorNo;
     }
 
     public String getGpsHeading() {
-        return gpsHeading;
+        return heading;
     }
 
     public void setGpsHeading(String gpsHeading) {
-        this.gpsHeading = gpsHeading;
+        this.heading = gpsHeading;
     }
 
     public String getGpsLocX() {
-        return gpsLocX;
+        return gpsx;
     }
 
     public void setGpsLocX(String gpsLocX) {
-        this.gpsLocX = gpsLocX;
+        this.gpsx = gpsLocX;
     }
 
     public String getGpsLocY() {
-        return gpsLocY;
+        return gpsy;
     }
 
     public void setGpsLocY(String gpsLocY) {
-        this.gpsLocY = gpsLocY;
+        this.gpsy = gpsLocY;
     }
 
     public short getCryptoCurrencyType() {
-        return cryptoCurrencyType;
+        return crypto;
     }
 
     public void setCryptoCurrencyType(short cryptoCurrencyType) {
-        this.cryptoCurrencyType = cryptoCurrencyType;
+        this.crypto = cryptoCurrencyType;
     }
 
     public short getFiatCurrencyType() {
-        return fiatCurrencyType;
+        return fiat;
     }
 
     public void setFiatCurrencyType(short fiatCurrencyType) {
-        this.fiatCurrencyType = fiatCurrencyType;
+        this.fiat = fiatCurrencyType;
     }
 
     public List<Byte> getDenominations() {
@@ -110,11 +110,11 @@ public class ProjectionRequest {
     }
 
     public int getDispenseStart() {
-        return dispenseStart;
+        return start;
     }
 
     public void setDispenseStart(int dispenseStart) {
-        this.dispenseStart = dispenseStart;
+        this.start = dispenseStart;
     }
 
     public int getDispenseEnd() {
@@ -126,10 +126,10 @@ public class ProjectionRequest {
     }
 
     public int getDispenseFrequency() {
-        return dispenseFrequency;
+        return frequency;
     }
 
     public void setDispenseFrequency(int dispenseFrequency) {
-        this.dispenseFrequency = dispenseFrequency;
+        this.frequency = dispenseFrequency;
     }   
 }

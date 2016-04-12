@@ -42,23 +42,23 @@ public class Projection {
         
         //temp vars to hold values for each seed. most are the same for all keys
         byte[] serial = new byte[13];
-        byte[] opnum = B58.hexToBytes(request.getOperatorNo());
-        byte[] gpsHeading = B58.hexToBytes(request.getGpsHeading());//future implementation
-        byte[] gpsLocX = B58.hexToBytes(request.getGpsLocX());//future implementation
-        byte[] gpsLocY = B58.hexToBytes(request.getGpsLocY());//future implementation
-        byte[] cryptoCurrencyType = B58.toByteArray(request.getCryptoCurrencyType());//i.e. BTC
-        byte[] fiatCurrencyType = B58.toByteArray(request.getFiatCurrencyType());//i.e. USD
-        byte[] denom = new byte[1];
+        byte[] operator = B58.hexToBytes(request.getOperatorNo());
+        byte[] heading = B58.hexToBytes(request.getGpsHeading());//future implementation
+        byte[] gpsx = B58.hexToBytes(request.getGpsLocX());//future implementation
+        byte[] gpsy = B58.hexToBytes(request.getGpsLocY());//future implementation
+        byte[] crypto = B58.toByteArray(request.getCryptoCurrencyType());//i.e. BTC
+        byte[] fiat = B58.toByteArray(request.getFiatCurrencyType());//i.e. USD
+        byte[] denomination = new byte[1];
         byte[] time = new byte[4];
         
         //make seeds from the request. we'll need a key for every serial, denomination and time value
         for (byte denom_B : request.getDenominations()) {
-            denom[0]=denom_B;
+            denomination[0]=denom_B;
             for (int i = request.getDispenseStart(); i <= request.getDispenseEnd(); i += request.getDispenseFrequency()) {
                 time = B58.toByteArray(i);
                 for (String s : request.getSerialNo()) {
                     serial = B58.hexToBytes(s);
-                    Seed seed = new Seed(serial,opnum,gpsHeading,gpsLocX,gpsLocY,cryptoCurrencyType,fiatCurrencyType,denom,time);
+                    Seed seed = new Seed(serial,operator,heading,gpsx,gpsy,crypto,fiat,denomination,time);
                     BoxKey key = new BoxKey(seed);
                     keys.add(key);
                 }
