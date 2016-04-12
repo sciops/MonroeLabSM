@@ -78,12 +78,12 @@ public class Seed {
         serial = ArrayUtils.subarray(seed, 0, 13);
         operator = ArrayUtils.subarray(seed, 13, 16);
         heading = ArrayUtils.subarray(seed, 16, 17);
-        gpsx = ArrayUtils.subarray(seed, 17,20);
+        gpsx = ArrayUtils.subarray(seed, 17, 20);
         gpsy = ArrayUtils.subarray(seed, 20, 23);
-        crypto = ArrayUtils.subarray(seed, 23,25);
-        fiat = ArrayUtils.subarray(seed, 25,27);
-        denomination = ArrayUtils.subarray(seed, 27,28);
-        time = ArrayUtils.subarray(seed, 28,32);
+        crypto = ArrayUtils.subarray(seed, 23, 25);
+        fiat = ArrayUtils.subarray(seed, 25, 27);
+        denomination = ArrayUtils.subarray(seed, 27, 28);
+        time = ArrayUtils.subarray(seed, 28, 32);
     }
 
     public Seed(
@@ -101,8 +101,8 @@ public class Seed {
         this.heading = B58.hexToBytes(heading);
         this.gpsx = B58.hexToBytes(gpsX);
         this.gpsy = B58.hexToBytes(gpsY);
-        setCryptoCurrency(crypto);
-        setFiatCurrency(fiat);
+        setCrypto(crypto);
+        setFiat(fiat);
         this.denomination[0] = Byte.parseByte(denom);
         this.time = B58.hexToBytes(time);
     }
@@ -119,8 +119,18 @@ public class Seed {
         this(serial, operator, "66", "66", "66", crypto, fiat, denomination, time);
     }
 
+    //more defaults    
+    public Seed(
+            String serial,
+            String operator,
+            String denomination,
+            String time
+    ) throws NoSuchAlgorithmException, DecoderException {
+        this(serial, operator, "66", "66", "66", "01", "0348", denomination, time);
+    }
+
     public byte[] getSeed() {
-        byte[] seed = new byte[0];       
+        byte[] seed = new byte[0];
         seed = (byte[]) ArrayUtils.addAll(seed, serial);
         seed = (byte[]) ArrayUtils.addAll(seed, operator);
         seed = (byte[]) ArrayUtils.addAll(seed, heading);
@@ -133,7 +143,7 @@ public class Seed {
         return seed;
     }
 
-    public byte[] getSerialNo() {
+    public byte[] getSerial() {
         return serial;
     }
 
@@ -141,64 +151,88 @@ public class Seed {
         return B58.bytesToHex(serial);
     }
 
-    public byte[] getOperatorNo() {
+    public byte[] getOperator() {
         return operator;
     }
 
-    public byte[] getGpsHeading() {
+    public String getOperatorString() {
+        return B58.bytesToHex(operator);
+    }
+
+    public byte[] getHeading() {
         return heading;
     }
 
-    public byte[] getGpsLocX() {
+    public String getHeadingString() {
+        return B58.bytesToHex(heading);
+    }
+
+    public byte[] getGpsx() {
         return gpsx;
     }
 
-    public byte[] getGpsLocY() {
+    public String getGpsxString() {
+        return B58.bytesToHex(gpsx);
+    }
+
+    public byte[] getGpsy() {
         return gpsy;
     }
 
-    public byte[] getCryptoCurrencyType() {
+    public String getGpsyString() {
+        return B58.bytesToHex(gpsy);
+    }
+
+    public byte[] getCrypto() {
         return crypto;
     }
 
-    public byte[] getFiatCurrencyType() {
+    public String getCryptoString() {
+        return B58.bytesToHex(crypto);
+    }
+
+    public byte[] getFiat() {
         return fiat;
     }
 
-    public byte[] getDenom() {
+    public String getFiatString() {
+        return B58.bytesToHex(fiat);
+    }
+
+    public byte[] getDenomination() {
         return denomination;
     }
 
-    public byte[] getUtcDiv60() {
+    public byte[] getTime() {
         return time;
     }
 
-    public void setSerialNo(byte[] serialNo) {
-        this.serial = serialNo;
+    public void setSerial(byte[] serial) {
+        this.serial = serial;
     }
 
-    public void setOperatorNo(byte[] operatorNo) {
-        this.operator = operatorNo;
+    public void setOperator(byte[] operator) {
+        this.operator = operator;
     }
 
-    public void setGpsHeading(byte[] gpsHeading) {
-        this.heading = gpsHeading;
+    public void setHeading(byte[] heading) {
+        this.heading = heading;
     }
 
-    public void setGpsLocX(byte[] gpsLocX) {
-        this.gpsx = gpsLocX;
+    public void setGpsx(byte[] gpsx) {
+        this.gpsx = gpsx;
     }
 
-    public void setGpsLocY(byte[] gpsLocY) {
-        this.gpsy = gpsLocY;
+    public void setGpsy(byte[] gpsy) {
+        this.gpsy = gpsy;
     }
 
-    public void setCryptoCurrencyType(byte[] cryptoCurrencyType) {
-        this.crypto = cryptoCurrencyType;
+    public void setCrypto(byte[] crypto) {
+        this.crypto = crypto;
     }
 
     //TODO: throw exception for currency not supported
-    public void setCryptoCurrency(String cryptoCurrency) throws NoSuchAlgorithmException, DecoderException {
+    public void setCrypto(String cryptoCurrency) throws NoSuchAlgorithmException, DecoderException {
         if (cryptoCurrency.equals("Bitcoin")) {
             cryptoCurrency = "01";
         } else if (cryptoCurrency.equals("BTC")) {
@@ -211,12 +245,12 @@ public class Seed {
         this.crypto = B58.hexToBytes(cryptoCurrency);
     }
 
-    public void setFiatCurrencyType(byte[] fiatCurrencyType) {
-        this.fiat = fiatCurrencyType;
+    public void setFiat(byte[] fiat) {
+        this.fiat = fiat;
     }
 
     //todo:throw exception for currency not supported
-    public void setFiatCurrency(String fiatCurrency) throws NoSuchAlgorithmException, DecoderException {
+    public void setFiat(String fiatCurrency) throws NoSuchAlgorithmException, DecoderException {
         if (fiatCurrency.equals("US Dollars")) {
             fiatCurrency = "0348";//840d, ISO4217
         } else if (fiatCurrency.equals("USD")) {
@@ -230,23 +264,20 @@ public class Seed {
         }
     }
 
-    public void setDenom(byte[] denom) {
-        this.denomination = denom;
+    public void setDenomination(byte[] denomination) {
+        this.denomination = denomination;
     }
 
-    public void setDenom(byte denom) {
-        byte[] temp = new byte[1];
-        temp[0] = denom;
-        this.denomination = temp;
+    public void setDenomination(byte denomination) {
+        this.denomination[0] = denomination;
     }
 
-    public void setUtcDiv60(byte[] utcDiv60) {
-        this.time = utcDiv60;
+    public void setTime(byte[] time) {
+        this.time = time;
     }
 
-    public void setUtcDiv60(long utvDiv60) {
-        byte[] temp = new byte[4];
-        Bitwise.putInt((int) utvDiv60, temp, 0);
-        this.time = temp;
+    public void setTime(int time) {
+        Bitwise.putInt(time, this.time, 0);
     }
+
 }

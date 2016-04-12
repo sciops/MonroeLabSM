@@ -27,12 +27,13 @@ package com.mycompany.monroelabsm;
  *
  * @author Stephen R. Williams
  * //http://www.mscharhag.com/java/building-rest-api-with-spark
- * 
+ *
  * This controller provides API endpoints for the front-end.
  */
 import static spark.Spark.*;
 
 public class BoxKeyController {
+
     //BoxKeyService is a service class which will do all data retrieval/manipulation work
     public BoxKeyController(BoxKeyService service) {
         //search for key by id. TODO: still implemented, but need to return the id in new endpoint.
@@ -67,9 +68,7 @@ public class BoxKeyController {
         //reset the keys to hardcoded defaults
         get("/reset", (req, res) -> service.reset(), JsonUtil.json());
         post("/reset", (req, res) -> service.reset(), JsonUtil.json());
-        //endpoint to project out a list of keys
-        post("/projection/*", (req, res) -> service.projection(req.splat()[0]), JsonUtil.json());
-
+        
         exception(NotFoundException.class, (e, req, res) -> {
             res.status(404);
             res.body("Resource not found");

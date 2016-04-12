@@ -149,16 +149,4 @@ public class BoxKeyService {
         keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "20", "56F6BB47")));
         return keys;
     }
-
-    public Projection projection(ProjectionRequest request) throws DecoderException, NoSuchAlgorithmException {
-        return new Projection(request);
-    }
-
-    public Projection projection(String json) throws JsonPojoMismatchException, DecoderException, NoSuchAlgorithmException {
-        ProjectionRequest request = new Gson().fromJson(json, ProjectionRequest.class);
-        if (request == null) {
-            throw new JsonPojoMismatchException();
-        }
-        return projection(request);//use above method
-    }
 }

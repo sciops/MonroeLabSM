@@ -42,21 +42,24 @@ public class Projection {
         
         //temp vars to hold values for each seed. most are the same for all keys
         byte[] serial = new byte[13];
-        byte[] operator = B58.hexToBytes(request.getOperatorNo());
-        byte[] heading = B58.hexToBytes(request.getGpsHeading());//future implementation
-        byte[] gpsx = B58.hexToBytes(request.getGpsLocX());//future implementation
-        byte[] gpsy = B58.hexToBytes(request.getGpsLocY());//future implementation
-        byte[] crypto = B58.toByteArray(request.getCryptoCurrencyType());//i.e. BTC
-        byte[] fiat = B58.toByteArray(request.getFiatCurrencyType());//i.e. USD
+        byte[] operator = B58.hexToBytes(request.getOperator());
+        byte[] heading = B58.hexToBytes(request.getHeading());//future implementation
+        byte[] gpsx = B58.hexToBytes(request.getGpsx());//future implementation
+        byte[] gpsy = B58.hexToBytes(request.getGpsy());//future implementation
+        byte[] crypto = B58.hexToBytes(request.getCrypto());//i.e. BTC
+        byte[] fiat = B58.hexToBytes(request.getFiat());//i.e. USD
         byte[] denomination = new byte[1];
         byte[] time = new byte[4];
         
         //make seeds from the request. we'll need a key for every serial, denomination and time value
-        for (byte denom_B : request.getDenominations()) {
-            denomination[0]=denom_B;
-            for (int i = request.getDispenseStart(); i <= request.getDispenseEnd(); i += request.getDispenseFrequency()) {
+        int start = Bitwise.getInt(B58.hexToBytes(request.getStart()),0);
+        int end = Bitwise.getInt(B58.hexToBytes(request.getEnd()),0);
+        int freq = Bitwise.getInt(B58.hexToBytes(request.getFrequency()),0);
+        for (String denomination_s : request.getDenominations()) {
+            denomination=B58.hexToBytes(denomination_s);
+            for (int i = start; i <= end; i += freq) {
                 time = B58.toByteArray(i);
-                for (String s : request.getSerialNo()) {
+                for (String s : request.getSerials()) {
                     serial = B58.hexToBytes(s);
                     Seed seed = new Seed(serial,operator,heading,gpsx,gpsy,crypto,fiat,denomination,time);
                     BoxKey key = new BoxKey(seed);

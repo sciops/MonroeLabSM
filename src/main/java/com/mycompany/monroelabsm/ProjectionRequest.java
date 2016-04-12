@@ -23,7 +23,9 @@
  */
 package com.mycompany.monroelabsm;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import org.apache.commons.codec.DecoderException;
 
 /**
  *
@@ -38,98 +40,83 @@ public class ProjectionRequest {
     private String heading;//future implementation
     private String gpsx;//future implementation
     private String gpsy;//future implementation
-    private short crypto;//i.e. BTC
-    private short fiat;//i.e. USD
-    private List<Byte> denominations;
-    private int start;//start time for dispensing
-    private int dispenseEnd;//end time for dispensing
-    private int frequency;//number of keys per time period
+    private String crypto;//i.e. BTC
+    private String fiat;//i.e. USD
+    private List<String> denominations;
+    private String start;//start time for dispensing
+    private String end;//end time for dispensing
+    private String frequency;//number of keys per time period
+    
+    public ProjectionRequest(String serial, String operator, String denomination, String start, String end) throws NoSuchAlgorithmException, DecoderException{
+        //using default values hard-coded into the Seed class
+        Seed seed = new Seed(serial,operator,denomination,start);
+        this.serials.add(serial);
+        this.operator=operator;
+        this.heading=seed.getHeadingString();
+        this.crypto=seed.getCryptoString();
+        this.fiat=seed.getFiatString();
+        this.denominations.add(denomination);
+        this.start=start;
+        this.end=end;
+        this.frequency="05a0";//1440(dec) minutes in a day
+    }
 
-    public List<String> getSerialNo() {
+    public ProjectionRequest(List<String> serials, String operator, String heading, String gpsx, String gpsy, String crypto, String fiat, List<String> denominations, String start, String end, String frequency) {
+        this.serials = serials;
+        this.operator = operator;
+        this.heading = heading;
+        this.gpsx = gpsx;
+        this.gpsy = gpsy;
+        this.crypto = crypto;
+        this.fiat = fiat;
+        this.denominations = denominations;
+        this.start = start;
+        this.end = end;
+        this.frequency = frequency;
+    }
+
+    public List<String> getSerials() {
         return serials;
     }
 
-    public void setSerialNo(List<String> serialNo) {
-        this.serials = serialNo;
-    }
-
-    public String getOperatorNo() {
+    public String getOperator() {
         return operator;
     }
 
-    public void setOperatorNo(String operatorNo) {
-        this.operator = operatorNo;
-    }
-
-    public String getGpsHeading() {
+    public String getHeading() {
         return heading;
     }
 
-    public void setGpsHeading(String gpsHeading) {
-        this.heading = gpsHeading;
-    }
-
-    public String getGpsLocX() {
+    public String getGpsx() {
         return gpsx;
     }
 
-    public void setGpsLocX(String gpsLocX) {
-        this.gpsx = gpsLocX;
-    }
-
-    public String getGpsLocY() {
+    public String getGpsy() {
         return gpsy;
     }
 
-    public void setGpsLocY(String gpsLocY) {
-        this.gpsy = gpsLocY;
-    }
-
-    public short getCryptoCurrencyType() {
+    public String getCrypto() {
         return crypto;
     }
 
-    public void setCryptoCurrencyType(short cryptoCurrencyType) {
-        this.crypto = cryptoCurrencyType;
-    }
-
-    public short getFiatCurrencyType() {
+    public String getFiat() {
         return fiat;
     }
 
-    public void setFiatCurrencyType(short fiatCurrencyType) {
-        this.fiat = fiatCurrencyType;
-    }
-
-    public List<Byte> getDenominations() {
+    public List<String> getDenominations() {
         return denominations;
     }
 
-    public void setDenominations(List<Byte> denominations) {
-        this.denominations = denominations;
-    }
-
-    public int getDispenseStart() {
+    public String getStart() {
         return start;
     }
 
-    public void setDispenseStart(int dispenseStart) {
-        this.start = dispenseStart;
+    public String getEnd() {
+        return end;
     }
 
-    public int getDispenseEnd() {
-        return dispenseEnd;
-    }
-
-    public void setDispenseEnd(int dispenseEnd) {
-        this.dispenseEnd = dispenseEnd;
-    }
-
-    public int getDispenseFrequency() {
+    public String getFrequency() {
         return frequency;
     }
 
-    public void setDispenseFrequency(int dispenseFrequency) {
-        this.frequency = dispenseFrequency;
-    }   
 }
