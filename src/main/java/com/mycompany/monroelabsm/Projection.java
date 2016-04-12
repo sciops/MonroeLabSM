@@ -37,7 +37,6 @@ public class Projection {
 
     //list of keys generated
     private List<BoxKey> keys;
-    private List<Seed> seeds;
 
     public Projection(ProjectionRequest request) throws DecoderException, NoSuchAlgorithmException {
         
@@ -53,14 +52,13 @@ public class Projection {
         byte[] time = new byte[4];
         
         //make seeds from the request. we'll need a key for every serial, denomination and time value
-        for (Byte denom_B : request.getDenominations()) {
-            denom[0]=denom_B.byteValue();
+        for (byte denom_B : request.getDenominations()) {
+            denom[0]=denom_B;
             for (int i = request.getDispenseStart(); i <= request.getDispenseEnd(); i += request.getDispenseFrequency()) {
                 time = B58.toByteArray(i);
                 for (String s : request.getSerialNo()) {
                     serial = B58.hexToBytes(s);
                     Seed seed = new Seed(serial,opnum,gpsHeading,gpsLocX,gpsLocY,cryptoCurrencyType,fiatCurrencyType,denom,time);
-                    seeds.add(seed);
                     BoxKey key = new BoxKey(seed);
                     keys.add(key);
                 }
@@ -70,11 +68,5 @@ public class Projection {
 
     public List<BoxKey> getKeys() {
         return keys;
-    }
-
-    public List<Seed> getSeeds() {
-        return seeds;
-    }
-    
-    
+    }    
 }

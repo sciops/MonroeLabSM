@@ -42,18 +42,6 @@ public class BoxKeyService {
     //private static final AtomicLong counter = new AtomicLong();
     //storing all keys here in memory until user authentication / persistence is implemented
     private static List<BoxKey> keys;
-    //this BoxKey seed will store the default values for all the values that stay the same
-    private static Seed protoSeed;
-
-    static {
-        try {
-            keys = reset();
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(BoxKeyService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DecoderException ex) {
-            Logger.getLogger(BoxKeyService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     public List<BoxKey> findAllBoxKeys() {
         return keys;
@@ -139,8 +127,8 @@ public class BoxKeyService {
         return keys;
     }
 
-    //this method will clear the memory and insert hard-coded values for testing the front-end
-    public static List<BoxKey> reset() throws NoSuchAlgorithmException, DecoderException {
+    //this method will clear the memory and insert hard-coded values for testing the CRUD front-end
+    public List<BoxKey> reset() throws NoSuchAlgorithmException, DecoderException {
         if (keys != null) {
             keys.clear();
         }
@@ -162,15 +150,15 @@ public class BoxKeyService {
         return keys;
     }
 
-    public static List<BoxKey> projection(ProjectionRequest request) {
-        return keys;
+    public Projection projection(ProjectionRequest request) throws DecoderException, NoSuchAlgorithmException {
+        return new Projection(request);
     }
 
-    public static List<BoxKey> projection(String json) throws JsonPojoMismatchException {
+    public Projection projection(String json) throws JsonPojoMismatchException, DecoderException, NoSuchAlgorithmException {
         ProjectionRequest request = new Gson().fromJson(json, ProjectionRequest.class);
         if (request == null) {
             throw new JsonPojoMismatchException();
         }
-        return projection(request);
+        return projection(request);//use above method
     }
 }
