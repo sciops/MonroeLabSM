@@ -31,13 +31,15 @@ THE SOFTWARE.
             <div class="panel-heading"><span class="lead">Projection Form</span></div>
             <div class="formcontainer">
                 <form ng-submit="vm.onSubmit()" name="vm.form" novalidate>
-                    <tab ng-repeat="tab in vm.tabs"
-                         heading="{{tab.title}}"
-                         active="tab.active"
-                         disable="tab.disabled">
-                        <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options">
-                        </formly-form>
-                    </tab>
+                    <tabset>
+                        <tab ng-repeat="tab in vm.tabs"
+                             heading="{{tab.title}}"
+                             active="tab.active"
+                             disable="tab.disabled">
+                            <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options">
+                            </formly-form>
+                        </tab>
+                    </tabset>
                 </form>
                 <hr />
                 <h2>Model Value</h2>

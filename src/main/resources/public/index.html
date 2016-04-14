@@ -1,163 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <!-- update this base tag to your deployment path context -->
-        <!-- https://docs.angularjs.org/error/$location/nobase -->
-        <base href="/"> 
+<!--
+The MIT License
 
+Copyright 2016 Stephen R. Williams.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+
+
+<!-- Adapted from https://github.com/madhudskumar/uiRouter-example -->
+<html>
+    <head>
+        <base href="/"> 
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="description" content="MonroeBox Services Corp.">
+        <meta name="author" content="Stephen R. Williams">
+        <link rel="icon" href="favicon.ico">
         <title>MonroeBox</title>
-
-        <!-- Twitter bootstrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.2.0/metisMenu.min.css">
-        <!-- DataTables CSS --> 
-        <link href="css/plugins/social-buttons.css" rel="stylesheet">
-        <!-- Custom CSS --> 
-        <link href="css/sb-admin-2.css" rel="stylesheet">
-        <!-- Custom Fonts --> 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-        <link href="css/app.css" rel="stylesheet" />
-        <style>
-            .username.ng-valid {
-                background-color: lightgreen;
-            }
-            .username.ng-dirty.ng-invalid-required {
-                background-color: red;
-            }
-            .username.ng-dirty.ng-invalid-minlength {
-                background-color: yellow;
-            }
-            .email.ng-valid {
-                background-color: lightgreen;
-            }
-            .email.ng-dirty.ng-invalid-required {
-                background-color: red;
-            }
-            .email.ng-dirty.ng-invalid-email {
-                background-color: yellow;
-            }
-        </style>
-
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
-        <!-- jQuery Version 1.11.0 --> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <!-- Bootstrap Core JavaScript --> 
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        <!-- Metis Menu Plugin JavaScript --> 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.2.0/metisMenu.min.js"></script>
-        <!-- Custom Theme JavaScript --> 
-        <script src="js/sb-admin-2.js"></script>
-        <!-- apiCheck is used by formly to validate its api -->
-        <script src="//npmcdn.com/api-check@latest/dist/api-check.js"></script>
-        <!-- Angular.js -->
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-resource.min.js"></script>   
-        <!-- Angular-UI Bootstrap has tabs directive we want -->
-        <script src="//npmcdn.com/angular-ui-bootstrap@latest/dist/ui-bootstrap-tpls.js"></script>
-        <!-- This is the latest version of formly core. -->
-        <script src="//npmcdn.com/angular-formly@latest/dist/formly.js"></script>
-        <!-- This is the latest version of formly bootstrap templates -->
-        <script src="//npmcdn.com/angular-formly-templates-bootstrap@latest/dist/angular-formly-templates-bootstrap.js"></script>
-
-        <!-- App routing -->
-        <script src = "js/app/app.js" ></script>
-        <script src = "js/app/projection.js" ></script>
-        <script src = "js/controller/controllers.js"></script>
-        <script src = "js/service/service.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
+              integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" 
+              integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="css/plugins/social-buttons.css"/>
+        <link rel="stylesheet" href="css/sb-admin-2.css"/>
+        <link rel="stylesheet" href="css/app.css"/>
     </head>
-    <body>
-        <div ng-app="ngRouteExample">
-            <div ng-controller="MainController">
-                <div id="wrapper">
-                    <!-- Navigation -->
-                    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            <div class="navbar-inner">
-                                <div class="container">
-                                    <a class="brand" href="/"> <img src="images/cube-logo.jpg" height="50" width="200"></a>
-                                </div>
-                            </div>
-                        </div>
-                        <ul class="nav navbar-top-links navbar-right">
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a></li>
-                                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <div class="navbar-default sidebar" role="navigation">
-                            <div class="sidebar-nav navbar-collapse">
-                                <ul class="nav" id="side-menu">
-                                    <li class="sidebar-search">
-                                        <div class="input-group custom-search-form">
-                                            <input type="text" class="form-control" placeholder="Search...">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" type="button">
-                                                    <i class="fa fa-search"></i>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </li>
-                                    <li><a class="active" href="services"><i class="fa fa-tags fa-fw"></i>Services</a></li>
-                                    <li><a class="active" href="contact"><i class="fa fa-phone fa-fw"></i>Contact</a></li>
-                                    <li><a class="active" href="about"><i class="fa fa-info fa-fw"></i>About</a></li>
-                                    <li><a class="active" href="input"><i class="fa fa-book fa-fw"></i>CRUD Input Form</a></li>
-                                    <li><a class="active" href="projection"><i class="fa fa-book fa-fw"></i>Projection Form</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </nav>
+    <body style="padding-top: 70px;" ng-app="app">
+        
+        <!--NAVBAR from https://getbootstrap.com/examples/navbar-fixed-top/-->
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/"><img src="images/cube-sm.png"/></a>
+                </div><!-- /.nav-header -->
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#services"><i class="fa fa-tags fa-fw"></i>Services</a></li>
+                        <li><a href="#contact"><i class="fa fa-phone fa-fw"></i>Contact</a></li>
+                        <li><a href="#about"><i class="fa fa-info fa-fw"></i>About</a></li>
+                        <li><a href="#input"><i class="fa fa-book fa-fw"></i>CRUD Input Form</a></li>
+                        <li><a href="#projection"><i class="fa fa-calendar fa-fw"></i>Projection Form</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="login">Login</a></li>
+                        <li><a href="register">Register</a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div><!-- /container -->
+        </nav><!-- /nav -->
 
-                    <!-- Content -->
-                    <div id="page-wrapper">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <h1><span class="text-danger">Mon</span>roe Box Services Corp.</h1>
-                            </div>
-                            <div class="row">
-                                <br>
-                                <div id="main">
-                                    <!--Page injections go here -->
-                                    <div ng-view></div>
-                                </div>
-                                <hr />
-                                <!--debug text for angular routing
-                                <pre>$location.path() = {{$location.path()}}</pre>
-                                <pre>$route.current.templateUrl = {{$route.current.templateUrl}}</pre>
-                                <pre>$route.current.params = {{$route.current.params}}</pre>
-                                <pre>$route.current.scope.name = {{$route.current.scope.name}}</pre>
-                                <pre>$routeParams = {{$routeParams}}</pre>-->
-                            </div>
-                        </div>
-                    </div>
+        <!--CONTENT-->
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1><span class="text-danger">Monroe</span>Box Services Corp.</h1>
                 </div>
             </div>
+            <div class="row">
+                <br>
+                <!--Page injections go here -->
+                <div ui-view></div>
+                <hr />
+                <!--debug text for angular routing
+                <pre>$location.path() = {{$location.path()}}</pre>
+                <pre>$route.current.templateUrl = {{$route.current.templateUrl}}</pre>
+                <pre>$route.current.params = {{$route.current.params}}</pre>
+                <pre>$route.current.scope.name = {{$route.current.scope.name}}</pre>
+                <pre>$routeParams = {{$routeParams}}</pre>-->
+            </div>
         </div>
+
+        <!--SCRIPTS-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" 
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+        <script>
+                            var app = angular.module('app', ['ui.router']);
+
+                            app.config(function ($stateProvider, $urlRouterProvider) {
+                                $urlRouterProvider.otherwise("/services");
+
+                                $stateProvider
+                                        .state('services', {
+                                            url: '/services',
+                                            templateUrl: 'pages/services.html'
+                                        })
+                                        .state('contact', {
+                                            url: '/contact',
+                                            templateUrl: 'pages/contact.html'
+                                        })
+                                        .state('about', {
+                                            url: '/about',
+                                            templateUrl: 'pages/about.html'
+                                        })
+                                        .state('input', {
+                                            url: '/input',
+                                            templateUrl: 'pages/input.html'
+                                        })
+                                        .state('projection', {
+                                            url: '/projection',
+                                            templateUrl: 'pages/projection.html'
+                                        })
+                                        .state('state1.list', {
+                                            url: '/list',
+                                            templateUrl: 'templates/state1.list.html',
+                                            controller: function ($scope) {
+                                                $scope.items = ["a", "list", "of", "items"];
+                                            }
+                                        })
+                                        .state('state2', {
+                                            url: "/state2",
+                                            templateUrl: "templates/state2.html"
+                                        })
+                                        .state('state2.list', {
+                                            url: "/list",
+                                            templateUrl: "templates/state2.list.html",
+                                            controller: function ($scope) {
+                                                $scope.things = ["A", "Set", "Of", "Things"];
+                                            }
+                                        });
+                            })
+        </script>
     </body>
 </html>
