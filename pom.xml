@@ -4,7 +4,7 @@
 
     <groupId>com.mycompany</groupId>
     <artifactId>MonroeLabSM</artifactId>
-    <version>1.006-SNAPSHOT</version>
+    <version>1.007-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>MonroeLabSM</name>

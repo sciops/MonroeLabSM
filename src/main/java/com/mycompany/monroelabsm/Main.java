@@ -23,7 +23,7 @@ import static spark.Spark.staticFileLocation;
 import spark.servlet.SparkApplication;
 
 public class Main implements SparkApplication {
-    final String VERSION = "v1.006";
+    final String VERSION = "v1.007";
     //must move all verbs to init method, out of main
     @Override
     public void init() {

@@ -5,7 +5,7 @@
 
   var app = angular.module('projectionApp', ['formly', 'formlyBootstrap', 'ui.bootstrap']);
 
-  app.controller('MainCtrl', function MainCtrl(formlyVersion) {
+  app.controller('ProjectionController', function ProjectionController(formlyVersion) {
     var vm = this;
     // funcation assignment
     vm.onSubmit = onSubmit;

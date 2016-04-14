@@ -15,7 +15,7 @@
                         $scope.message = 'SUBMITTED!';
                         //code here to actually submit the boxkey JSON somewhere
                     }
-                    
+
                     var self = this;
                     self.key = {id: null, serial: '', opnum: '', datetime: ''};
                     self.keys = [];
@@ -168,6 +168,10 @@
                         .when('/input', {
                             templateUrl: 'pages/input.html',
                             controller: 'inputController'
+                        })
+                        .when('/projection', {
+                            templateUrl: 'pages/projection.html',
+                            controller: 'projectionController'
                         });
                 // configure html5 to get links working on jsfiddle
                 $locationProvider.html5Mode({enabled: true});
@@ -188,7 +192,7 @@
                                     );
                         },
                         createBoxKey: function (key) {
-                            var url = '/key/'+ JSON.stringify(key);
+                            var url = '/key/' + JSON.stringify(key);
                             return $http.post(url)
                                     .then(
                                             function (response) {
@@ -201,7 +205,7 @@
                                     );
                         },
                         updateBoxKey: function (key) {
-                            var url = '/key/'+ JSON.stringify(key);
+                            var url = '/key/' + JSON.stringify(key);
                             return $http.put(url)
                                     .then(
                                             function (response) {
@@ -214,7 +218,7 @@
                                     );
                         },
                         deleteBoxKey: function (id) {
-                            var url = '/key/'+ id;
+                            var url = '/key/' + id;
                             return $http.delete(url)
                                     .then(
                                             function (response) {
