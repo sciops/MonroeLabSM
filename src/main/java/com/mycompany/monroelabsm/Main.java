@@ -23,11 +23,12 @@ import static spark.Spark.staticFileLocation;
 import spark.servlet.SparkApplication;
 
 public class Main implements SparkApplication {
-    final String VERSION = "v1.005";
+    final String VERSION = "v1.006";
     //must move all verbs to init method, out of main
     @Override
     public void init() {
         BoxKeyController bkc = new BoxKeyController(new BoxKeyService());
+        ProjectionController pc = new ProjectionController(new ProjectionService());
         get("/", (req, res) -> {
             res.redirect("/index.html");
             return null;
