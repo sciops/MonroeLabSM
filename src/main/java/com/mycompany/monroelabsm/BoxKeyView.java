@@ -32,20 +32,20 @@ import java.util.List;
  * Immutable response for easy/proper JSON parsing of values into hex strings
  */
 public class BoxKeyView {
-    SeedView seedView;
+    SeedView seed;
     String digest;
 
     public BoxKeyView(BoxKey bk) {
-        this.seedView = new SeedView(bk.getSeed());
-        this.digest = new String(bk.getDigestString());
+        this.seed = new SeedView(bk.getSeed());
+        this.digest = bk.getDigestString();
     }
 
     public SeedView getSeedView() {
-        return seedView;
+        return this.seed;
     }
 
     public String getDigest() {
-        return digest;
+        return this.digest;
     }
 
 }
