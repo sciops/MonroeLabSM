@@ -17,7 +17,7 @@
                     }
 
                     var self = this;
-                    self.key = {id: null, serial: '', opnum: '', datetime: ''};
+                    self.key = { seed: '', digest: ''};
                     self.keys = [];
                     self.fetchAllBoxKeys = function () {
                         BoxKeyService.fetchAllBoxKeys()
@@ -92,6 +92,7 @@
                         $scope.myForm.$setPristine(); //reset Form
                     };
                 }])
+            /*
             .controller('MainController', function ($scope, $route, $routeParams, $location) {
                 $scope.$route = $route;
                 $scope.$location = $location;
@@ -123,7 +124,7 @@
                 $scope.message = 'Look! I am an about page.';
                 $scope.name = "contactController";
                 $scope.params = $routeParams;
-            })
+            })*/
             .controller('inputController', function ($scope, $routeParams) {
                 $scope.message = 'Please click Submit above.';
                 $scope.name = "inputController";
@@ -137,6 +138,8 @@
                     //code here to actually submit the boxkey JSON somewhere
                 }
             })
+            
+    /*
             .config(function ($routeProvider, $locationProvider) {
                 $routeProvider
                         .when('/home', {
@@ -175,7 +178,8 @@
                         });
                 // configure html5 to get links working on jsfiddle
                 $locationProvider.html5Mode({enabled: true});
-            })
+            })*/
+    
             .factory('BoxKeyService', ['$http', '$q', function ($http, $q) {
                     return {
                         fetchAllBoxKeys: function () {

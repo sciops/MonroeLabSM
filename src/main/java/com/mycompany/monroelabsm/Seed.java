@@ -202,9 +202,17 @@ public class Seed {
     public byte[] getDenomination() {
         return denomination;
     }
+    
+    public String getDenominationString() {
+        return B58.bytesToHex(denomination);
+    }
 
     public byte[] getTime() {
         return time;
+    }
+    
+    public String getTimeString() {
+        return B58.bytesToHex(time);
     }
 
     public void setSerial(byte[] serial) {

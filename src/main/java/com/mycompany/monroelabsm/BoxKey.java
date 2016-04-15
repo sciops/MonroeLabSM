@@ -33,6 +33,8 @@ package com.mycompany.monroelabsm;
  */
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BoxKey {
 
@@ -58,6 +60,19 @@ public class BoxKey {
     public Seed getSeed() {
         return this.seed;
     }
+    
+    public List<String> getSeedStrings() {
+        List<String> list = new ArrayList();
+        list.add(seed.getSerialString());
+        list.add(seed.getOperatorString());
+        list.add(seed.getHeadingString());
+        list.add(seed.getGpsxString());
+        list.add(seed.getGpsyString());
+        list.add(seed.getCryptoString());
+        list.add(seed.getDenominationString());
+        list.add(seed.getTimeString());
+        return list;
+    }
 
     private void setSeed(byte[] seed) throws NoSuchAlgorithmException {
         //TODO: validate this byte array first!
@@ -67,6 +82,10 @@ public class BoxKey {
 
     public byte[] getDigest() {
         return digest;
+    }
+    
+    public String getDigestString() {
+        return B58.bytesToHex(digest);
     }
 
     private void setDigest() throws NoSuchAlgorithmException {
@@ -94,4 +113,5 @@ public class BoxKey {
         }
         return true;
     }
+  
 }

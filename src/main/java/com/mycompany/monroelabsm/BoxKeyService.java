@@ -26,15 +26,13 @@ package com.mycompany.monroelabsm;
 /**
  *
  * @author Stephen R. Williams
- * 
+ *
  * This class performs the actions requested by the controller.
  */
 import com.google.gson.Gson;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.codec.DecoderException;
 
 public class BoxKeyService {
@@ -43,8 +41,17 @@ public class BoxKeyService {
     //storing all keys here in memory until user authentication / persistence is implemented
     private static List<BoxKey> keys;
 
-    public List<BoxKey> findAllBoxKeys() {
-        return keys;
+    public List<BoxKeyView> findAllBoxKeys() {
+        return keysToViews(this.keys);
+    }
+
+    public List<BoxKeyView> keysToViews(List<BoxKey> keys) {
+        List<BoxKeyView> views = new ArrayList();
+        if (keys == null) return views;
+        else for (BoxKey bk : keys) {
+            views.add(new BoxKeyView(bk));
+        }
+        return views;
     }
 
     //lookup the key by id
@@ -62,26 +69,26 @@ public class BoxKeyService {
         return this.findById(Long.parseLong(id_s));
     }
 
-    public List<BoxKey> findBySerial(String serial) {
+    public List<BoxKeyView> findBySerial(String serial) {
         List<BoxKey> foundKeys = null;
         for (BoxKey key : keys) {
             if (key.getSeed().getSerialString().equalsIgnoreCase(serial)) {
                 foundKeys.add(key);
             }
         }
-        return foundKeys;
+        return keysToViews(foundKeys);
     }//returns null if nothing found
 
-    public BoxKey saveBoxKey(BoxKey key) throws AlreadyExistsException {
+    public BoxKeyView saveBoxKey(BoxKey key) throws AlreadyExistsException {
         //check for pre-existing key first
         if (this.keys.contains(key)) {
             throw new AlreadyExistsException();
         }
         keys.add(key);
-        return key;
+        return new BoxKeyView(key);
     }
 
-    public BoxKey saveBoxKey(String json) throws AlreadyExistsException, JsonPojoMismatchException {
+    public BoxKeyView saveBoxKey(String json) throws AlreadyExistsException, JsonPojoMismatchException {
         //convert string json to boxkey and then save it with previous method.
         BoxKey key = new Gson().fromJson(json, BoxKey.class);
         if (key == null) {
@@ -90,15 +97,15 @@ public class BoxKeyService {
         return saveBoxKey(key);
     }
 
-    public BoxKey updateBoxKey(BoxKey key) throws NotFoundException {
+    public BoxKeyView updateBoxKey(BoxKey key) throws NotFoundException {
         if (!this.keys.contains(key)) {
             throw new NotFoundException();
         }
         keys.set(keys.indexOf(key), key);
-        return key;
+        return new BoxKeyView(key);
     }
 
-    public BoxKey updateBoxKey(String json) throws NotFoundException, JsonPojoMismatchException {
+    public BoxKeyView updateBoxKey(String json) throws NotFoundException, JsonPojoMismatchException {
         BoxKey key = new Gson().fromJson(json, BoxKey.class);
         if (key == null) {
             throw new JsonPojoMismatchException();
@@ -106,7 +113,7 @@ public class BoxKeyService {
         return updateBoxKey(key);
     }
 
-    public BoxKey deleteBoxKeyById(long id) throws NotFoundException, NoSuchAlgorithmException {
+    public BoxKeyView deleteBoxKeyById(long id) throws NotFoundException, NoSuchAlgorithmException {
         BoxKey deletedKey = null;
         for (BoxKey key : keys) {
             if (key.hashCode() == id) {
@@ -114,21 +121,21 @@ public class BoxKeyService {
                 keys.remove(key);
             }
         }
-        return deletedKey;
+        return new BoxKeyView(deletedKey);
     }
 
     //parse id and use the other method
-    public BoxKey deleteBoxKeyById(String id_s) throws NotFoundException, NoSuchAlgorithmException {
+    public BoxKeyView deleteBoxKeyById(String id_s) throws NotFoundException, NoSuchAlgorithmException {
         return this.deleteBoxKeyById(Long.parseLong(id_s));
     }
 
-    public List<BoxKey> deleteAllBoxKeys() {
+    public List<BoxKeyView> deleteAllBoxKeys() {
         keys.clear();
-        return keys;
+        return keysToViews(keys);
     }
 
     //this method will clear the memory and insert hard-coded values for testing the CRUD front-end
-    public List<BoxKey> reset() throws NoSuchAlgorithmException, DecoderException {
+    public List<BoxKeyView> reset() throws NoSuchAlgorithmException, DecoderException {
         if (keys != null) {
             keys.clear();
         }
@@ -147,6 +154,6 @@ public class BoxKeyService {
         keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "5", "56F6BB47")));
         keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "10", "56F6BB47")));
         keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "20", "56F6BB47")));
-        return keys;
+        return keysToViews(keys);
     }
 }
