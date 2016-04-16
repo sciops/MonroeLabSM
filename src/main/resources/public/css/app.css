@@ -37,6 +37,8 @@ body, .form-control{
   box-shadow: 0 0 30px black;
 }
 
+/*this defines the width of edit/delete buttons*/
 .custom-width {
-    width: 80px !important;
+    width: 40px !important;
+    height: 40px !important;
 }
