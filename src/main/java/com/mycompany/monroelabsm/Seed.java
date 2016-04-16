@@ -13,6 +13,7 @@ package com.mycompany.monroelabsm;
  * components in byte arrays, then concats them together into a larger array
  * when requested. The seed used in the SHA algo is a 32-byte/256-bit number.
  */
+import java.nio.ByteBuffer;
 import java.security.NoSuchAlgorithmException;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.lang.ArrayUtils;
@@ -129,18 +130,20 @@ public class Seed {
         this(serial, operator, "66", "66", "66", "01", "0348", denomination, time);
     }
 
+    //http://stackoverflow.com/questions/4827622/copy-several-byte-arrays-to-one-big-byte-array
     public byte[] getSeed() {
-        byte[] seed = new byte[0];
-        seed = (byte[]) ArrayUtils.addAll(seed, serial);
-        seed = (byte[]) ArrayUtils.addAll(seed, operator);
-        seed = (byte[]) ArrayUtils.addAll(seed, heading);
-        seed = (byte[]) ArrayUtils.addAll(seed, gpsx);
-        seed = (byte[]) ArrayUtils.addAll(seed, gpsy);
-        seed = (byte[]) ArrayUtils.addAll(seed, crypto);
-        seed = (byte[]) ArrayUtils.addAll(seed, fiat);
-        seed = (byte[]) ArrayUtils.addAll(seed, denomination);
-        seed = (byte[]) ArrayUtils.addAll(seed, time);
-        return seed;
+        byte[] seed = null;
+        ByteBuffer bb = ByteBuffer.wrap(seed);
+        bb.put(serial);
+        bb.put(operator);
+        bb.put(heading);
+        bb.put(gpsx);
+        bb.put(gpsy);
+        bb.put(crypto);
+        bb.put(fiat);
+        bb.put(denomination);
+        bb.put(time);
+        return bb.array();
     }
 
     public byte[] getSerial() {
