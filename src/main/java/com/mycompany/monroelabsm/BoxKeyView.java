@@ -23,8 +23,6 @@
  */
 package com.mycompany.monroelabsm;
 
-import java.util.List;
-
 /**
  *
  * @author Stephen R. Williams
@@ -32,12 +30,17 @@ import java.util.List;
  * Immutable response for easy/proper JSON parsing of values into hex strings
  */
 public class BoxKeyView {
-    SeedView seed;
-    String digest;
+
+    private SeedView seed;
+    private String digest;
+    private String publickey;//this is a Base58Check encoded String commonly used to represent bitcoin addresses
+    private String privatekey;//this is the private key
 
     public BoxKeyView(BoxKey bk) {
         this.seed = new SeedView(bk.getSeed());
         this.digest = bk.getDigestString();
+        this.publickey = bk.getPublicKey();
+        this.privatekey = bk.getPrivateKey();
     }
 
     public SeedView getSeedView() {
@@ -48,4 +51,11 @@ public class BoxKeyView {
         return this.digest;
     }
 
+    public String getPublicKey() {
+        return publickey;
+    }
+
+    public String getPrivateKey() {
+        return privatekey;
+    }
 }

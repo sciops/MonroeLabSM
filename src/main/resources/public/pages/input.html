@@ -14,8 +14,9 @@
                         <th>Operator</th>
                         <th>Denomination</th>
                         <th>Date/Time</th>
-                        <th>Digest</th>
-                        <th width="20%"></th>
+                        <th>Public Key</th>
+                        <th align="center">Edit</th>
+                        <th align="center">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,10 +25,9 @@
                         <td><span ng-bind="key.seed.operator"></span></td>
                         <td><span ng-bind="key.seed.denomination"></span></td>
                         <td><span ng-bind="key.seed.time"></span></td>
-                        <td><span ng-bind="key.digest"></span></td>
+                        <td><span ng-bind="key.publickey"></span></td>
                         <td><button type="button" ng-click="ctrl.edit(key.digest)" class="btn btn-success custom-width"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
                         <td><button type="button" ng-click="ctrl.remove(key.id)" class="btn btn-danger custom-width"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-                        <td width="20%"></td>
                     </tr>
                 </tbody>
             </table>

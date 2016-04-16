@@ -38,8 +38,10 @@ import java.util.List;
 
 public class BoxKey {
 
-    private Seed seed;
-    private byte[] digest = new byte[32];
+    private Seed seed;//this Seed object contains all the values that go into a public key hash
+    private byte[] digest = new byte[32];//this is the digest of a SHA256 hash function, aka public key
+    private String publicKey;//this is a Base58Check encoded String commonly used to represent bitcoin addresses
+    private String privateKey;//this is the private key
 
     //copy constructor
     public BoxKey(BoxKey key) throws NoSuchAlgorithmException {
@@ -89,9 +91,20 @@ public class BoxKey {
     }
 
     private void setDigest() throws NoSuchAlgorithmException {
+        byte[] seed = this.seed.getSeed();
         MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(this.seed.getSeed());
+        md.update(seed);
         this.digest = md.digest();
+        this.publicKey = B58.encode(seed, (byte)0);
+        this.privateKey = B58.encode(seed, (byte)-128);
+    }
+
+    public String getPublicKey() {
+        return publicKey;
+    }
+
+    public String getPrivateKey() {
+        return privateKey;
     }
 
     @Override

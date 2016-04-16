@@ -22,9 +22,19 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class B58 {
 
     public static String encode(byte[] toEncode, byte prefix) {
-
+        //TODO:validate toEncode for correct size
+        //TODO:implement an enum for this parameter instead.
         //validate prefix against known prefixes
-        byte[] validPrefixes = {0, 5, 21, 52, -128, 111, -60, -17};
+        byte[] validPrefixes = {
+            0, //Bitcoin pubkey hash
+            5, //Bitcoin script hash
+            21, //Bitcoin (compact) public key (proposed)
+            52, //Namecoin pubkey hash
+            -128, //Private key
+            111, //Bitcoin testnet pubkey hash
+            -60, //Bitcoin testnet script hash
+            -17 //Testnet Private key
+        };
         Arrays.sort(validPrefixes);
         if (Arrays.binarySearch(validPrefixes, prefix) < 0) {//not found. see https://docs.oracle.com/javase/7/docs/api/java/util/Arrays.html
             return "Base58 error: Invalid address prefix byte specified.";

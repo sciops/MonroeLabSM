@@ -132,7 +132,7 @@ public class Seed {
 
     //http://stackoverflow.com/questions/4827622/copy-several-byte-arrays-to-one-big-byte-array
     public byte[] getSeed() {
-        byte[] seed = null;
+        byte[] seed = new byte[32];
         ByteBuffer bb = ByteBuffer.wrap(seed);
         bb.put(serial);
         bb.put(operator);
