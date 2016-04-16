@@ -102,52 +102,6 @@ THE SOFTWARE.
         integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
-        <script>
-                            var app = angular.module('app', ['ui.router']);
-
-                            app.config(function ($stateProvider, $urlRouterProvider) {
-                                $urlRouterProvider.otherwise("/services");
-
-                                $stateProvider
-                                        .state('services', {
-                                            url: '/services',
-                                            templateUrl: 'pages/services.html'
-                                        })
-                                        .state('contact', {
-                                            url: '/contact',
-                                            templateUrl: 'pages/contact.html'
-                                        })
-                                        .state('about', {
-                                            url: '/about',
-                                            templateUrl: 'pages/about.html'
-                                        })
-                                        .state('input', {
-                                            url: '/input',
-                                            templateUrl: 'pages/input.html'
-                                        })
-                                        .state('projection', {
-                                            url: '/projection',
-                                            templateUrl: 'pages/projection.html'
-                                        })
-                                        .state('state1.list', {
-                                            url: '/list',
-                                            templateUrl: 'templates/state1.list.html',
-                                            controller: function ($scope) {
-                                                $scope.items = ["a", "list", "of", "items"];
-                                            }
-                                        })
-                                        .state('state2', {
-                                            url: "/state2",
-                                            templateUrl: "templates/state2.html"
-                                        })
-                                        .state('state2.list', {
-                                            url: "/list",
-                                            templateUrl: "templates/state2.list.html",
-                                            controller: function ($scope) {
-                                                $scope.things = ["A", "Set", "Of", "Things"];
-                                            }
-                                        });
-                            })
-        </script>
+        <script src="js/app.js"></script>
     </body>
 </html>

@@ -12,30 +12,46 @@ package com.mycompany.monroelabsm;
  * Started with git clone of SparkTomcat by Leonan Luppi
  * https://github.com/leonanluppi/SparkTomcat
  * https://github.com/leonanluppi/SparkTomcat/blob/master/src/main/java/com/sparkjava/tomcat/Main.java
- * 
- * This main class gets things started. 
- * Netbeans makes it really easy to deploy to AWS Tomcat servers (click of the run button) but the process is a little clunkier for far-jars.
- * So I am deploying this on a Tomcat server instead of using Spark Framework's embedded Jetty.
- * I'm also including a pretty basic AngularJS front-end
+ *
+ * This main class gets things started. Netbeans makes it really easy to deploy
+ * to AWS Tomcat servers (click of the run button) but the process is a little
+ * clunkier for far-jars. So I am deploying this on a Tomcat server instead of
+ * using Spark Framework's embedded Jetty. I'm also including a pretty basic
+ * AngularJS front-end
  */
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.codec.DecoderException;
 import static spark.Spark.*;
 import static spark.Spark.staticFileLocation;
 import spark.servlet.SparkApplication;
 
 public class Main implements SparkApplication {
+
     final String VERSION = "v1.007";
+
     //must move all verbs to init method, out of main
     @Override
     public void init() {
-        BoxKeyController bkc = new BoxKeyController(new BoxKeyService());
+        BoxKeyService bks = new BoxKeyService();
+        BoxKeyController bkc = new BoxKeyController(bks);
         ProjectionController pc = new ProjectionController(new ProjectionService());
         get("/", (req, res) -> {
             res.redirect("/index.html");
             return null;
         });
-        get("/hello", (req, res) -> "Hello World. This is the /hello response in MonroeLabSM "+VERSION);
-        get("/hello/:name", (req, res) -> "Hello "+req.params(":name")+". This is the /hello response in MonroeLabSM. "+VERSION);
-        staticFileLocation("/public"); //http://sparkjava.com/documentation.html#static-files  
+        get("/hello", (req, res) -> "Hello World. This is the /hello response in MonroeLabSM " + VERSION);
+        get("/hello/:name", (req, res) -> "Hello " + req.params(":name") + ". This is the /hello response in MonroeLabSM. " + VERSION);
+        staticFileLocation("/public"); //http://sparkjava.com/documentation.html#static-files
+        
+        try {
+            bks.reset();
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DecoderException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public static void main(String[] args) {
