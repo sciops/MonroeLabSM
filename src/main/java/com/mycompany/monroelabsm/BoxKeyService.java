@@ -47,9 +47,12 @@ public class BoxKeyService {
 
     public List<BoxKeyView> keysToViews(List<BoxKey> keys) {
         List<BoxKeyView> views = new ArrayList();
-        if (keys == null) return views;
-        else for (BoxKey bk : keys) {
-            views.add(new BoxKeyView(bk));
+        if (keys == null) {
+            return views;
+        } else {
+            for (BoxKey bk : keys) {
+                views.add(new BoxKeyView(bk));
+            }
         }
         return views;
     }
@@ -77,6 +80,15 @@ public class BoxKeyService {
             }
         }
         return keysToViews(foundKeys);
+    }//returns null if nothing found
+
+    public BoxKeyView findByDigest(String digest) {
+        for (BoxKey key : keys) {
+            if (key.getDigestString().equalsIgnoreCase(digest)) {
+                return new BoxKeyView(key);
+            }
+        }
+        return null;
     }//returns null if nothing found
 
     public BoxKeyView saveBoxKey(BoxKey key) throws AlreadyExistsException {
@@ -113,7 +125,7 @@ public class BoxKeyService {
         return updateBoxKey(key);
     }
 
-    public BoxKeyView deleteBoxKeyById(long id) throws NotFoundException, NoSuchAlgorithmException {
+    public BoxKeyView deleteBoxKeyById(int id) throws NotFoundException, NoSuchAlgorithmException {
         BoxKey deletedKey = null;
         for (BoxKey key : keys) {
             if (key.hashCode() == id) {
@@ -124,9 +136,21 @@ public class BoxKeyService {
         return new BoxKeyView(deletedKey);
     }
 
-    //parse id and use the other method
+    //parse id and use the above method
     public BoxKeyView deleteBoxKeyById(String id_s) throws NotFoundException, NoSuchAlgorithmException {
-        return this.deleteBoxKeyById(Long.parseLong(id_s));
+        return this.deleteBoxKeyById(Integer.parseInt(id_s));
+    }
+
+    public BoxKeyView deleteBoxKeyByDigest(String digest) throws NoSuchAlgorithmException {
+        BoxKey deletedKey = null;
+        for (BoxKey key : keys) {
+            if (key.getDigestString().equalsIgnoreCase(digest)) {
+                deletedKey = new BoxKey(key);
+                keys.remove(key);
+                return new BoxKeyView(deletedKey);
+            }
+        }
+        return null;//not found
     }
 
     public List<BoxKeyView> deleteAllBoxKeys() {
