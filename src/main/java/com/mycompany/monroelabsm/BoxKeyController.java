@@ -54,7 +54,7 @@ public class BoxKeyController {
         //remove a key by id
         delete("/key/:digest", (req, res) -> {
             String digest = req.params(":digest");
-            BoxKeyView deletedKey = service.deleteBoxKeyByDigest(digest);
+            BoxKeyView deletedKey = service.deleteByDigest(digest);
             if (deletedKey != null) {
                 return deletedKey;
             }
@@ -62,7 +62,7 @@ public class BoxKeyController {
             return new ResponseError("404: No key with that id found");
         }, JsonUtil.json());
         //delete them all
-        delete("/keys", (req, res) -> service.deleteAllBoxKeys(), JsonUtil.json());
+        delete("/keys", (req, res) -> service.deleteAll(), JsonUtil.json());
         //reset the keys to hardcoded defaults
         get("/reset", (req, res) -> service.reset(), JsonUtil.json());
         post("/reset", (req, res) -> service.reset(), JsonUtil.json());

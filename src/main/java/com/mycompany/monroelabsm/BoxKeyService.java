@@ -91,6 +91,24 @@ public class BoxKeyService {
         return null;
     }//returns null if nothing found
 
+    public BoxKeyView findByPublicKey(String pubkey) {
+        for (BoxKey key : keys) {
+            if (key.getPublicKey().equalsIgnoreCase(pubkey)) {
+                return new BoxKeyView(key);
+            }
+        }
+        return null;
+    }//returns null if nothing found
+
+    public BoxKeyView findByPrivateKey(String privkey) {
+        for (BoxKey key : keys) {
+            if (key.getPrivateKey().equalsIgnoreCase(privkey)) {
+                return new BoxKeyView(key);
+            }
+        }
+        return null;
+    }//returns null if nothing found
+
     public BoxKeyView saveBoxKey(BoxKey key) throws AlreadyExistsException {
         //check for pre-existing key first
         if (this.keys.contains(key)) {
@@ -125,7 +143,7 @@ public class BoxKeyService {
         return updateBoxKey(key);
     }
 
-    public BoxKeyView deleteBoxKeyById(int id) throws NotFoundException, NoSuchAlgorithmException {
+    public BoxKeyView deleteById(int id) throws NotFoundException, NoSuchAlgorithmException {
         BoxKey deletedKey = null;
         for (BoxKey key : keys) {
             if (key.hashCode() == id) {
@@ -137,11 +155,11 @@ public class BoxKeyService {
     }
 
     //parse id and use the above method
-    public BoxKeyView deleteBoxKeyById(String id_s) throws NotFoundException, NoSuchAlgorithmException {
-        return this.deleteBoxKeyById(Integer.parseInt(id_s));
+    public BoxKeyView deleteById(String id_s) throws NotFoundException, NoSuchAlgorithmException {
+        return this.deleteById(Integer.parseInt(id_s));
     }
 
-    public BoxKeyView deleteBoxKeyByDigest(String digest) throws NoSuchAlgorithmException {
+    public BoxKeyView deleteByDigest(String digest) throws NoSuchAlgorithmException {
         BoxKey deletedKey = null;
         for (BoxKey key : keys) {
             if (key.getDigestString().equalsIgnoreCase(digest)) {
@@ -153,7 +171,31 @@ public class BoxKeyService {
         return null;//not found
     }
 
-    public List<BoxKeyView> deleteAllBoxKeys() {
+    public BoxKeyView deleteByPublicKey(String pubkey) throws NoSuchAlgorithmException {
+        BoxKey deletedKey = null;
+        for (BoxKey key : keys) {
+            if (key.getPublicKey().equalsIgnoreCase(pubkey)) {
+                deletedKey = new BoxKey(key);
+                keys.remove(key);
+                return new BoxKeyView(deletedKey);
+            }
+        }
+        return null;//not found
+    }
+
+    public BoxKeyView deleteByPrivateKey(String privkey) throws NoSuchAlgorithmException {
+        BoxKey deletedKey = null;
+        for (BoxKey key : keys) {
+            if (key.getPrivateKey().equalsIgnoreCase(privkey)) {
+                deletedKey = new BoxKey(key);
+                keys.remove(key);
+                return new BoxKeyView(deletedKey);
+            }
+        }
+        return null;//not found
+    }
+
+    public List<BoxKeyView> deleteAll() {
         keys.clear();
         return keysToViews(keys);
     }
