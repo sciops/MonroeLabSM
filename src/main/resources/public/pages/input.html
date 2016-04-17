@@ -1,6 +1,3 @@
-
-
-
 <!-- reference http://www.sitepoint.com/creating-crud-app-minutes-angulars-resource/ -->
 <div class="ng-cloak col-sm-10">
     <div class="panel panel-default" ng-controller="BoxKeyController as ctrl">
@@ -26,8 +23,8 @@
                         <td><span ng-bind="key.seed.denomination"></span></td>
                         <td><span ng-bind="key.seed.time"></span></td>
                         <td><span ng-bind="key.publickey"></span></td>
-                        <td><button type="button" ng-click="ctrl.edit(key.digest)" class="btn btn-success custom-width"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
-                        <td><button type="button" ng-click="ctrl.remove(key.id)" class="btn btn-danger custom-width"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                        <td><button type="button" ng-click="ctrl.edit(key.publickey)" class="btn btn-success custom-width"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
+                        <td><button type="button" ng-click="ctrl.remove(key.publickey)" class="btn btn-danger custom-width"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
                     </tr>
                 </tbody>
             </table>
