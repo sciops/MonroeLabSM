@@ -37,8 +37,8 @@ public class BoxKeyController {
     //BoxKeyService is a service class which will do all data retrieval/manipulation work
     public BoxKeyController(BoxKeyService service) {
         //search for key by id. TODO: still implemented, but need to return the id in new endpoint.
-        get("/key/:digest", (req, res) -> {
-            BoxKeyView key = service.findByDigest(req.params(":digest"));
+        get("/key/:publickey", (req, res) -> {
+            BoxKeyView key = service.findByPublicKey(req.params(":publickey"));
             if (key != null) {
                 return key;//found it            
             }
@@ -52,9 +52,9 @@ public class BoxKeyController {
         //put changes to a key
         put("/key/*", (req, res) -> service.updateBoxKey(req.splat()[0]), JsonUtil.json());
         //remove a key by id
-        delete("/key/:digest", (req, res) -> {
-            String digest = req.params(":digest");
-            BoxKeyView deletedKey = service.deleteByDigest(digest);
+        delete("/key/:publickey", (req, res) -> {
+            String publickey = req.params(":publickey");
+            BoxKeyView deletedKey = service.deleteByPublicKey(publickey);
             if (deletedKey != null) {
                 return deletedKey;
             }
