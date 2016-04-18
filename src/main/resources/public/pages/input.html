@@ -34,12 +34,11 @@
         <div class="panel-heading"><span class="lead">Box Key Form</span></div>
         <div class="formcontainer">
             <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
-                <input type="hidden" ng-model="ctrl.key.id" />
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label class="col-md-2 control-lable" for="file">Serial</label>
+                        <label class="col-md-2 control-label" for="file">Serial</label>
                         <div class="col-md-7">
-                            <input type="text" ng-model="ctrl.key.serial" name="serial" class="form-control input-sm" placeholder="Enter your serial" required ng-minlength="3"/>
+                            <input type="text" ng-model="ctrl.key.seed.serial" name="serial" class="form-control input-sm" placeholder="Enter your serial" required ng-minlength="3"/>
                             <div class="has-error" ng-show="ctrl.key.$dirty">
                                 <span ng-show="ctrl.key.$error.required">This is a required field</span>
                                 <span ng-show="ctrl.key.$error.minlength">Minimum length required is 3</span>
@@ -50,17 +49,35 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label class="col-md-2 control-lable" for="file">Operator</label>
+                        <label class="col-md-2 control-label" for="file">Operator</label>
                         <div class="col-md-7">
-                            <input type="text" ng-model="ctrl.key.opnum" class="form-control input-sm" placeholder="Your operator code here."/>
+                            <input type="text" ng-model="ctrl.key.seed.operator" class="form-control input-sm" placeholder="Your operator code here."/>
+                            <div class="has-error" ng-show="ctrl.key.$dirty">
+                                <span ng-show="ctrl.key.$error.required">This is a required field</span>
+                                <span ng-show="ctrl.key.$error.minlength">Minimum length required is 3</span>
+                                <span ng-show="ctrl.key.$invalid">This field is invalid </span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label class="col-md-2 control-lable" for="file">DateTime</label>
+                        <label for="denom" class="col-sm-2 control-label">Denomination</label>
+                        <div class="col-sm-10">
+                            <input type="text" ng-model="ctrl.key.seed.denomination" class="form-control" id="denom" placeholder="Currency denomination goes here"/>
+                            <div class="has-error" ng-show="ctrl.key.$dirty">
+                                <span ng-show="ctrl.key.$error.required">This is a required field</span>
+                                <span ng-show="ctrl.key.$error.minlength">Minimum length required is 3</span>
+                                <span ng-show="ctrl.key.$invalid">This field is invalid </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2 control-label" for="file">Time</label>
                         <div class="col-md-7">
-                            <input type="text" ng-model="ctrl.key.datetime" name="datetime" class="form-control input-sm" placeholder="Enter your unixtime code" required/>
+                            <input type="text" ng-model="ctrl.key.seed.time" name="datetime" class="form-control input-sm" placeholder="Enter your unixtime code" required/>
                             <div class="has-error" ng-show="myForm.$dirty">
                                 <span ng-show="myForm.email.$error.required">This is a required field</span>
                                 <span ng-show="myForm.email.$invalid">This field is invalid </span>
@@ -69,58 +86,8 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-12">
-                        <label class="col-md-2 control-lable" for="file">Currency Type</label>
-                        <div class="col-md-7">
-                            <input type="text" ng-model="ctrl.key.currtype" class="form-control input-sm" placeholder="What currency type will you accept?"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-12">
-                        <label for="denomradio" class="col-sm-2 control-label">Does your currency have denominations?</label>
-                        <div class="col-sm-10">
-                            <input type="radio" class="form-control" name="denomradio" ng-model="denomradio" value="yesdenom" id="yesdenom">Yes
-                            <br>
-                            <input type="radio" class="form-control" name="denomradio" ng-model="denomradio" value="nodenom" id="nodenom">No
-                            <br>
-                            <input type="radio" class="form-control" name="denomradio" ng-model="denomradio" value="maybedenom" id="maybedenom">I don't know
-                            <br>
-                        </div>
-                        <br><br><br>
-                        <div ng-show="isShown('yesdenom')">
-                            <label for="denom" class="col-sm-2 control-label">Denomination</label>
-                            <div class="col-sm-4">
-                                <input type="checkbox" ng-model="ctrl.key.denomone" class="form-control" id="denomone" name="denomone" value="1"> 1
-                                <br>
-                                <input type="checkbox" ng-model="ctrl.key.denomtwo" class="form-control" id="denomtwo" name="denomtwo" value="2"> 2
-                                <br>
-                                <input type="checkbox" ng-model="ctrl.key.denomfive" class="form-control" id="denomfive" name="denomfive" value="5"> 5
-                                <br>
-                                <input type="checkbox" ng-model="ctrl.key.denomten" class="form-control" id="denomten" name="denomten" value="10"> 10
-                                <br>
-                                <input type="checkbox" ng-model="ctrl.key.denomtwenty" class="form-control" id="denomtwenty" name="denomtwenty" value="20"> 20
-                                <br>
-                                <input type="checkbox" ng-model="ctrl.key.denomfifty" class="form-control" id="denomfifty" name="denomfifty" value="50"> 50
-                                <br>
-                                <input type="checkbox" ng-model="ctrl.key.denomhundred" class="form-control" id="denomhundred" name="denomhundred" value="100"> 100
-                                <br>
-                            </div>
-                        </div>
-                        <div ng-show="isShown('nodenom')">
-                            <label for="denom" class="col-sm-2 control-label">Denomination</label>
-                            <div class="col-sm-10">
-                                <input type="text" ng-model="ctrl.key.denom" class="form-control" id="denom" placeholder="Currency denomination goes here"/>
-                            </div>
-                        </div>
-                        <div ng-show="isShown('maybedenom')">
-                            <center><p>Well, I hope you figure it out!</p></center>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="form-actions floatRight">
-                        <input type="submit"  value="{{!ctrl.key.id ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
+                        <input type="submit"  value="{{!ctrl.key.publickey ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
                         <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Reset Form</button>
                     </div>
                 </div>
