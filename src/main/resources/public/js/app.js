@@ -96,14 +96,15 @@ var app = angular.module('app', ['ui.router'])
                 };
                 self.fetchAllBoxKeys();
                 self.submit = function () {
-                    if (self.key.digest === null) {
-                        console.log('Saving New Key', self.key);
+                    console.log("Submit function entered. Digest:"+self.key.digest);
+                    if (self.key.digest.length===0) { //http://stackoverflow.com/questions/154059/how-do-you-check-for-an-empty-string-in-javascript
+                        console.log('Saving New Key: ', self.key.seed);
                         self.createBoxKey(self.key);
                     } else {
+                        console.log('Updating Key: ', self.key.digest);
                         self.updateBoxKey(self.key);
-                        console.log('Key updated with id: ', self.key.digest);
                     }
-                    self.reset();
+                    $scope.myForm.$setPristine(); //reset Form
                 };
                 self.edit = function (digest) {
                     console.log('digest to be edited', digest);
@@ -116,12 +117,6 @@ var app = angular.module('app', ['ui.router'])
                 };
                 self.remove = function (digest) {
                     console.log('digest to be deleted', digest);
-                    for (var i = 0; i < self.keys.length; i++) {
-                        if (self.keys[i].id === digest) {
-                            self.reset();
-                            break;
-                        }
-                    }
                     self.deleteBoxKey(digest);
                 };
                 self.reset = function () {

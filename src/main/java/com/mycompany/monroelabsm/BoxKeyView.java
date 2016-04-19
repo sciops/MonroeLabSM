@@ -23,6 +23,9 @@
  */
 package com.mycompany.monroelabsm;
 
+import java.security.NoSuchAlgorithmException;
+import org.apache.commons.codec.DecoderException;
+
 /**
  *
  * @author Stephen R. Williams
@@ -36,11 +39,11 @@ public class BoxKeyView {
     private String publickey;//this is a Base58Check encoded String commonly used to represent bitcoin addresses
     private String privatekey;//this is the private key
 
-    public BoxKeyView(BoxKey bk) {
-        this.seed = new SeedView(bk.getSeed());
-        this.digest = bk.getDigestString();
-        this.publickey = bk.getPublicKey();
-        this.privatekey = bk.getPrivateKey();
+    public BoxKeyView(BoxKey key) {
+        this.seed = new SeedView(key.getSeed());
+        this.digest = key.getDigestString();
+        this.publickey = key.getPublicKey();
+        this.privatekey = key.getPrivateKey();
     }
 
     public SeedView getSeedView() {
@@ -57,5 +60,9 @@ public class BoxKeyView {
 
     public String getPrivateKey() {
         return privatekey;
+    }
+    
+    public BoxKey getBoxKey() throws NoSuchAlgorithmException, DecoderException{
+        return new BoxKey(seed.getSeed());
     }
 }

@@ -23,6 +23,11 @@
  */
 package com.mycompany.monroelabsm;
 
+import java.security.NoSuchAlgorithmException;
+import java.util.HashSet;
+import java.util.Set;
+import org.apache.commons.codec.DecoderException;
+
 /**
  *
  * @author Stephen R. Williams
@@ -86,7 +91,30 @@ public class SeedView {
     public String getTime() {
         return time;
     }
-    
-    
-    
+
+    public Seed getSeed() throws DecoderException, NoSuchAlgorithmException {
+
+        //first check if some values are null. if they are, use another constructor.
+        Set set = new HashSet();
+        set.add(heading);
+        set.add(gpsx);
+        set.add(gpsy);
+        if (set.contains(null)) {
+            set.add(crypto);
+            set.add(fiat);
+            if (set.contains(null)) {
+                return new Seed(serial, operator, denomination, time);
+            } else {
+                return new Seed(serial, operator, crypto, fiat, denomination, time);
+            }
+        } else {
+            return new Seed(serial, operator, heading, gpsx, gpsy, crypto, fiat, denomination, time);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return serial + operator + heading + gpsx + gpsy + crypto + fiat + denomination + time;
+    }
+
 }

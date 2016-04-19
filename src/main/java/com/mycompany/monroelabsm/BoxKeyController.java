@@ -51,7 +51,7 @@ public class BoxKeyController {
         post("/key/*", (req, res) -> service.saveBoxKey(req.splat()[0]), JsonUtil.json());
         //put changes to a key
         put("/key/*", (req, res) -> service.updateBoxKey(req.splat()[0]), JsonUtil.json());
-        //remove a key by id
+        //remove a key by publickey
         delete("/key/:publickey", (req, res) -> {
             String publickey = req.params(":publickey");
             BoxKeyView deletedKey = service.deleteByPublicKey(publickey);

@@ -35,6 +35,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.codec.DecoderException;
 
 public class BoxKey {
 
@@ -56,6 +57,11 @@ public class BoxKey {
 
     public BoxKey(Seed seed) throws NoSuchAlgorithmException {
         this.seed=seed;
+        this.setDigest();
+    }
+    
+    public BoxKey(String seed) throws NoSuchAlgorithmException, DecoderException {
+        this.setSeed(B58.hexToBytes(seed));
         this.setDigest();
     }
 

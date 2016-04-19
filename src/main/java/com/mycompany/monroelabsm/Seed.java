@@ -15,6 +15,8 @@ package com.mycompany.monroelabsm;
  */
 import java.nio.ByteBuffer;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashSet;
+import java.util.Set;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.lang.ArrayUtils;
 
@@ -91,17 +93,19 @@ public class Seed {
             String serial,
             String operator,
             String heading,
-            String gpsX,
-            String gpsY,
+            String gpsx,
+            String gpsy,
             String crypto,
             String fiat,
             String denom,
-            String time) throws DecoderException, NoSuchAlgorithmException {
+            String time
+    ) throws DecoderException, NoSuchAlgorithmException {
+ 
         this.serial = B58.hexToBytes(serial);
         this.operator = B58.hexToBytes(operator);
         this.heading = B58.hexToBytes(heading);
-        this.gpsx = B58.hexToBytes(gpsX);
-        this.gpsy = B58.hexToBytes(gpsY);
+        this.gpsx = B58.hexToBytes(gpsx);
+        this.gpsy = B58.hexToBytes(gpsy);
         setCrypto(crypto);
         setFiat(fiat);
         this.denomination[0] = Byte.parseByte(denom);
@@ -205,7 +209,7 @@ public class Seed {
     public byte[] getDenomination() {
         return denomination;
     }
-    
+
     public String getDenominationString() {
         return B58.bytesToHex(denomination);
     }
@@ -213,7 +217,7 @@ public class Seed {
     public byte[] getTime() {
         return time;
     }
-    
+
     public String getTimeString() {
         return B58.bytesToHex(time);
     }

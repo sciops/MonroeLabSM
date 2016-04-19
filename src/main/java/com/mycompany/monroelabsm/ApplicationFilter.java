@@ -39,13 +39,15 @@ import spark.servlet.SparkFilter;
  * @author Stephen R. Williams
  * 
  * https://github.com/perwendel/spark/issues/373
+ * 
+ * This class is required for war deployment to solve a problem with mime mapping static files.
  */
 public class ApplicationFilter extends SparkFilter
 {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
     {
-        String requestUrl = ((HttpServletRequest) request).getRequestURI().toString();
+        String requestUrl = ((HttpServletRequest) request).getRequestURI();
 
         Map<String, String> mimeMapping = new HashMap<>();
         mimeMapping.put("/","text/html");//this line fixes the issue of the root response returning text/plain
@@ -53,7 +55,10 @@ public class ApplicationFilter extends SparkFilter
         mimeMapping.put(".js","text/javascript");
         mimeMapping.put(".html","text/html");
         mimeMapping.put(".htm","text/html");
-
+        mimeMapping.put(".mp4","video/mp4");
+        mimeMapping.put(".webm","video/webm");
+        mimeMapping.put(".ogg","video/ogg");
+        
         for(Map.Entry<String,String> entry : mimeMapping.entrySet())
         {
             if(requestUrl.endsWith(entry.getKey()))

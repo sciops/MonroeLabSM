@@ -109,7 +109,8 @@ public class BoxKeyService {
         return null;
     }//returns null if nothing found
 
-    public BoxKeyView saveBoxKey(BoxKey key) throws AlreadyExistsException {
+    public BoxKeyView saveBoxKey(BoxKeyView view) throws AlreadyExistsException, NoSuchAlgorithmException, DecoderException {
+        BoxKey key = view.getBoxKey();
         //check for pre-existing key first
         if (this.keys.contains(key)) {
             throw new AlreadyExistsException();
@@ -118,16 +119,17 @@ public class BoxKeyService {
         return new BoxKeyView(key);
     }
 
-    public BoxKeyView saveBoxKey(String json) throws AlreadyExistsException, JsonPojoMismatchException {
+    public BoxKeyView saveBoxKey(String json) throws AlreadyExistsException, JsonPojoMismatchException, NoSuchAlgorithmException, DecoderException {
         //convert string json to boxkey and then save it with previous method.
-        BoxKey key = new Gson().fromJson(json, BoxKey.class);
-        if (key == null) {
+        BoxKeyView view = new Gson().fromJson(json, BoxKeyView.class);
+        if (view == null) {
             throw new JsonPojoMismatchException();
         }
-        return saveBoxKey(key);
+        return saveBoxKey(view);
     }
 
-    public BoxKeyView updateBoxKey(BoxKey key) throws NotFoundException {
+    public BoxKeyView updateBoxKey(BoxKeyView view) throws NotFoundException, NoSuchAlgorithmException, DecoderException {
+        BoxKey key = view.getBoxKey();
         if (!this.keys.contains(key)) {
             throw new NotFoundException();
         }
@@ -135,12 +137,12 @@ public class BoxKeyService {
         return new BoxKeyView(key);
     }
 
-    public BoxKeyView updateBoxKey(String json) throws NotFoundException, JsonPojoMismatchException {
-        BoxKey key = new Gson().fromJson(json, BoxKey.class);
-        if (key == null) {
+    public BoxKeyView updateBoxKey(String json) throws NotFoundException, JsonPojoMismatchException, NoSuchAlgorithmException, DecoderException {
+        BoxKeyView view = new Gson().fromJson(json, BoxKeyView.class);
+        if (view == null) {
             throw new JsonPojoMismatchException();
         }
-        return updateBoxKey(key);
+        return updateBoxKey(view);
     }
 
     public BoxKeyView deleteById(int id) throws NotFoundException, NoSuchAlgorithmException {
