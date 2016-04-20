@@ -96,28 +96,28 @@ var app = angular.module('app', ['ui.router'])
                 };
                 self.fetchAllBoxKeys();
                 self.submit = function () {
-                    console.log("Submit function entered. Digest:"+self.key.digest);
-                    if (self.key.digest.length===0) { //http://stackoverflow.com/questions/154059/how-do-you-check-for-an-empty-string-in-javascript
+                    console.log("Submit function entered. publickey:"+self.key.publickey);
+                    if (self.key.publickey.length===0) { //http://stackoverflow.com/questions/154059/how-do-you-check-for-an-empty-string-in-javascript
                         console.log('Saving New Key: ', self.key.seed);
                         self.createBoxKey(self.key);
                     } else {
-                        console.log('Updating Key: ', self.key.digest);
+                        console.log('Updating Key: ', self.key.publickey);
                         self.updateBoxKey(self.key);
                     }
                     $scope.myForm.$setPristine(); //reset Form
                 };
-                self.edit = function (digest) {
-                    console.log('digest to be edited', digest);
+                self.edit = function (publickey) {
+                    //find the key by this publickey.
                     for (var i = 0; i < self.keys.length; i++) {
-                        if (self.keys[i].digest === digest) {
+                        if (self.keys[i].publickey === publickey) {
                             self.key = angular.copy(self.keys[i]);
                             break;
                         }
                     }
                 };
-                self.remove = function (digest) {
-                    console.log('digest to be deleted', digest);
-                    self.deleteBoxKey(digest);
+                self.remove = function (publickey) {
+                    console.log('publickey to be deleted', publickey);
+                    self.deleteBoxKey(publickey);
                 };
                 self.reset = function () {
                     self.key = {id: null, keyname: '', address: '', email: ''};
