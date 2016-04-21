@@ -36,8 +36,8 @@
             <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label class="col-md-2 control-label" for="file">Serial</label>
-                        <div class="col-md-7">
+                        <label class="col-md-2 control-label" for="serial">Serial</label>
+                        <div class="col-md-3">
                             <input 
                                 type="text" 
                                 ng-model="ctrl.key.seed.serial" 
@@ -56,14 +56,14 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label class="col-md-2 control-label" for="file">Operator</label>
-                        <div class="col-md-7">
+                        <label class="col-md-2 control-label" for="operator">Operator</label>
+                        <div class="col-md-3">
                             <input 
                                 type="text" 
                                 ng-model="ctrl.key.seed.operator" 
                                 class="form-control input-sm" 
                                 placeholder="Your operator code here." 
-                                required 
+                                required
                                 ng-minlength="6"
                                 />
                             <div class="has-error" ng-show="ctrl.key.$dirty">
@@ -76,8 +76,8 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="denom" class="col-sm-2 control-label">Denomination</label>
-                        <div class="col-sm-10">
+                        <label class="col-md-2 control-label" for="denomination">Denomination</label>
+                        <div class="col-md-3">
                             <input 
                                 type="text" 
                                 ng-model="ctrl.key.seed.denomination" 
@@ -97,7 +97,7 @@
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label class="col-md-2 control-label" for="file">Time</label>
-                        <div class="col-md-7">
+                        <div class="col-md-3">
                             <input 
                                 type="text" 
                                 ng-model="ctrl.key.seed.time" 
@@ -116,7 +116,7 @@
                 <div class="row">
                     <div class="form-actions floatRight">
                         <input type="submit"  value="{{!ctrl.key.publickey ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid"/>
-                        <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Reset Form</button>
+                        <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm">Reset Form</button>
                     </div>
                 </div>
             </form>
