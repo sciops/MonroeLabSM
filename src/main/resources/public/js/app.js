@@ -1,4 +1,5 @@
 var app = angular.module('app', ['ui.router'])
+        //this configures the ui router to display new pages when the navbar is clicked
         .config(function ($stateProvider, $urlRouterProvider) {
             $urlRouterProvider.otherwise("/services");
             $stateProvider
@@ -41,6 +42,7 @@ var app = angular.module('app', ['ui.router'])
                         }
                     });
         })
+        //this controller manages the CRUD input form.
         .controller('BoxKeyController', ['$scope', 'BoxKeyService', function ($scope, BoxKeyService) {
                 //storage of the key to be added or edited
                 var self = this;
@@ -117,6 +119,7 @@ var app = angular.module('app', ['ui.router'])
                     $scope.myForm.$setPristine(); //reset Form
                 };
             }])
+        //this factory determines what URLs to use for requests.
         .factory('BoxKeyService', ['$http', '$q', function ($http, $q) {
                 return {
                     fetchAllBoxKeys: function () {
