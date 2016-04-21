@@ -15,8 +15,6 @@ package com.mycompany.monroelabsm;
  */
 import java.nio.ByteBuffer;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashSet;
-import java.util.Set;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.lang.ArrayUtils;
 
@@ -100,7 +98,6 @@ public class Seed {
             String denom,
             String time
     ) throws DecoderException, NoSuchAlgorithmException {
- 
         this.serial = B58.hexToBytes(serial);
         this.operator = B58.hexToBytes(operator);
         this.heading = B58.hexToBytes(heading);
@@ -108,7 +105,7 @@ public class Seed {
         this.gpsy = B58.hexToBytes(gpsy);
         setCrypto(crypto);
         setFiat(fiat);
-        this.denomination[0] = Byte.parseByte(denom);
+        this.denomination = B58.hexToBytes(denom);
         this.time = B58.hexToBytes(time);
     }
 
@@ -209,6 +206,10 @@ public class Seed {
     public byte[] getDenomination() {
         return denomination;
     }
+    
+    public byte getDenominationByte() {
+        return denomination[0];
+    }
 
     public String getDenominationString() {
         return B58.bytesToHex(denomination);
@@ -274,9 +275,8 @@ public class Seed {
             fiatCurrency = "03D2";//978d, ISO4217
         } else if (fiatCurrency.equals("EUR")) {
             fiatCurrency = "03D2";//978d, ISO4217
-        } else {
-            this.fiat = B58.hexToBytes(fiatCurrency);
         }
+        this.fiat = B58.hexToBytes(fiatCurrency);
     }
 
     public void setDenomination(byte[] denomination) {
