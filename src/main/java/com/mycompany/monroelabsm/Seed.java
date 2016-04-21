@@ -95,7 +95,7 @@ public class Seed {
             String gpsy,
             String crypto,
             String fiat,
-            String denom,
+            String denomination,
             String time
     ) throws DecoderException, NoSuchAlgorithmException {
         this.serial = B58.hexToBytes(serial);
@@ -105,7 +105,7 @@ public class Seed {
         this.gpsy = B58.hexToBytes(gpsy);
         setCrypto(crypto);
         setFiat(fiat);
-        this.denomination = B58.hexToBytes(denom);
+        this.denomination = B58.hexToBytes(denomination);
         this.time = B58.hexToBytes(time);
     }
 
@@ -118,7 +118,7 @@ public class Seed {
             String denomination,
             String time
     ) throws NoSuchAlgorithmException, DecoderException {
-        this(serial, operator, "66", "66", "66", crypto, fiat, denomination, time);
+        this(serial, operator, "66", "666666", "666666", crypto, fiat, denomination, time);
     }
 
     //more defaults    
@@ -128,7 +128,7 @@ public class Seed {
             String denomination,
             String time
     ) throws NoSuchAlgorithmException, DecoderException {
-        this(serial, operator, "66", "66", "66", "01", "0348", denomination, time);
+        this(serial, operator, "66", "666666", "666666", "0001", "0348", denomination, time);
     }
 
     //http://stackoverflow.com/questions/4827622/copy-several-byte-arrays-to-one-big-byte-array

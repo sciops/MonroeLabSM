@@ -42,6 +42,8 @@ public class BoxKeyService {
     private static List<BoxKey> keys;
 
     public List<BoxKeyView> findAllBoxKeys() {
+        System.out.println("DEBUG findAllBoxKeys called. current content of keys:");
+        for (BoxKey k:keys) System.out.println(k.getSeedStrings());
         return keysToViews(this.keys);
     }
 
@@ -54,6 +56,8 @@ public class BoxKeyService {
                 views.add(new BoxKeyView(bk));
             }
         }
+        System.out.println("DEBUG keysToViews called. current content of views:");
+        for (BoxKeyView v:views) System.out.println(v.getSeedView().toString());
         return views;
     }
 
@@ -110,13 +114,15 @@ public class BoxKeyService {
     }//returns null if nothing found
 
     public BoxKeyView saveBoxKey(BoxKeyView view) throws AlreadyExistsException, NoSuchAlgorithmException, DecoderException {
-        BoxKey key = view.getBoxKey();
-        //check for pre-existing key first
-        if (this.keys.contains(key)) {
-            throw new AlreadyExistsException();
+        BoxKey newKey = view.getBoxKey();
+        for (BoxKey oldKey : keys) {//search for a key by public key
+            if (oldKey.getPublicKey().equalsIgnoreCase(newKey.getPublicKey())) {
+                throw new AlreadyExistsException();
+            }
         }
-        keys.add(key);
-        return new BoxKeyView(key);
+        //if the list is exhausted, we may add the new key
+        keys.add(newKey);
+        return new BoxKeyView(newKey);
     }
 
     public BoxKeyView saveBoxKey(String json) throws AlreadyExistsException, JsonPojoMismatchException, NoSuchAlgorithmException, DecoderException {
@@ -129,15 +135,24 @@ public class BoxKeyService {
     }
 
     public BoxKeyView updateBoxKey(BoxKeyView view) throws NotFoundException, NoSuchAlgorithmException, DecoderException {
-        BoxKey key = view.getBoxKey();
-        if (!this.keys.contains(key)) {
-            throw new NotFoundException();
+        BoxKey newKey = view.getBoxKey();
+        System.out.println("compare newKey: " + newKey.getPublicKey());
+        for (BoxKey oldKey : keys) {//search for a key by public key
+            System.out.println("compare oldKey: " + oldKey.getPublicKey());
+            if (oldKey.getPublicKey().equalsIgnoreCase(newKey.getPublicKey())) {
+                System.out.println("Found!");
+                keys.remove(oldKey);
+                keys.add(newKey);
+                return new BoxKeyView(newKey);
+            }
         }
-        keys.set(keys.indexOf(key), key);
-        return new BoxKeyView(key);
+        System.out.println("Not found!");
+        //if the list is exhausted, return 404 with the following exception.
+        throw new NotFoundException();
     }
 
     public BoxKeyView updateBoxKey(String json) throws NotFoundException, JsonPojoMismatchException, NoSuchAlgorithmException, DecoderException {
+        System.out.println("json string passed to updateBoxKey:" + json);
         BoxKeyView view = new Gson().fromJson(json, BoxKeyView.class);
         if (view == null) {
             throw new JsonPojoMismatchException();
@@ -208,20 +223,19 @@ public class BoxKeyService {
             keys.clear();
         }
         keys = new ArrayList<BoxKey>();
-        //old hard-coded key
-        //keys.add(new BoxKey("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "1", "56F6BB45"));
-        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "1", "56F6BB45")));
-        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "5", "56F6BB45")));
-        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "10", "56F6BB45")));
-        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "20", "56F6BB45")));
-        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "1", "56F6BB46")));
-        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "5", "56F6BB46")));
-        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "10", "56F6BB46")));
-        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "20", "56F6BB46")));
-        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "1", "56F6BB47")));
-        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "5", "56F6BB47")));
-        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "10", "56F6BB47")));
-        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "20", "56F6BB47")));
+        //constructor parameters: serial,operator,crypto,fiat,denomination,time
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "01", "56F6BB45")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "05", "56F6BB45")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "0A", "56F6BB45")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "14", "56F6BB45")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "01", "56F6BB46")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "05", "56F6BB46")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "0A", "56F6BB46")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a55", "666666", "BTC", "USD", "14", "56F6BB46")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "01", "56F6BB47")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "05", "56F6BB47")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "0A", "56F6BB47")));
+        keys.add(new BoxKey(new Seed("ff0154d4b792d4d69c62217a56", "666666", "BTC", "USD", "14", "56F6BB47")));
         return keysToViews(keys);
     }
 }
