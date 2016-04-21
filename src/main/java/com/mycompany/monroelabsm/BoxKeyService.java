@@ -136,10 +136,11 @@ public class BoxKeyService {
 
     public BoxKeyView updateBoxKey(BoxKeyView view) throws NotFoundException, NoSuchAlgorithmException, DecoderException {
         BoxKey newKey = view.getBoxKey();
+        System.out.println("compare view  : " + view.getPublicKey());
         System.out.println("compare newKey: " + newKey.getPublicKey());
         for (BoxKey oldKey : keys) {//search for a key by public key
             System.out.println("compare oldKey: " + oldKey.getPublicKey());
-            if (oldKey.getPublicKey().equalsIgnoreCase(newKey.getPublicKey())) {
+            if (oldKey.getPublicKey().equalsIgnoreCase(view.getPublicKey())) {
                 System.out.println("Found!");
                 keys.remove(oldKey);
                 keys.add(newKey);
