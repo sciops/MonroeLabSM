@@ -52,7 +52,7 @@ public class SeedView {
         this.gpsy = seed.getGpsyString();
         this.crypto = seed.getCryptoString();
         this.fiat = seed.getFiatString();
-        this.denomination = seed.getFiatString();
+        this.denomination = seed.getDenominationString();
         this.time = seed.getTimeString();
     }
 
@@ -93,7 +93,6 @@ public class SeedView {
     }
 
     public Seed getSeed() throws DecoderException, NoSuchAlgorithmException {
-
         //first check if some values are null. if they are, use another constructor.
         Set set = new HashSet();
         set.add(heading);
