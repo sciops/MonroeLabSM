@@ -42,8 +42,8 @@ public class BoxKeyService {
     private static List<BoxKey> keys;
 
     public List<BoxKeyView> findAllBoxKeys() {
-        System.out.println("DEBUG findAllBoxKeys called. current content of keys:");
-        for (BoxKey k:keys) System.out.println(k.getSeedStrings());
+        //System.out.println("DEBUG findAllBoxKeys called. current content of keys:");
+        //for (BoxKey k:keys) System.out.println(k.getSeedStrings());
         return keysToViews(this.keys);
     }
 
@@ -56,8 +56,8 @@ public class BoxKeyService {
                 views.add(new BoxKeyView(bk));
             }
         }
-        System.out.println("DEBUG keysToViews called. current content of views:");
-        for (BoxKeyView v:views) System.out.println(v.getSeedView().toString());
+        //System.out.println("DEBUG keysToViews called. current content of views:");
+        //for (BoxKeyView v:views) System.out.println(v.getSeedView().toString());
         return views;
     }
 
