@@ -42,20 +42,12 @@ var app = angular.module('app', ['ui.router'])
                     });
         })
         .controller('BoxKeyController', ['$scope', 'BoxKeyService', function ($scope, BoxKeyService) {
-                //radio button/checkbox hiding        
-                $scope.message = 'Please click Submit above.';
-                //$scope.params = $routeParams;
-                $scope.denomradio = 'yesdenom';
-                $scope.isShown = function (denomradio) {
-                    return (denomradio === $scope.denomradio);
-                };
-                $scope.submit = function () {
-                    $scope.message = 'SUBMITTED!';
-                    //code here to actually submit the boxkey JSON somewhere
-                };
+                //storage of the key to be added or edited
                 var self = this;
                 self.key = {seed: null, digest: '', publickey: '', privatekey: ''};
+                //storage of a list of keys to be viewed or edited
                 self.keys = [];
+                
                 self.fetchAllBoxKeys = function () {
                     BoxKeyService.fetchAllBoxKeys()
                             .then(
@@ -96,14 +88,15 @@ var app = angular.module('app', ['ui.router'])
                 };
                 self.fetchAllBoxKeys();
                 self.submit = function () {
-                    console.log("Submit function entered. publickey:"+self.key.publickey);
-                    if (self.key.publickey.length===0) { //http://stackoverflow.com/questions/154059/how-do-you-check-for-an-empty-string-in-javascript
-                        console.log('Saving New Key: ', self.key.seed);
+                    //console.log("Submit function entered. publickey:" + self.key.publickey);
+                    if (self.key.publickey.length === 0) { //http://stackoverflow.com/questions/154059/how-do-you-check-for-an-empty-string-in-javascript
+                        //console.log('Saving New Key: ', self.key.seed);
                         self.createBoxKey(self.key);
                     } else {
-                        console.log('Updating Key: ', self.key.publickey);
+                        //console.log('Updating Key: ', self.key.publickey);
                         self.updateBoxKey(self.key);
                     }
+                    self.key = {id: null, keyname: '', address: '', email: ''};
                     $scope.myForm.$setPristine(); //reset Form
                 };
                 self.edit = function (publickey) {
@@ -124,19 +117,6 @@ var app = angular.module('app', ['ui.router'])
                     $scope.myForm.$setPristine(); //reset Form
                 };
             }])
-        .controller('inputController', function ($scope, $routeParams) {
-            $scope.message = 'Please click Submit above.';
-            $scope.name = "inputController";
-            $scope.params = $routeParams;
-            $scope.denomradio = 'yesdenom';
-            $scope.isShown = function (denomradio) {
-                return (denomradio === $scope.denomradio);
-            };
-            $scope.submit = function () {
-                $scope.message = 'SUBMITTED!';
-                //code here to actually submit the boxkey JSON somewhere
-            };
-        })
         .factory('BoxKeyService', ['$http', '$q', function ($http, $q) {
                 return {
                     fetchAllBoxKeys: function () {

@@ -30,7 +30,7 @@
             </table>
         </div>
     </div>
-    <div class="panel panel-default">
+    <div class="panel panel-default boxkey-form">
         <div class="panel-heading"><span class="lead">BoxKey Form</span></div>
         <div class="formcontainer">
             <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
@@ -39,7 +39,7 @@
                         <label class="col-md-2 control-label" for="serial">Serial</label>
                         <div class="col-md-3">
                             <input 
-                                type="text" 
+                                type="text"
                                 ng-model="ctrl.key.seed.serial" 
                                 class="form-control input-sm" 
                                 placeholder="Enter your serial" 
@@ -99,7 +99,7 @@
                         <label class="col-md-2 control-label" for="file">Time</label>
                         <div class="col-md-3">
                             <input 
-                                type="text" 
+                                type="text"
                                 ng-model="ctrl.key.seed.time" 
                                 class="form-control input-sm" 
                                 placeholder="Enter your unixtime code" 
