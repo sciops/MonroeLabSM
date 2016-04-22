@@ -229,13 +229,33 @@ app.factory('BoxKeyService', ['$http', '$q', function ($http, $q) {
 
 app.controller('ProjectionController', function ($scope) {
     var self = this;
-    self.serials = ['test1'];
+
+    self.request = {
+        serials: [''],
+        operator: '',
+        heading: '',
+        gpsx: '',
+        gpsy: '',
+        crypto: '',
+        fiat: '',
+        denominations: [''],
+        start: '',
+        end: '',
+        frequency: ''
+    };
+
     self.addNewSerial = function () {
-        self.serials.push('');
+        self.request.serials.push('');
     };
     self.removeSerial = function (index) {
         //http://stackoverflow.com/questions/5767325/remove-a-particular-element-from-an-array-in-javascript
-        self.serials.splice(index, 1);
+        self.request.serials.splice(index, 1);
+    };
+    self.addNewDenomination = function () {
+        self.request.denominations.push('');
+    };
+    self.removeDenomination = function (index) {
+        self.request.denominations.splice(index, 1);
     };
 
 });
