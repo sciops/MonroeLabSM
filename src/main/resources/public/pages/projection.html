@@ -22,62 +22,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -->
+<!-- references http://www.sitepoint.com/creating-crud-app-minutes-angulars-resource/ 
+                http://mrngoitall.net/blog/2013/10/02/adding-form-fields-dynamically-in-angularjs/
 
-<!-- Page Content --> 
-<!-- reference http://www.sitepoint.com/creating-crud-app-minutes-angulars-resource/ -->
-<div class="ng-cloak col-sm-offset-2 col-sm-10">
-    <div class="generic-container" ng-app="projectionApp" ng-controller="ProjectionController as vm">
-        <div class="panel panel-default">
-            <div class="panel-heading"><span class="lead">Projection Form</span></div>
-            <div class="formcontainer">
-                <form ng-submit="vm.onSubmit()" name="vm.form" novalidate>
-                    <tabset>
-                        <tab ng-repeat="tab in vm.tabs"
-                             heading="{{tab.title}}"
-                             active="tab.active"
-                             disable="tab.disabled">
-                            <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options">
-                            </formly-form>
-                        </tab>
-                    </tabset>
-                </form>
-                <hr />
-                <h2>Model Value</h2>
-                <pre>{{vm.model| json}}</pre>
-                <h2>Tabs <small>(note, functions are not shown)</small></h2>
-                <pre>{{vm.originalTabs| json}}</pre>
-                <h2>Form</h2>
-                <pre>{{vm.form| json}}</pre>
-            </div>
-        </div>
+-->
+<div ng-controller="ProjectionController as proj">
+    proj.serials = {{proj.serials}}
+    <div class="form-group" data-ng-repeat="serial in proj.serials track by $index">
+        <label for="serial" ng-show="proj.showSerialLabel(serial)">Serials</label>
+        <input type="text" ng-model="proj.serials[$index]" name="" placeholder="Enter a serial number">
+        <button ng-click="proj.removeSerial($index)">Remove</button>
+        <br />
+        <button ng-show="$last" ng-click="proj.addNewSerial()">Add another serial</button>
     </div>
-
-    <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading"><span class="lead">List of Box Keys</span></div>
-        <div class="tablecontainer">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <!--Heading row for list of box keys table -->
-                        <th>Serial</th>
-                        <th>Operator</th>
-                        <th>Date/Time</th>
-                        <th width="20%"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="k in ctrl.keys">
-                        <td><span ng-bind="k.seed.serial"></span></td>
-                        <td><span ng-bind="k.seed.operator"></span></td>
-                        <td><span ng-bind="k.seed.time"></span></td>
-                        <td>
-                            <button type="button" ng-click="ctrl.edit(k.id)" class="btn btn-success custom-width">Edit</button>  <button type="button" ng-click="ctrl.remove(k.id)" class="btn btn-danger custom-width">Remove</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 </div>
