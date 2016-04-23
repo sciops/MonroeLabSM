@@ -27,9 +27,35 @@ THE SOFTWARE.
 
 -->
 
-<div class="panel panel-default col-sm-12">
+<div class="panel panel-default col-sm-12" ng-controller="ProjectionController as proj">
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="lead">List of Box Keys</span></div>
+        <div class="tablecontainer">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <!--Heading row for list of box keys table -->
+                        <th>Serial</th>
+                        <th>Operator</th>
+                        <th>Denomination</th>
+                        <th>Date/Time</th>
+                        <th>Public Key</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="key in proj.keys">
+                        <td><span ng-bind="key.seed.serial"></span></td>
+                        <td><span ng-bind="key.seed.operator"></span></td>
+                        <td><span ng-bind="key.seed.denomination"></span></td>
+                        <td><span ng-bind="key.seed.time"></span></td>
+                        <td><span ng-bind="key.publickey"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
     <div class="panel-heading"><span class="lead">Projection Form</span></div>
-    <div class="formcontainer" ng-controller="ProjectionController as proj">
+    <div class="formcontainer">
         <form name="projectionForm">
             <div class="row form-group col-md-12" data-ng-repeat="serial in proj.request.serials track by $index">
                 <div class="col-md-2"><label class="control-label" ng-show="$first">Serials</label></div>
@@ -182,9 +208,6 @@ THE SOFTWARE.
                 </div>
             </div>
         </form>
-        {{proj.request}}
-        <br />
-        {{proj.keys}}
     </div>
 
 </div>
