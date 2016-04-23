@@ -66,8 +66,8 @@ public class Projection {
                     //System.out.println("Seed values: "+serial+operator+heading+gpsx+gpsy+crypto+fiat+denomination+time);
                     Seed seed = new Seed(serial,operator,heading,gpsx,gpsy,crypto,fiat,denomination,time);
                     BoxKey key = new BoxKey(seed);
-                    System.out.println("List keys: "+keys);
-                    System.out.println("Adding key: "+key);
+                    //System.out.println("List keys: "+keys);
+                    //System.out.println("Adding key: "+key);
                     keys.add(key);
                 }
             }
