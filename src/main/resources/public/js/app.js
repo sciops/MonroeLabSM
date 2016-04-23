@@ -199,70 +199,80 @@ app.factory('BoxKeyService', ['$http', '$q', function ($http, $q) {
     }]);
 
 app.controller('ProjectionController', ['$scope', 'ProjectionService', function ($scope, ProjectionService) {
-    var self = this;
-    /*
-    self.request = {
-        serials: [''],
-        operator: '',
-        //heading: '',
-        //gpsx: '',
-        //gpsy: '',
-        //crypto: '',
-        //fiat: '',
-        denominations: [''],
-        start: '',
-        end: ''//,
-        //frequency: '',
-    };
-    */
-    self.request = {
-        serials: ['ff445787458965632545125987'],
-        operator: '021325',
-        denominations: ['14'],
-        start: '10000000',
-        end: '10000140'
-    };
-
-    self.addNewSerial = function () {
-        self.request.serials.push('');
-    };
-    self.removeSerial = function (index) {
-        //http://stackoverflow.com/questions/5767325/remove-a-particular-element-from-an-array-in-javascript
-        self.request.serials.splice(index, 1);
-    };
-    self.addNewDenomination = function () {
-        self.request.denominations.push('');
-    };
-    self.removeDenomination = function (index) {
-        self.request.denominations.splice(index, 1);
-    };
-    self.submit = function () {
-        ProjectionService.projectionRequest(self.request);
-        self.reset();
-    };
-    self.reset = function () {
-        //TODO:is there a better way to remove this duplication?
+        var self = this;
+        self.keys = [];
+        
+        /*
+         self.request = {
+         serials: [''],
+         operator: '',
+         //heading: '',
+         //gpsx: '',
+         //gpsy: '',
+         //crypto: '',
+         //fiat: '',
+         denominations: [''],
+         start: '',
+         end: ''//,
+         //frequency: '',
+         };
+         */
         self.request = {
-            serials: [''],
-            operator: '',
-            //heading: '',
-            //gpsx: '',
-            //gpsy: '',
-            //crypto: '',
-            //fiat: '',
-            denominations: [''],
-            start: '',
-            end: ''//,
-            //frequency: '',
+            serials: ['ff445787458965632545125987'],
+            operator: '021325',
+            denominations: ['14'],
+            start: '10000000',
+            end: '10000140'
         };
-        $scope.projectionForm.$setPristine();
-    };
-}]);
+
+        self.addNewSerial = function () {
+            self.request.serials.push('');
+        };
+        self.removeSerial = function (index) {
+            //http://stackoverflow.com/questions/5767325/remove-a-particular-element-from-an-array-in-javascript
+            self.request.serials.splice(index, 1);
+        };
+        self.addNewDenomination = function () {
+            self.request.denominations.push('');
+        };
+        self.removeDenomination = function (index) {
+            self.request.denominations.splice(index, 1);
+        };
+        self.submit = function () {
+            ProjectionService.projectionRequest(self.request)
+                    .then(
+                            function (d) {
+                                self.keys = d;
+                            },
+                            function (errResponse) {
+                                console.error('Error while fetching keys');
+                            }
+                    );
+            self.reset();
+        };
+        self.reset = function () {
+            //TODO:is there a better way to remove this duplication?
+            self.request = {
+                serials: [''],
+                operator: '',
+                //heading: '',
+                //gpsx: '',
+                //gpsy: '',
+                //crypto: '',
+                //fiat: '',
+                denominations: [''],
+                start: '',
+                end: ''//,
+                        //frequency: '',
+            };
+            $scope.projectionForm.$setPristine();
+        };
+    }]);
 
 app.factory('ProjectionService', ['$http', '$q', function ($http, $q) {
         return {
             projectionRequest: function (request) {
-                console.log('Entered projectionRequest with request:'+request);
+                //console.log('Entered projectionRequest with request:' + request);
                 var url = '/projection/' + JSON.stringify(request);
                 return $http.get(url)
                         .then(

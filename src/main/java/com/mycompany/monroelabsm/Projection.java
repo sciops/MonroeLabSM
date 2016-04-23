@@ -24,6 +24,7 @@
 package com.mycompany.monroelabsm;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.codec.DecoderException;
 
@@ -39,6 +40,7 @@ public class Projection {
     private List<BoxKey> keys;
 
     public Projection(ProjectionRequest request) throws DecoderException, NoSuchAlgorithmException {
+        keys = new ArrayList();
         
         //temp vars to hold values for each seed. most are the same for all keys
         byte[] serial = new byte[13];
@@ -61,8 +63,11 @@ public class Projection {
                 time = B58.toByteArray(i);
                 for (String s : request.getSerials()) {
                     serial = B58.hexToBytes(s);
+                    //System.out.println("Seed values: "+serial+operator+heading+gpsx+gpsy+crypto+fiat+denomination+time);
                     Seed seed = new Seed(serial,operator,heading,gpsx,gpsy,crypto,fiat,denomination,time);
                     BoxKey key = new BoxKey(seed);
+                    System.out.println("List keys: "+keys);
+                    System.out.println("Adding key: "+key);
                     keys.add(key);
                 }
             }
@@ -72,4 +77,11 @@ public class Projection {
     public List<BoxKey> getKeys() {
         return keys;
     }    
+    
+    public List<BoxKeyView> getViews() {
+        List<BoxKeyView> views = new ArrayList();
+        for (BoxKey key : keys)
+            views.add(new BoxKeyView(key));        
+        return views;
+    }
 }

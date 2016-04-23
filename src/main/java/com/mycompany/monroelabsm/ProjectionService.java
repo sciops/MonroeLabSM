@@ -34,11 +34,12 @@ import org.apache.commons.codec.DecoderException;
  */
 public class ProjectionService {
 
-    public Projection projection(ProjectionRequest request) throws DecoderException, NoSuchAlgorithmException {
-        return new Projection(request);
+    public List<BoxKeyView> projection(ProjectionRequest request) throws DecoderException, NoSuchAlgorithmException {
+        Projection projection = new Projection(request);
+        return projection.getViews();
     }
 
-    public Projection projection(String json) throws JsonPojoMismatchException, DecoderException, NoSuchAlgorithmException {
+    public List<BoxKeyView> projection(String json) throws JsonPojoMismatchException, DecoderException, NoSuchAlgorithmException {
         //TODO: validate for empty strings , etc.
         ProjectionRequest request = new Gson().fromJson(json, ProjectionRequest.class);
         
@@ -62,7 +63,7 @@ public class ProjectionService {
         return projection(request);//use above method
     }
 
-    public Projection projection(List<String> serials, String operator, List<String> denominations, String start, String end) throws DecoderException, NoSuchAlgorithmException {
+    public List<BoxKeyView> projection(List<String> serials, String operator, List<String> denominations, String start, String end) throws DecoderException, NoSuchAlgorithmException {
         return projection(new ProjectionRequest(serials, operator, denominations, start, end));//use above method
     }
 
