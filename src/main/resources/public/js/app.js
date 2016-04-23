@@ -62,35 +62,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                         controller: 'ProjectionDetailController'
                     }
                 }
-            })
-
-
-            //old states
-            /*
-             .state('services', {
-             url: '/services',
-             templateUrl: 'pages/services.html'
-             })
-             .state('contact', {
-             url: '/contact',
-             templateUrl: 'pages/contact.html'
-             })
-             .state('about', {
-             url: '/about',
-             templateUrl: 'pages/about.html'
-             })
-             .state('input', {
-             url: '/input',
-             templateUrl: 'pages/input.html'
-             })
-             .state('projection', {
-             url: '/projection',
-             templateUrl: 'pages/projection.html'
-             })
-             */
-            ;
+            });
 });
-
 //this controller manages the CRUD input form.
 app.controller('BoxKeyController', ['$scope', 'BoxKeyService', function ($scope, BoxKeyService) {
         //storage of the key to be added or edited
@@ -98,7 +71,6 @@ app.controller('BoxKeyController', ['$scope', 'BoxKeyService', function ($scope,
         self.key = {seed: null, digest: '', publickey: '', privatekey: ''};
         //storage of a list of keys to be viewed or edited
         self.keys = [];
-
         self.fetchAllBoxKeys = function () {
             BoxKeyService.fetchAllBoxKeys()
                     .then(
@@ -168,7 +140,6 @@ app.controller('BoxKeyController', ['$scope', 'BoxKeyService', function ($scope,
             $scope.myForm.$setPristine(); //reset Form
         };
     }]);
-
 //this factory determines what URLs to use for requests in the CRUD form
 app.factory('BoxKeyService', ['$http', '$q', function ($http, $q) {
         return {
@@ -227,21 +198,29 @@ app.factory('BoxKeyService', ['$http', '$q', function ($http, $q) {
         };
     }]);
 
-app.controller('ProjectionController', function ($scope) {
+app.controller('ProjectionController', ['$scope', 'ProjectionService', function ($scope, ProjectionService) {
     var self = this;
-
+    /*
     self.request = {
         serials: [''],
         operator: '',
-        heading: '',
-        gpsx: '',
-        gpsy: '',
-        crypto: '',
-        fiat: '',
+        //heading: '',
+        //gpsx: '',
+        //gpsy: '',
+        //crypto: '',
+        //fiat: '',
         denominations: [''],
         start: '',
-        end: '',
-        frequency: ''
+        end: ''//,
+        //frequency: '',
+    };
+    */
+    self.request = {
+        serials: ['ff445787458965632545125987'],
+        operator: '021325',
+        denominations: ['14'],
+        start: '10000000',
+        end: '10000140'
     };
 
     self.addNewSerial = function () {
@@ -257,38 +236,43 @@ app.controller('ProjectionController', function ($scope) {
     self.removeDenomination = function (index) {
         self.request.denominations.splice(index, 1);
     };
+    self.submit = function () {
+        ProjectionService.projectionRequest(self.request);
+        self.reset();
+    };
+    self.reset = function () {
+        //TODO:is there a better way to remove this duplication?
+        self.request = {
+            serials: [''],
+            operator: '',
+            //heading: '',
+            //gpsx: '',
+            //gpsy: '',
+            //crypto: '',
+            //fiat: '',
+            denominations: [''],
+            start: '',
+            end: ''//,
+            //frequency: '',
+        };
+        $scope.projectionForm.$setPristine();
+    };
+}]);
 
-});
-app.controller('ProjectionDetailController', function ($scope) {
-    $scope.selected = ProjectionService.find($stateParams.publickey);
-});
-app.factory('ProjectionService', function () {
-    //this is a list of default values to debug with.
-    var keys = [
-        {
-            serial: 1,
-            name: 'Craig McKeachie',
-            email: 'craig@test.com',
-            description: 'Lorem ipsum dolor sit amet.'
-        },
-        {
-            serial: 2,
-            name: 'John Doe',
-            email: 'johndoe@gmail.com',
-            description: 'Lorem ipsum dolor sit amet.'
-        }
-    ];
-
-    return {
-        list: function () {
-            return keys;
-        },
-        find: function (id) {
-            return _.find(keys, function (key) {
-                return key.publickey == publickey;
-            })
-        }
-    }
-})
-
-
+app.factory('ProjectionService', ['$http', '$q', function ($http, $q) {
+        return {
+            projectionRequest: function (request) {
+                console.log('Entered projectionRequest with request:'+request);
+                var url = '/projection/' + JSON.stringify(request);
+                return $http.get(url)
+                        .then(
+                                function (response) {
+                                    return response.data;
+                                },
+                                function (errResponse) {
+                                    return $q.reject(errResponse);
+                                }
+                        );
+            }
+        };
+    }]);

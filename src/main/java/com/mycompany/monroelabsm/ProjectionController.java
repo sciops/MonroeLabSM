@@ -34,13 +34,15 @@ public class ProjectionController {
     public ProjectionController(ProjectionService service) {
         //endpoint to project out a list of keys
         get("/projection/*", (req, res) -> service.projection(req.splat()[0]), JsonUtil.json());
-        get("/projection/:serial/:operator/:denom/:start/:end", (req, res) -> service.projection(
-                req.params("serial"),
+        /* Wrong syntax for list of strings?
+        get("/projection/:serials/:operator/:denominations/:start/:end", (req, res) -> service.projection(
+                req.params("serials"),
                 req.params("operator"),
-                req.params("denom"),
+                req.params("denominations"),
                 req.params("start"),
                 req.params("end")
         ), JsonUtil.json());
+        */
     }
 
 }

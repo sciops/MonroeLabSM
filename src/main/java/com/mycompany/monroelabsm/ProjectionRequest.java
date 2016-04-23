@@ -47,18 +47,20 @@ public class ProjectionRequest {
     private String end;//end time for dispensing
     private String frequency;//number of keys per time period
     
-    public ProjectionRequest(String serial, String operator, String denomination, String start, String end) throws NoSuchAlgorithmException, DecoderException{
-        //using default values hard-coded into the Seed class
-        Seed seed = new Seed(serial,operator,denomination,start);
-        this.serials.add(serial);
+    public ProjectionRequest(List<String> serials, String operator, List<String> denominations, String start, String end) throws NoSuchAlgorithmException, DecoderException{
+        //making a Seed because we're using the Seed class's hard-coded defaults here
+        Seed seed = new Seed(serials.get(0),operator,denominations.get(0),start);
+        this.serials=serials;
         this.operator=operator;
         this.heading=seed.getHeadingString();
+        this.gpsx=seed.getGpsxString();
+        this.gpsy=seed.getGpsyString();
         this.crypto=seed.getCryptoString();
         this.fiat=seed.getFiatString();
-        this.denominations.add(denomination);
+        this.denominations=denominations;
         this.start=start;
         this.end=end;
-        this.frequency="05a0";//1440(dec) minutes in a day
+        this.frequency="000005a0";//1440(dec) minutes in a day
     }
 
     public ProjectionRequest(List<String> serials, String operator, String heading, String gpsx, String gpsy, String crypto, String fiat, List<String> denominations, String start, String end, String frequency) {

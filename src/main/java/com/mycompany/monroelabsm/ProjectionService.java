@@ -25,6 +25,7 @@ package com.mycompany.monroelabsm;
 
 import com.google.gson.Gson;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import org.apache.commons.codec.DecoderException;
 
 /**
@@ -38,15 +39,31 @@ public class ProjectionService {
     }
 
     public Projection projection(String json) throws JsonPojoMismatchException, DecoderException, NoSuchAlgorithmException {
+        //TODO: validate for empty strings , etc.
         ProjectionRequest request = new Gson().fromJson(json, ProjectionRequest.class);
-        if (request == null) {
-            throw new JsonPojoMismatchException();
-        }
+        
+        //remake this object using another constructor so that defaults are used.
+        ProjectionRequest requestWithDefaults = new ProjectionRequest(request.getSerials(), request.getOperator(), request.getDenominations(), request.getStart(), request.getEnd());
+        if (request == null) throw new JsonPojoMismatchException();
+        else if (request.getCrypto()==null) request = requestWithDefaults;
+        else if (request.getFiat()==null) request = requestWithDefaults;
+        else if (request.getHeading()==null) request = requestWithDefaults;
+        else if (request.getGpsx()==null) request = requestWithDefaults;
+        else if (request.getGpsy()==null) request = requestWithDefaults;
+        else if (request.getFrequency()==null) request = requestWithDefaults;
+        
+        if (request.getCrypto().equalsIgnoreCase("")) request = requestWithDefaults;
+        else if (request.getFiat().equalsIgnoreCase("")) request = requestWithDefaults;
+        else if (request.getHeading().equalsIgnoreCase("")) request = requestWithDefaults;
+        else if (request.getGpsx().equalsIgnoreCase("")) request = requestWithDefaults;
+        else if (request.getGpsy().equalsIgnoreCase("")) request = requestWithDefaults;
+        else if (request.getFrequency().equalsIgnoreCase("")) request = requestWithDefaults;
+
         return projection(request);//use above method
     }
 
-    public Projection projection(String serial, String operator, String denomination, String start, String end) throws DecoderException, NoSuchAlgorithmException {
-        return projection(new ProjectionRequest(serial,operator,denomination,start,end));//use above method
+    public Projection projection(List<String> serials, String operator, List<String> denominations, String start, String end) throws DecoderException, NoSuchAlgorithmException {
+        return projection(new ProjectionRequest(serials, operator, denominations, start, end));//use above method
     }
-    
+
 }
