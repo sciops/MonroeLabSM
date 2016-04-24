@@ -42,3 +42,12 @@ body, .form-control{
     width: 40px !important;
     height: 40px !important;
 }
+
+.houstonbg {
+    background: url(/images/skyline-559295_960_720.jpg) no-repeat;  
+    color:white; 
+}
+
+.houstonbg a {
+    color:yellow; 
+}

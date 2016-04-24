@@ -61,39 +61,30 @@ THE SOFTWARE.
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a href="#services"><i class="fa fa-tags fa-fw"></i>Services</a></li>
-                        <li><a href="#contact"><i class="fa fa-phone fa-fw"></i>Contact</a></li>
                         <li><a href="#about"><i class="fa fa-info fa-fw"></i>About</a></li>
+                        <li><a href="#contact"><i class="fa fa-phone fa-fw"></i>Contact</a></li>
                         <li><a href="#input"><i class="fa fa-book fa-fw"></i>CRUD Input Form</a></li>
                         <li><a href="#projection"><i class="fa fa-calendar fa-fw"></i>Projection Form</a></li>
                     </ul>
+                    <!--
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="login">Login</a></li>
                         <li><a href="register">Register</a></li>
                     </ul>
+                    -->
                 </div><!--/.nav-collapse -->
             </div><!-- /container -->
         </nav><!-- /nav -->
-
         <!--CONTENT-->
-        <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1><span class="text-danger">Monroe</span>Box Services Corp.</h1>
-                </div>
-            </div>
-            <div class="row">
-                <br>
-                <!--Page injections go here -->
-                <div ui-view="content"></div>
-                <hr />
-                <!--debug text for angular routing
-                <pre>$location.path() = {{$location.path()}}</pre>
-                <pre>$route.current.templateUrl = {{$route.current.templateUrl}}</pre>
-                <pre>$route.current.params = {{$route.current.params}}</pre>
-                <pre>$route.current.scope.name = {{$route.current.scope.name}}</pre>
-                <pre>$routeParams = {{$routeParams}}</pre>-->
-            </div>
-        </div>
+        <!--Page injections go here -->
+        <div ui-view="content"></div>
+        
+        <!--debug text for angular routing
+        <pre>$location.path() = {{$location.path()}}</pre>
+        <pre>$route.current.templateUrl = {{$route.current.templateUrl}}</pre>
+        <pre>$route.current.params = {{$route.current.params}}</pre>
+        <pre>$route.current.scope.name = {{$route.current.scope.name}}</pre>
+        <pre>$routeParams = {{$routeParams}}</pre>-->
 
         <!--SCRIPTS-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -105,7 +96,5 @@ THE SOFTWARE.
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
         <!--this script contains controllers for communicating with the api-->
         <script src="js/app.js"></script>
-
     </body>
-
 </html>

@@ -22,9 +22,18 @@ body {
     #page-wrapper {
         position: inherit;
         margin: 0 250px 0 250px;
-        padding: 0 30px;
+        padding: 0 0px;
         border-left: 1px solid #e7e7e7;
     }
+}
+
+.navbar {
+    margin-bottom: 0px;
+}
+
+.navbar-brand {
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
 
 .navbar-top-links li {
@@ -288,6 +297,10 @@ table.dataTable thead .sorting:after {
 
 .huge {
     font-size: 40px;
+}
+
+.panel {
+    min-height: 350px;
 }
 
 .panel-green {

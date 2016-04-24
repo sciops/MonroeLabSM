@@ -32,7 +32,6 @@ h6 {
     text-align: center;
     color: #f8f8f8;
     /*background: url(../img/intro-bg.jpg) no-repeat center center;*/
-    background: url(../img/images2.jpg) no-repeat center center;
     background-size: 99%;
 }
 
@@ -157,6 +156,17 @@ h6 {
     }
 }
 
+@media (min-width:400px){
+    .global-search {
+        padding: 20px 0;
+        text-align:center;
+    }
+
+    .global-search .form-control {
+        width:300px;
+    }
+}
+
 footer {
     padding: 50px 0;
     background-color: #f8f8f8;
@@ -184,16 +194,3 @@ p.copyright {
     padding-top:10px;
 }
 
-
-
-@media (min-width:400px){
-    .global-search {
-        padding: 20px 0;
-        text-align:center;
-    }
-
-    .global-search .form-control {
-        width:300px;
-    }
-
-}
