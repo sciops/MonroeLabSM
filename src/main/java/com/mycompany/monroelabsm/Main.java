@@ -29,7 +29,7 @@ import spark.servlet.SparkApplication;
 
 public class Main implements SparkApplication {
 
-    final String VERSION = "v1.007";
+    final String VERSION = "v1.008";
 
     //must move all verbs to init method, out of main
     @Override

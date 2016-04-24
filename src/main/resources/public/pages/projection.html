@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 -->
 
-<div class="panel panel-default col-sm-12" ng-controller="ProjectionController as proj">
+<div class="ng-cloak col-sm-12" ng-controller="ProjectionController as proj">
     <div class="panel panel-default">
         <div class="panel-heading"><span class="lead">List of Box Keys</span></div>
         <div class="tablecontainer">
@@ -53,161 +53,161 @@ THE SOFTWARE.
                 </tbody>
             </table>
         </div>
-    </div>
-    <div class="panel-heading"><span class="lead">Projection Form</span></div>
-    <div class="formcontainer">
-        <form name="projectionForm">
-            <div class="row form-group col-md-12" data-ng-repeat="serial in proj.request.serials track by $index">
-                <div class="col-md-2"><label class="control-label" ng-show="$first">Serials</label></div>
-                <div class="col-md-8">
-                    <input 
-                        type="text" 
-                        ng-model="proj.request.serials[$index]" 
-                        name="" 
-                        placeholder="Enter a serial number"
-                        class="form-control input-sm" 
-                        required 
-                        ng-minlength="26"
-                        ng-maxlength="26"
-                        />
-                    <button 
-                        type="button" 
-                        ng-hide="proj.request.serials.length < 2" 
-                        ng-click="proj.removeSerial($index)" 
-                        class="btn btn-danger custom-width"
-                        >
-                        <i class="fa fa-trash" aria-hidden="true"></i>
-                    </button>
-                    <button 
-                        type="button" 
-                        ng-show="$last" 
-                        ng-click="proj.addNewSerial()" 
-                        class="btn btn-info custom-width"
-                        >
-                        <i class="fa fa-plus" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="row form-group col-md-12">
-                <label class="col-md-2 control-label">Operator</label>
-                <div class="col-md-8">
-                    <input 
-                        type="text" 
-                        ng-model="proj.request.operator" 
-                        class="form-control input-sm" 
-                        placeholder="Enter an operator number"
-                        required 
-                        ng-minlength="6"
-                        ng-maxlength="6"
-                        />
-                </div>
-            </div>
-            <!--
-            <div class="row form-group col-md-12">
-                <label class="col-md-2 control-label">Heading</label>
-                <div class="col-md-8">
-                    <input type="text" ng-model="proj.request.heading" class="form-control input-sm" placeholder="Enter a heading number"/>
-                </div>
-            </div>
-            <div class="row form-group col-md-12">
-                <label class="col-md-2 control-label">GPS X-Coordinate</label>
-                <div class="col-md-8">
-                    <input type="text" ng-model="proj.request.gpsx" class="form-control input-sm" placeholder="Enter a X coordinate"/>
-                </div>
-            </div>
-            <div class="row form-group col-md-12">
-                <label class="col-md-2 control-label">GPS Y-Coordinate</label>
-                <div class="col-md-8">
-                    <input type="text" ng-model="proj.request.gpsy" class="form-control input-sm" placeholder="Enter a Y coordinate"/>
-                </div>
-            </div>
-            <div class="row form-group col-md-12">
-                <label class="col-md-2 control-label">Crypto currency</label>
-                <div class="col-md-8">
-                    <input type="text" ng-model="proj.request.crypto" class="form-control input-sm" placeholder="Enter a crypto currency code"/>
-                </div>
-            </div>
-            <div class="row form-group col-md-12">
-                <label class="col-md-2 control-label">Fiat currency</label>
-                <div class="col-md-8">
-                    <input type="text" ng-model="proj.request.fiat" class="form-control input-sm" placeholder="Enter a fiat currency code"/>
-                </div>
-            </div>
-            -->
-            <div class="row form-group col-md-12" data-ng-repeat="denomination in proj.request.denominations track by $index">
-                <div class="col-md-2"><label class="control-label" ng-show="$first">Denominations</label></div>
-                <div class="col-md-8">
-                    <input 
-                        type="text"
-                        ng-model="proj.request.denominations[$index]" 
-                        name="" 
-                        placeholder="Enter a denomination"
-                        class="form-control input-sm"
-                        required 
-                        ng-minlength="2"
-                        ng-maxlength="2"
-                        />
-                    <button 
-                        type="button" 
-                        ng-hide="proj.request.denominations.length < 2" 
-                        ng-click="proj.removeDenomination($index)" 
-                        class="btn btn-danger custom-width"
-                        >
-                        <i class="fa fa-trash" aria-hidden="true"></i>
-                    </button>
-                    <button 
-                        type="button" 
-                        ng-show="$last" 
-                        ng-click="proj.addNewDenomination()" 
-                        class="btn btn-info custom-width"
-                        >
-                        <i class="fa fa-plus" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="row form-group col-md-12">
-                <label class="col-md-2 control-label">Start Time</label>
-                <div class="col-md-8">
-                    <input 
-                        type="text" 
-                        ng-model="proj.request.start" 
-                        class="form-control input-sm" 
-                        placeholder="Enter a starting time"
-                        required 
-                        ng-minlength="8"
-                        ng-maxlength="8"
-                        />
-                </div>
-            </div>
-            <div class="row form-group col-md-12">
-                <label class="col-md-2 control-label">End Time</label>
-                <div class="col-md-8">
-                    <input 
-                        type="text" 
-                        ng-model="proj.request.end" 
-                        class="form-control input-sm" 
-                        placeholder="Enter a ending time"
-                        required 
-                        ng-minlength="8"
-                        ng-maxlength="8"
-                        />
-                </div>
-            </div>
-            <!--
-            <div class="row form-group col-md-12">
-                <label class="col-md-2 control-label">Frequency</label>
-                <div class="col-md-8">
-                    <input type="text" ng-model="proj.request.frequency" class="form-control input-sm" placeholder="Enter a frequency"/>
-                </div>
-            </div>-->
 
-            <div class="row form-group col-md-12">
-                <div class="form-actions floatRight">
-                    <input type="submit"  ng-click="proj.submit()" value="Submit" class="btn btn-primary btn-sm" ng-disabled="projectionForm.$invalid"/>
-                    <button type="button" ng-click="proj.reset()" class="btn btn-warning btn-sm">Reset Form</button>
+        <div class="panel-heading"><span class="lead">Projection Form</span></div>
+        <div class="formcontainer">
+            <form name="projectionForm">
+                <div class="row form-group col-md-12" data-ng-repeat="serial in proj.request.serials track by $index">
+                    <div class="col-md-2"><label class="control-label" ng-show="$first">Serials</label></div>
+                    <div class="col-md-8">
+                        <input 
+                            type="text" 
+                            ng-model="proj.request.serials[$index]" 
+                            name="" 
+                            placeholder="Enter a serial number"
+                            class="form-control input-sm" 
+                            required 
+                            ng-minlength="26"
+                            ng-maxlength="26"
+                            />
+                        <button 
+                            type="button" 
+                            ng-hide="proj.request.serials.length < 2" 
+                            ng-click="proj.removeSerial($index)" 
+                            class="btn btn-danger custom-width"
+                            >
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                        <button 
+                            type="button" 
+                            ng-show="$last" 
+                            ng-click="proj.addNewSerial()" 
+                            class="btn btn-info custom-width"
+                            >
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </form>
-    </div>
+                <div class="row form-group col-md-12">
+                    <label class="col-md-2 control-label">Operator</label>
+                    <div class="col-md-8">
+                        <input 
+                            type="text" 
+                            ng-model="proj.request.operator" 
+                            class="form-control input-sm" 
+                            placeholder="Enter an operator number"
+                            required 
+                            ng-minlength="6"
+                            ng-maxlength="6"
+                            />
+                    </div>
+                </div>
+                <!--
+                <div class="row form-group col-md-12">
+                    <label class="col-md-2 control-label">Heading</label>
+                    <div class="col-md-8">
+                        <input type="text" ng-model="proj.request.heading" class="form-control input-sm" placeholder="Enter a heading number"/>
+                    </div>
+                </div>
+                <div class="row form-group col-md-12">
+                    <label class="col-md-2 control-label">GPS X-Coordinate</label>
+                    <div class="col-md-8">
+                        <input type="text" ng-model="proj.request.gpsx" class="form-control input-sm" placeholder="Enter a X coordinate"/>
+                    </div>
+                </div>
+                <div class="row form-group col-md-12">
+                    <label class="col-md-2 control-label">GPS Y-Coordinate</label>
+                    <div class="col-md-8">
+                        <input type="text" ng-model="proj.request.gpsy" class="form-control input-sm" placeholder="Enter a Y coordinate"/>
+                    </div>
+                </div>
+                <div class="row form-group col-md-12">
+                    <label class="col-md-2 control-label">Crypto currency</label>
+                    <div class="col-md-8">
+                        <input type="text" ng-model="proj.request.crypto" class="form-control input-sm" placeholder="Enter a crypto currency code"/>
+                    </div>
+                </div>
+                <div class="row form-group col-md-12">
+                    <label class="col-md-2 control-label">Fiat currency</label>
+                    <div class="col-md-8">
+                        <input type="text" ng-model="proj.request.fiat" class="form-control input-sm" placeholder="Enter a fiat currency code"/>
+                    </div>
+                </div>
+                -->
+                <div class="row form-group col-md-12" data-ng-repeat="denomination in proj.request.denominations track by $index">
+                    <div class="col-md-2"><label class="control-label" ng-show="$first">Denominations</label></div>
+                    <div class="col-md-8">
+                        <input 
+                            type="text"
+                            ng-model="proj.request.denominations[$index]" 
+                            name="" 
+                            placeholder="Enter a denomination"
+                            class="form-control input-sm"
+                            required 
+                            ng-minlength="2"
+                            ng-maxlength="2"
+                            />
+                        <button 
+                            type="button" 
+                            ng-hide="proj.request.denominations.length < 2" 
+                            ng-click="proj.removeDenomination($index)" 
+                            class="btn btn-danger custom-width"
+                            >
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                        <button 
+                            type="button" 
+                            ng-show="$last" 
+                            ng-click="proj.addNewDenomination()" 
+                            class="btn btn-info custom-width"
+                            >
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="row form-group col-md-12">
+                    <label class="col-md-2 control-label">Start Time</label>
+                    <div class="col-md-8">
+                        <input 
+                            type="text" 
+                            ng-model="proj.request.start" 
+                            class="form-control input-sm" 
+                            placeholder="Enter a starting time"
+                            required 
+                            ng-minlength="8"
+                            ng-maxlength="8"
+                            />
+                    </div>
+                </div>
+                <div class="row form-group col-md-12">
+                    <label class="col-md-2 control-label">End Time</label>
+                    <div class="col-md-8">
+                        <input 
+                            type="text" 
+                            ng-model="proj.request.end" 
+                            class="form-control input-sm" 
+                            placeholder="Enter a ending time"
+                            required 
+                            ng-minlength="8"
+                            ng-maxlength="8"
+                            />
+                    </div>
+                </div>
+                <!--
+                <div class="row form-group col-md-12">
+                    <label class="col-md-2 control-label">Frequency</label>
+                    <div class="col-md-8">
+                        <input type="text" ng-model="proj.request.frequency" class="form-control input-sm" placeholder="Enter a frequency"/>
+                    </div>
+                </div>-->
 
+                <div class="row form-group col-md-12">
+                    <div class="form-actions floatRight">
+                        <input type="submit"  ng-click="proj.submit()" value="Submit" class="btn btn-primary btn-sm" ng-disabled="projectionForm.$invalid"/>
+                        <button type="button" ng-click="proj.reset()" class="btn btn-warning btn-sm">Reset Form</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
