@@ -30,21 +30,41 @@ THE SOFTWARE.
     <div class="panel panel-default">
         <div class="panel-heading"><span class="lead">List of Box Keys</span></div>
         <div class="tablecontainer">
-            <!--http://ng-table.com/#/-->
-            <table ng-table="vm.tableParams" class="table" show-filter="true">
-                <tr ng-repeat="key in proj.keys">
-                    <td title="'Serial'" filter="{ serial: 'text'}" sortable="'serial'">
-                        {{key.seed.serial}}</td>
-                    <td title="'Operator'" filter="{ operator: 'text'}" sortable="'operator'">
-                        {{key.seed.operator}}</td>
-                    <td title="'Denomination'" filter="{ denomination: 'text'}" sortable="'denomination'">
-                        {{key.seed.denomination}}</td>
-                    <td title="'Date/Time'" filter="{ time: 'text'}" sortable="'time'">
-                        {{key.seed.time}}</td>
-                    <td title="'Public Key'" filter="{ publickey: 'text'}" sortable="'publickey'">
-                        <a href="https://blockchain.info/address/{{key.publickey}}">{{key.publickey}}</a></td>
-                </tr>
-            </table>
+            <table st-table="proj.keys" class="table table-striped">
+		<thead>
+		<tr>
+			<th st-sort="serial">serial</th>
+			<th st-sort="operator">operator</th>
+			<th st-sort="denomination">denomination</th>
+			<th st-sort="time">time</th>
+			<th>public key</th>
+		</tr>
+		<tr>
+			<th>
+				<input st-search="'publickey'" placeholder="search for public key" class="input-sm form-control" type="search"/>
+			</th>
+			<th colspan="4">
+				<input st-search placeholder="global search" class="input-sm form-control" type="search"/>
+			</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr ng-repeat="key in proj.keys">
+			<td>{{key.seed.serial}}</td>
+			<td>{{key.seed.operator}}</td>
+			<td>{{key.seed.denomination}}</td>
+			<td>{{key.seed.time}}</td>
+			<td><a ng-href="https://blockchain.info/address/{{key.publickey}}">{{key.publickey}}</a></td>
+		</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="5" class="text-center">
+					<div st-pagination="" st-items-by-page="proj.itemsByPage" st-displayed-pages="7"></div>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
         </div>
 
         <div class="panel-heading"><span class="lead">Projection Form</span></div>

@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router','ngTable']);
+var app = angular.module('app', ['ui.router', 'smart-table']);
 //this configures the ui router to display new pages when the navbar is clicked
 app.config(function ($stateProvider, $urlRouterProvider) {
     //.otherwise determines the default view
@@ -198,12 +198,11 @@ app.factory('BoxKeyService', ['$http', '$q', function ($http, $q) {
         };
     }]);
 
-app.controller('ProjectionController', ['$scope', 'ProjectionService', 'NgTableParams' ,function ($scope, ProjectionService, NgTableParams) {
+app.controller('ProjectionController', ['$scope', 'ProjectionService', function ($scope, ProjectionService) {
         var self = this;
         self.keys = [];
-        //http://ng-table.com/#/
-        self.tableParams = new NgTableParams({}, {dataset: self.keys});
-        
+        var itemsByPage = 15;
+
         /*
          self.request = {
          serials: [''],
@@ -224,7 +223,7 @@ app.controller('ProjectionController', ['$scope', 'ProjectionService', 'NgTableP
             operator: '021325',
             denominations: ['14'],
             start: '00000000',
-            end: '00003000'
+            end: '00010000'
         };
 
         self.addNewSerial = function () {
@@ -245,6 +244,7 @@ app.controller('ProjectionController', ['$scope', 'ProjectionService', 'NgTableP
                     .then(
                             function (d) {
                                 self.keys = d;
+                                self.tableParams.reload();
                             },
                             function (errResponse) {
                                 console.error('Error while fetching keys');
