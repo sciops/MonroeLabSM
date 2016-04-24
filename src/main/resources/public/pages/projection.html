@@ -24,37 +24,26 @@ THE SOFTWARE.
 -->
 <!-- references http://www.sitepoint.com/creating-crud-app-minutes-angulars-resource/ 
                 http://mrngoitall.net/blog/2013/10/02/adding-form-fields-dynamically-in-angularjs/
-
 -->
 
 <div class="ng-cloak col-sm-12" ng-controller="ProjectionController as proj">
     <div class="panel panel-default">
         <div class="panel-heading"><span class="lead">List of Box Keys</span></div>
         <div class="tablecontainer">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <!--Heading row for list of box keys table -->
-                        <th>Serial</th>
-                        <th>Operator</th>
-                        <th>Denomination</th>
-                        <th>Date/Time</th>
-                        <th>Public Key</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="key in proj.keys">
-                        <td><span ng-bind="key.seed.serial"></span></td>
-                        <td><span ng-bind="key.seed.operator"></span></td>
-                        <td><span ng-bind="key.seed.denomination"></span></td>
-                        <td><span ng-bind="key.seed.time"></span></td>
-                        <td>
-                            <a href="https://blockchain.info/address/{{key.publickey}}">
-                                <span ng-bind="key.publickey"></span>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
+            <!--http://ng-table.com/#/-->
+            <table ng-table="vm.tableParams" class="table" show-filter="true">
+                <tr ng-repeat="key in proj.keys">
+                    <td title="'Serial'" filter="{ serial: 'text'}" sortable="'serial'">
+                        {{key.seed.serial}}</td>
+                    <td title="'Operator'" filter="{ operator: 'text'}" sortable="'operator'">
+                        {{key.seed.operator}}</td>
+                    <td title="'Denomination'" filter="{ denomination: 'text'}" sortable="'denomination'">
+                        {{key.seed.denomination}}</td>
+                    <td title="'Date/Time'" filter="{ time: 'text'}" sortable="'time'">
+                        {{key.seed.time}}</td>
+                    <td title="'Public Key'" filter="{ publickey: 'text'}" sortable="'publickey'">
+                        <a href="https://blockchain.info/address/{{key.publickey}}">{{key.publickey}}</a></td>
+                </tr>
             </table>
         </div>
 

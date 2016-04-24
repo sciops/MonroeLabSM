@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router']);
+var app = angular.module('app', ['ui.router','ngTable']);
 //this configures the ui router to display new pages when the navbar is clicked
 app.config(function ($stateProvider, $urlRouterProvider) {
     //.otherwise determines the default view
@@ -198,9 +198,11 @@ app.factory('BoxKeyService', ['$http', '$q', function ($http, $q) {
         };
     }]);
 
-app.controller('ProjectionController', ['$scope', 'ProjectionService', function ($scope, ProjectionService) {
+app.controller('ProjectionController', ['$scope', 'ProjectionService', 'NgTableParams' ,function ($scope, ProjectionService, NgTableParams) {
         var self = this;
         self.keys = [];
+        //http://ng-table.com/#/
+        self.tableParams = new NgTableParams({}, {dataset: self.keys});
         
         /*
          self.request = {
