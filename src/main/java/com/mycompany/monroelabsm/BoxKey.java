@@ -26,16 +26,18 @@ package com.mycompany.monroelabsm;
 /**
  *
  * @author Stephen R. Williams
- * 
+ *
  * This class holds the seed class and handles requests for encryption
- * 
+ *
  * TODO: add more encryption methods here for other cryptocurrency types.
  */
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.codec.DecoderException;
+import com.google.bitcoin.core.*;
+import java.math.BigInteger;
+import org.apache.commons.codec.digest.DigestUtils;
 
 public class BoxKey {
 
@@ -56,10 +58,10 @@ public class BoxKey {
     }
 
     public BoxKey(Seed seed) throws NoSuchAlgorithmException {
-        this.seed=seed;
+        this.seed = seed;
         this.setDigest();
     }
-    
+
     public BoxKey(String seed) throws NoSuchAlgorithmException, DecoderException {
         this.setSeed(B58.hexToBytes(seed));
         this.setDigest();
@@ -68,7 +70,7 @@ public class BoxKey {
     public Seed getSeed() {
         return this.seed;
     }
-    
+
     public List<String> getSeedStrings() {
         List<String> list = new ArrayList();
         list.add(seed.getSerialString());
@@ -91,18 +93,23 @@ public class BoxKey {
     public byte[] getDigest() {
         return digest;
     }
-    
+
     public String getDigestString() {
         return B58.bytesToHex(digest);
     }
 
     private void setDigest() throws NoSuchAlgorithmException {
-        byte[] seed = this.seed.getSeed();
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(seed);
-        this.digest = md.digest();
-        this.publicKey = B58.encode(seed, (byte)0);
-        this.privateKey = B58.encode(seed, (byte)-128);
+        this.digest = DigestUtils.sha256(this.seed.getSeed());
+        //store private key in ECKey object
+        BigInteger bigDig = new BigInteger(1, this.digest);
+        ECKey ecKey = new ECKey(bigDig);
+        //set creation time with utc of the timestamp
+        ecKey.setCreationTimeSeconds(60 * Bitwise.getInt(seed.getTime(), 0));
+        byte[] hash = ecKey.getPubKeyHash();
+        //System.out.println("hash length: " + hash.length);
+        //System.out.println("hash: " + hash);
+        this.publicKey = B58.encode(ecKey.getPubKeyHash(), (byte) 0);
+        this.privateKey = B58.encode(ecKey.getPrivKeyBytes(), (byte) -128);
     }
 
     public String getPublicKey() {
@@ -127,10 +134,10 @@ public class BoxKey {
             return false;
         }
         final BoxKey other = (BoxKey) obj;
-        if (this.getDigest()!= other.getDigest()) {
+        if (this.getDigest() != other.getDigest()) {
             return false;
         }
         return true;
     }
-  
+
 }

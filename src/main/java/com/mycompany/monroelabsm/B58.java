@@ -16,8 +16,9 @@ import org.apache.commons.codec.digest.DigestUtils;
  * @author Stephen R. Williams
  *
  * https://en.bitcoin.it/wiki/Base58Check_encoding
- * 
- * This static utility class handles Base58Check encoding as well as converting numbers between byte arrays and hex strings
+ *
+ * This static utility class handles Base58Check encoding as well as converting
+ * numbers between byte arrays and hex strings
  */
 public class B58 {
 
@@ -40,12 +41,14 @@ public class B58 {
             return "Base58 error: Invalid address prefix byte specified.";
         }
 
-        byte[] step1 = new byte[33];
-        //step1[0] = 0;//mainnet
-        //step1[0] = 111;//testnet
-        //step1[0] = -128;//private key
+        int size = 21;
+        if (prefix==(byte)-128) {
+            size = 33;
+        }
+
+        byte[] step1 = new byte[size];
         step1[0] = prefix;
-        for (int i = 1; i <= 32; i++) {
+        for (int i = 1; i < size; i++) {
             step1[i] = toEncode[i - 1];
         }
 
@@ -56,36 +59,19 @@ public class B58 {
         step2[2] = step2a[2];
         step2[3] = step2a[3];
 
-        byte[] step3 = new byte[37];
-        for (int i = 0; i <= 32; i++) {
+        byte[] step3 = new byte[size+4];
+        for (int i = 0; i < size; i++) {
             step3[i] = step1[i];
         }
-        step3[33] = step2[0];
-        step3[34] = step2[1];
-        step3[35] = step2[2];
-        step3[36] = step2[3];
+        step3[size] = step2[0];
+        step3[size+1] = step2[1];
+        step3[size+2] = step2[2];
+        step3[size+3] = step2[3];
 
         String output = Base58.encode(step3);
         return output;
     }
-
-    public static String encodePrivKey(byte[] toEncode) {
-        byte b = -128;
-        return encode(toEncode, b);
-    }
-
-    //returns a Base58-encoded bitcoin string for a given array of bytes
-    public static String encodeMainNetAddr(byte[] toEncode) {
-        byte b = 0;
-        return encode(toEncode, b);
-    }
-
-    //returns a Base58-encoded testnet string for a given array of bytes
-    public static String encodeTestNetAddr(byte[] toEncode) {
-        byte b = 111;
-        return encode(toEncode, b);
-    }
-
+    
     //converts 32-bit integer to 4-byte array via evil bitwise logic
     public static byte[] toByteArray(int givenValue) {
         byte[] returnedBytes = new byte[4];

@@ -221,8 +221,8 @@ app.controller('ProjectionController', ['$scope', 'ProjectionService', function 
             serials: ['ff445787458965632545125987'],
             operator: '021325',
             denominations: ['14'],
-            start: '10000000',
-            end: '10003000'
+            start: '00000000',
+            end: '00003000'
         };
 
         self.addNewSerial = function () {
