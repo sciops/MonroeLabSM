@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router', 'smart-table']);
+var app = angular.module('app', ['ui.bootstrap', 'ui.router', 'smart-table']);
 //this configures the ui router to display new pages when the navbar is clicked
 app.config(function ($stateProvider, $urlRouterProvider) {
     //.otherwise determines the default view
@@ -198,10 +198,13 @@ app.factory('BoxKeyService', ['$http', '$q', function ($http, $q) {
         };
     }]);
 
-app.controller('ProjectionController', ['$scope', 'ProjectionService', function (scope, ProjectionService) {
+app.controller('ProjectionController', ['$scope', 'ProjectionService', function ($scope, ProjectionService) {
         var self = this;
-        scope.keys = [];
-        scope.itemsByPage=15;
+        //this is where keys are stored after being fetched from the server.
+        self.keys = [];
+        //this is how many rows are in each page of the results table for the projection page.
+        self.itemsByPage = 12;
+
 
         /*
          self.request = {
@@ -225,7 +228,6 @@ app.controller('ProjectionController', ['$scope', 'ProjectionService', function 
             start: '00000000',
             end: '00010000'
         };
-
         self.addNewSerial = function () {
             self.request.serials.push('');
         };
@@ -243,8 +245,7 @@ app.controller('ProjectionController', ['$scope', 'ProjectionService', function 
             ProjectionService.projectionRequest(self.request)
                     .then(
                             function (d) {
-                                scope.keys = d;
-                                
+                                self.keys = d;
                             },
                             function (errResponse) {
                                 console.error('Error while fetching keys');
@@ -255,22 +256,94 @@ app.controller('ProjectionController', ['$scope', 'ProjectionService', function 
         self.reset = function () {
             //TODO:is there a better way to remove this duplication?
             self.request = {
-                serials: [''],
-                operator: '',
+                serials: ['ff445787458965632545125987'],
+                operator: '021325',
                 //heading: '',
                 //gpsx: '',
                 //gpsy: '',
                 //crypto: '',
                 //fiat: '',
-                denominations: [''],
-                start: '',
-                end: ''//,
-                        //frequency: '',
+                denominations: ['14'],
+                start: '00000000',
+                end: '00010000'//,
+                //frequency: '',
             };
-            scope.projectionForm.$setPristine();
+            $scope.projectionForm.$setPristine();
         };
-    }]);
 
+        //this model is used for the denomination checkbox buttons
+        $scope.checkModel = {
+            one: false,
+            five: false,
+            ten: false,
+            twenty: true,
+            fifty: false,
+            hundred: false
+        };
+
+        $scope.$watchCollection('checkModel', function () {
+            self.request.denominations = [];
+            angular.forEach($scope.checkModel, function (value, key) {
+                if (value) {
+                    switch (key) {
+                        case "one":
+                            self.request.denominations.push("01");
+                            break;
+                        case "five":
+                            self.request.denominations.push("05");
+                            break;
+                        case "ten":
+                            self.request.denominations.push("0A");
+                            break;
+                        case "twenty":
+                            self.request.denominations.push("14");
+                            break;
+                        case "fifty":
+                            self.request.denominations.push("32");
+                            break;
+                        case "hundred":
+                            self.request.denominations.push("64");
+                            break;
+                    }
+                }
+            });
+        });
+
+
+        /*
+         $scope.$watchCollection('checkModel', function () {
+         self.request.denominations = [];
+         angular.forEach(self.checkModel, function (value, key) {
+         if (value) {
+         
+         console.log("key="+key);
+         console.log("key.toString="+key.toString());
+         
+         switch (key.toString()) {
+         case "one":
+         self.request.denominations.push("01");
+         break;
+         case "five":
+         self.request.denominations.push("05");
+         break;
+         case "ten":
+         self.request.denominations.push("0A");
+         break;
+         case "twenty":
+         self.request.denominations.push("14");
+         break;
+         case "fifty":
+         self.request.denominations.push("32");
+         break;
+         case "hundred":
+         self.request.denominations.push("64");
+         break;
+         }
+         
+         }
+         });
+         });*/
+    }]);
 app.factory('ProjectionService', ['$http', '$q', function ($http, $q) {
         return {
             projectionRequest: function (request) {

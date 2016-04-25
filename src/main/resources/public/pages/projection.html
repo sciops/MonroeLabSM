@@ -30,41 +30,36 @@ THE SOFTWARE.
     <div class="panel panel-default">
         <div class="panel-heading"><span class="lead">List of Box Keys</span></div>
         <div class="tablecontainer">
-            <table st-table="displayedCollection" st-safe-src="keys" class="table table-striped">
-		<thead>
-		<tr>
-			<th st-sort="serial">serial</th>
-			<th st-sort="operator">operator</th>
-			<th st-sort="denomination">denomination</th>
-			<th st-sort="time">time</th>
-			<th>public key</th>
-		</tr>
-		<tr>
-			<th>
-				<input st-search="'publickey'" placeholder="search for public key" class="input-sm form-control" type="search"/>
-			</th>
-			<th colspan="4">
-				<input st-search placeholder="global search" class="input-sm form-control" type="search"/>
-			</th>
-		</tr>
-		</thead>
-		<tbody>
-		<tr ng-repeat="key in displayedCollection">
-			<td>{{key.seed.serial}}</td>
-			<td>{{key.seed.operator}}</td>
-			<td>{{key.seed.denomination}}</td>
-			<td>{{key.seed.time}}</td>
-			<td><a ng-href="https://blockchain.info/address/{{key.publickey}}">{{key.publickey}}</a></td>
-		</tr>
-		</tbody>
-		<tfoot>
-			<tr>
-				<td colspan="5" class="text-center">
-					<div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
-				</td>
-			</tr>
-		</tfoot>
-	</table>
+            <!--http://stackoverflow.com/questions/29732714/client-side-pagination-not-working-in-smart-table-->
+            <table st-table="displayedCollection" st-safe-src="proj.keys" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th st-sort="serial">serial</th>
+                        <th st-sort="operator">operator</th>
+                        <th st-sort="denomination">denomination</th>
+                        <th st-sort="time">time</th>
+                        <th>public key</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="key in displayedCollection">
+                        <td>{{key.seed.serial}}</td>
+                        <td>{{key.seed.operator}}</td>
+                        <td>{{key.seed.denomination}}</td>
+                        <td>{{key.seed.time}}</td>
+                        <td><a ng-href="https://blockchain.info/address/{{key.publickey}}">{{key.publickey}}</a></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td colspan="2" class="text-center">
+                            <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+                        </td>
+                        <td><input st-search placeholder="global search" class="input-sm form-control" type="search"/></td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
 
         <div class="panel-heading"><span class="lead">Projection Form</span></div>
@@ -147,35 +142,17 @@ THE SOFTWARE.
                     </div>
                 </div>
                 -->
-                <div class="row form-group col-md-12" data-ng-repeat="denomination in proj.request.denominations track by $index">
-                    <div class="col-md-2"><label class="control-label" ng-show="$first">Denominations</label></div>
+                <div class="row form-group col-md-12">
+                    <div class="col-md-2"><label class="control-label">Denominations</label></div>
                     <div class="col-md-8">
-                        <input 
-                            type="text"
-                            ng-model="proj.request.denominations[$index]" 
-                            name="" 
-                            placeholder="Enter a denomination"
-                            class="form-control input-sm"
-                            required 
-                            ng-minlength="2"
-                            ng-maxlength="2"
-                            />
-                        <button 
-                            type="button" 
-                            ng-hide="proj.request.denominations.length < 2" 
-                            ng-click="proj.removeDenomination($index)" 
-                            class="btn btn-danger custom-width"
-                            >
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-                        </button>
-                        <button 
-                            type="button" 
-                            ng-show="$last" 
-                            ng-click="proj.addNewDenomination()" 
-                            class="btn btn-info custom-width"
-                            >
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                        </button>
+                        <div class="btn-group">
+                            <label class="btn btn-primary" ng-model="checkModel.one" uib-btn-checkbox>$1</label>
+                            <label class="btn btn-primary" ng-model="checkModel.five" uib-btn-checkbox>$5</label>
+                            <label class="btn btn-primary" ng-model="checkModel.ten" uib-btn-checkbox>$10</label>
+                            <label class="btn btn-primary" ng-model="checkModel.twenty" uib-btn-checkbox>$20</label>
+                            <label class="btn btn-primary" ng-model="checkModel.fifty" uib-btn-checkbox>$50</label>
+                            <label class="btn btn-primary" ng-model="checkModel.hundred" uib-btn-checkbox>$100</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row form-group col-md-12">
