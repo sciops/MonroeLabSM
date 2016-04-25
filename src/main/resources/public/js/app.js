@@ -198,10 +198,10 @@ app.factory('BoxKeyService', ['$http', '$q', function ($http, $q) {
         };
     }]);
 
-app.controller('ProjectionController', ['$scope', 'ProjectionService', function ($scope, ProjectionService) {
+app.controller('ProjectionController', ['$scope', 'ProjectionService', function (scope, ProjectionService) {
         var self = this;
-        self.keys = [];
-        var itemsByPage = 15;
+        scope.keys = [];
+        scope.itemsByPage=15;
 
         /*
          self.request = {
@@ -243,8 +243,8 @@ app.controller('ProjectionController', ['$scope', 'ProjectionService', function 
             ProjectionService.projectionRequest(self.request)
                     .then(
                             function (d) {
-                                self.keys = d;
-                                self.tableParams.reload();
+                                scope.keys = d;
+                                
                             },
                             function (errResponse) {
                                 console.error('Error while fetching keys');
@@ -267,7 +267,7 @@ app.controller('ProjectionController', ['$scope', 'ProjectionService', function 
                 end: ''//,
                         //frequency: '',
             };
-            $scope.projectionForm.$setPristine();
+            scope.projectionForm.$setPristine();
         };
     }]);
 
