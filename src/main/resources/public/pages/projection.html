@@ -46,8 +46,7 @@ THE SOFTWARE.
                         <td>{{key.seed.serial}}</td>
                         <td>{{key.seed.operator}}</td>
                         <td>{{key.seed.denomination}}</td>
-                        <td>{{key.seed.time}} , {{pleaseParse(key.seed.time,16)}}</td>
-                        <!--((new Date()).setTime(parseInt(key.seed.time,16)))-->
+                        <td>{{key.seed.time}}</td>
                         <td><a ng-href="https://blockchain.info/address/{{key.publickey}}">{{key.publickey}}</a></td>
                     </tr>
                 </tbody>

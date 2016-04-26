@@ -246,6 +246,21 @@ app.controller('ProjectionController', ['$scope', 'ProjectionService', function 
                     .then(
                             function (d) {
                                 self.keys = d;
+                                for (keysIndex in self.keys) {
+                                    //reassign date strings in place of the hex strings.
+                                    var thisKey = self.keys[keysIndex];
+                                    var hexString = thisKey.seed.time;
+                                    var newInteger = parseInt(hexString, 16) * 1000;
+                                    var newDate = new Date();
+                                    newDate.setTime(newInteger);
+                                    var newString = (newDate.toISOString());
+                                    self.keys[keysIndex].seed.time = newString;
+                                    
+                                    //do the same for the denomination
+                                    hexString = thisKey.seed.denomination;
+                                    newInteger = parseInt(hexString, 16);
+                                    self.keys[keysIndex].seed.denomination = "$"+newInteger;
+                                }
                             },
                             function (errResponse) {
                                 console.error('Error while fetching keys');
@@ -334,9 +349,6 @@ app.controller('ProjectionController', ['$scope', 'ProjectionService', function 
                         self.request.end = ("0000000" + endUTC.toString(16)).substr(-8);
                     }
                 });
-                var pleaseParse = function(s) {
-                    return parseInt(s, 16);
-                } 
 
     }]);
 app.factory('ProjectionService', ['$http', '$q', function ($http, $q) {
