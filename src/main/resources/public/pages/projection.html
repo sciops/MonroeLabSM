@@ -46,7 +46,8 @@ THE SOFTWARE.
                         <td>{{key.seed.serial}}</td>
                         <td>{{key.seed.operator}}</td>
                         <td>{{key.seed.denomination}}</td>
-                        <td>{{key.seed.time}}</td>
+                        <td>{{key.seed.time}} , {{pleaseParse(key.seed.time,16)}}</td>
+                        <!--((new Date()).setTime(parseInt(key.seed.time,16)))-->
                         <td><a ng-href="https://blockchain.info/address/{{key.publickey}}">{{key.publickey}}</a></td>
                     </tr>
                 </tbody>
@@ -155,6 +156,18 @@ THE SOFTWARE.
                         </div>
                     </div>
                 </div>
+
+
+                <div class="row form-group col-md-12">
+                    <label class="col-md-2 control-label">Dates</label>
+                    <div class="col-md-8">
+                        <input type="daterange" ng-model="dates" format="MMM DD" separator="/" class="form-control input-sm" /> 
+                    </div>
+                </div>
+
+
+                <!--
+                
                 <div class="row form-group col-md-12">
                     <label class="col-md-2 control-label">Start Time</label>
                     <div class="col-md-8">
@@ -183,6 +196,9 @@ THE SOFTWARE.
                             />
                     </div>
                 </div>
+                
+                -->
+
                 <!--
                 <div class="row form-group col-md-12">
                     <label class="col-md-2 control-label">Frequency</label>

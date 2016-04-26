@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.bootstrap', 'ui.router', 'smart-table']);
+var app = angular.module('app', ['ui.bootstrap', 'ui.router', 'smart-table', 'ngBootstrap']);
 //this configures the ui router to display new pages when the navbar is clicked
 app.config(function ($stateProvider, $urlRouterProvider) {
     //.otherwise determines the default view
@@ -266,7 +266,7 @@ app.controller('ProjectionController', ['$scope', 'ProjectionService', function 
                 denominations: ['14'],
                 start: '00000000',
                 end: '00010000'//,
-                //frequency: '',
+                        //frequency: '',
             };
             $scope.projectionForm.$setPristine();
         };
@@ -309,40 +309,35 @@ app.controller('ProjectionController', ['$scope', 'ProjectionService', function 
             });
         });
 
+        //date range picker by luis farzati: luisfarzati.github.io/ng-bs-daterangepicker/
+        $scope.dates = {startDate: moment().startOf('month'), endDate: moment().endOf('month')};
+        var startUTC;
+        var endUTC;
+        //create a watch to watch scope.dates for changes
+        //http://tutorials.jenkov.com/angularjs/watch-digest-apply.html#watch
+        $scope.$watch(
+                function (scope) {//this function returns what needs to be watched.
+                    return scope.dates;
+                },
+                function (newValue, oldValue) {//this function performs an action when the watched variable changes.
+                    //take dates and get integer values from them.
+                    //http://stackoverflow.com/questions/18634087/how-to-convert-a-string-to-a-unix-timestamp-in-javascript
+                    //for some reason, the watch triggers twice every time the daterangepicker is applied, so we'll check the number.
+                    startUTC = Math.round(new Date(oldValue.startDate).getTime() / 1000);
+                    endUTC = Math.round(new Date(oldValue.endDate).getTime() / 1000);
+                    //var d = (new Date()).setTime(parseInt(key.seed.time,16)).toString();
+                    //now get utc hex values and store them in the array.
+                    //these lines will also add leading zeroes                 
+                    //http://stackoverflow.com/questions/9909038/formatting-hexadecimal-number-in-javascript
+                    if ((startUTC > 1) && (endUTC >= startUTC)) {
+                        self.request.start = ("0000000" + startUTC.toString(16)).substr(-8);
+                        self.request.end = ("0000000" + endUTC.toString(16)).substr(-8);
+                    }
+                });
+                var pleaseParse = function(s) {
+                    return parseInt(s, 16);
+                } 
 
-        /*
-         $scope.$watchCollection('checkModel', function () {
-         self.request.denominations = [];
-         angular.forEach(self.checkModel, function (value, key) {
-         if (value) {
-         
-         console.log("key="+key);
-         console.log("key.toString="+key.toString());
-         
-         switch (key.toString()) {
-         case "one":
-         self.request.denominations.push("01");
-         break;
-         case "five":
-         self.request.denominations.push("05");
-         break;
-         case "ten":
-         self.request.denominations.push("0A");
-         break;
-         case "twenty":
-         self.request.denominations.push("14");
-         break;
-         case "fifty":
-         self.request.denominations.push("32");
-         break;
-         case "hundred":
-         self.request.denominations.push("64");
-         break;
-         }
-         
-         }
-         });
-         });*/
     }]);
 app.factory('ProjectionService', ['$http', '$q', function ($http, $q) {
         return {
