@@ -1,40 +1,142 @@
 body, #mainWrapper {
-	height: 70%;
-	background-color:rgb(245, 245, 245);
+    height: 70%;
+    background:#38291A;
+    color:#fff;
+    /*background-color:   rgb(245, 245, 245);*/
 }
 
 body, .form-control{
-	font-size:12px!important;
+    font-size:12px!important;
+}
+
+.btn, .btn.focus, .btn:focus {
+    color:#fff;
+    border-color:#fff;
+    background-image: linear-gradient(to bottom,#614823 0,#38291A 100%);
+}
+
+.btn:hover {
+    color:#B8BE1B;
+    border-color:#B8BE1B;
+    background-image: linear-gradient(to bottom,#614823 0,#38291A 100%);
+}
+
+.btn:active {
+    color:#B8BE1B;
+    border-color:#B8BE1B;
+    background-image: linear-gradient(to bottom,#38291A 0,#614823 100%);
+}
+
+a,
+a:link, 
+a:visited, 
+a:active,
+a:link:active,
+a:visited:active {
+    color: #fff;
+}
+
+a:hover,
+a:link:hover, 
+a:visited:hover {
+    color: #B8BE1B;
+}
+
+.navbar-nav>li>a,
+.navbar-nav>li>a:link, 
+.navbar-nav>li>a:visited,
+.navbar-nav>li>a:active,
+.navbar-nav>li>a:link:active, 
+.navbar-nav>li>a:visited:active
+{
+    color: #38291A;
+}
+
+.navbar-nav>li>a:hover,
+.navbar-nav>li>a:link:hover, 
+.navbar-nav>li>a:visited:hover {
+    color: #B8BE1B;
+}
+
+.panel-default {
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-top: 15px;
+    margin-right: 15px;
+    margin-left: 15px;
+    margin-bottom: 15px;
+}
+
+.panel-default>.panel-heading {
+    background:#38291A;
+    color:#fff;  
+    background-image: linear-gradient(to bottom,#614823 0,#38291A 100%);
+}
+
+.panel-default>.panel-body {
+    background:#fff;
+    color:#38291A;
+}
+
+.panel-primary {
+    border-color: #fff;
+}
+
+.panel-default a,
+.panel-default a:link, 
+.panel-default a:visited,
+.panel-default a:active,
+.panel-default a:link:active, 
+.panel-default a:visited:active
+{
+    color: #38291A;
+}
+
+.panel-default a:hover,
+.panel-default a:link:hover, 
+.panel-default a:visited:hover {
+    color: #B8BE1B;
 }
 
 .floatRight{
-	float:right;
-	margin-right: 18px;
+    float:right;
+    margin-right: 18px;
 }
 
 .has-error{
-	color:red;
+    color:red;
 }
 
 .formcontainer{
-	background-color: #DAE8E8;
-	padding: 20px;
+    background-color: #38291A;
+    padding: 20px;
+    border-color: #38291A;
 }
 
 .tablecontainer{
-	padding-left: 20px;
+    padding-left: 20px;
+    background:#fff;
+    color:#38291A;
 }
 
 .generic-container {
-  width:80%;
-  margin-left: 20px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  padding: 20px;
-  background-color: #EAE7E7;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-shadow: 0 0 30px black;
+    width:80%;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #EAE7E7;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 0 30px black;
+}
+
+.clearfix:after {
+    content: " "; /* Older browser do not support empty content */
+    visibility: hidden;
+    display: block;
+    height: 0;
+    clear: both;
 }
 
 /*this defines the width of edit/delete buttons*/
@@ -44,10 +146,25 @@ body, .form-control{
 }
 
 .houstonbg {
-    background: url(/images/skyline-559295_960_720.jpg) no-repeat;  
-    color:white; 
+    background: url(/images/skyline-559295_960_720.jpg) no-repeat;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height:663px;
+    color:white;
+    border-style:none;
 }
 
-.houstonbg a {
-    color:yellow; 
+.houstonbg a:link, 
+.houstonbg a:visited {
+    color: #B8BE1B;
+}
+
+.houstonbg a:link:hover, 
+.houstonbg a:visited:hover {
+    color: #fff;
+}
+
+.houstonbg a:link:active, 
+.houstonbg a:visited:active {
+    color: #B8BE1B;
 }

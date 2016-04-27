@@ -10,6 +10,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 views: {
                     'content': {
                         templateUrl: 'pages/services.html'
+                    },
+                    'navbar':{
+                        templateUrl: 'pages/navbar.html'
                     }
                 }
             })
@@ -18,6 +21,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 views: {
                     'content@': {
                         templateUrl: 'pages/services.html'
+                    },
+                    'navbar@':{
+                        templateUrl: 'pages/navbar.html'
                     }
                 }
             })
@@ -26,6 +32,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 views: {
                     'content@': {
                         templateUrl: 'pages/contact.html'
+                    },
+                    'navbar@':{
+                        templateUrl: 'pages/navbar.html'
                     }
                 }
             })
@@ -34,6 +43,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 views: {
                     'content@': {
                         templateUrl: 'pages/about.html'
+                    },
+                    'navbar@':{
+                        templateUrl: 'pages/navbar.html'
                     }
                 }
             })
@@ -42,6 +54,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 views: {
                     'content@': {
                         templateUrl: 'pages/input.html'
+                    },
+                    'navbar@':{
+                        templateUrl: 'pages/navbar.html'
                     }
                 }
             })
@@ -51,15 +66,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                     'content@': {
                         templateUrl: 'pages/projection.html',
                         controller: 'ProjectionController'
-                    }
-                }
-            })
-            .state('app.projection.serial', {
-                url: '/projection/:projectionrequest',
-                views: {
-                    'detail@app.projection': {
-                        templateUrl: 'pages/projection-detail.html',
-                        controller: 'ProjectionDetailController'
+                    },
+                    'navbar@':{
+                        templateUrl: 'pages/navbar.html'
                     }
                 }
             });

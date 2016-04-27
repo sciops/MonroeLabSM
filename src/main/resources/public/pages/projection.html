@@ -61,9 +61,10 @@ THE SOFTWARE.
                 </tfoot>
             </table>
         </div>
-
+    </div>
+    <div class="panel panel-default">
         <div class="panel-heading"><span class="lead">Projection Form</span></div>
-        <div class="formcontainer">
+        <div class="formcontainer clearfix">
             <form name="projectionForm">
                 <div class="row form-group col-md-12" data-ng-repeat="serial in proj.request.serials track by $index">
                     <div class="col-md-2"><label class="control-label" ng-show="$first">Serials</label></div>
@@ -82,7 +83,7 @@ THE SOFTWARE.
                             type="button" 
                             ng-hide="proj.request.serials.length < 2" 
                             ng-click="proj.removeSerial($index)" 
-                            class="btn btn-danger custom-width"
+                            class="btn"
                             >
                             <i class="fa fa-trash" aria-hidden="true"></i>
                         </button>
@@ -90,7 +91,7 @@ THE SOFTWARE.
                             type="button" 
                             ng-show="$last" 
                             ng-click="proj.addNewSerial()" 
-                            class="btn btn-info custom-width"
+                            class="btn"
                             >
                             <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
@@ -146,12 +147,12 @@ THE SOFTWARE.
                     <div class="col-md-2"><label class="control-label">Denominations</label></div>
                     <div class="col-md-8">
                         <div class="btn-group">
-                            <label class="btn btn-primary" ng-model="checkModel.one" uib-btn-checkbox>$1</label>
-                            <label class="btn btn-primary" ng-model="checkModel.five" uib-btn-checkbox>$5</label>
-                            <label class="btn btn-primary" ng-model="checkModel.ten" uib-btn-checkbox>$10</label>
-                            <label class="btn btn-primary" ng-model="checkModel.twenty" uib-btn-checkbox>$20</label>
-                            <label class="btn btn-primary" ng-model="checkModel.fifty" uib-btn-checkbox>$50</label>
-                            <label class="btn btn-primary" ng-model="checkModel.hundred" uib-btn-checkbox>$100</label>
+                            <label class="btn" ng-model="checkModel.one" uib-btn-checkbox>$1</label>
+                            <label class="btn" ng-model="checkModel.five" uib-btn-checkbox>$5</label>
+                            <label class="btn" ng-model="checkModel.ten" uib-btn-checkbox>$10</label>
+                            <label class="btn" ng-model="checkModel.twenty" uib-btn-checkbox>$20</label>
+                            <label class="btn" ng-model="checkModel.fifty" uib-btn-checkbox>$50</label>
+                            <label class="btn" ng-model="checkModel.hundred" uib-btn-checkbox>$100</label>
                         </div>
                     </div>
                 </div>
@@ -160,7 +161,13 @@ THE SOFTWARE.
                 <div class="row form-group col-md-12">
                     <label class="col-md-2 control-label">Dates</label>
                     <div class="col-md-8">
-                        <input type="daterange" ng-model="dates" format="MMM DD" separator="/" class="form-control input-sm" /> 
+                        <input 
+                            type="daterange" 
+                            ng-model="dates" 
+                            format="MMM DD" 
+                            separator="/" 
+                            class="form-control input-sm" 
+                            /> 
                     </div>
                 </div>
 
@@ -208,8 +215,8 @@ THE SOFTWARE.
 
                 <div class="row form-group col-md-12">
                     <div class="form-actions floatRight">
-                        <input type="submit"  ng-click="proj.submit()" value="Submit" class="btn btn-primary btn-sm" ng-disabled="projectionForm.$invalid"/>
-                        <button type="button" ng-click="proj.reset()" class="btn btn-warning btn-sm">Reset Form</button>
+                        <input type="submit"  ng-click="proj.submit()" value="Submit" class="btn" ng-disabled="projectionForm.$invalid"/>
+                        <button type="button" ng-click="proj.reset()" class="btn">Reset Form</button>
                     </div>
                 </div>
             </form>

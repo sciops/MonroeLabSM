@@ -27,8 +27,8 @@
                                 <span ng-bind="key.publickey"></span>
                             </a>
                         </td>
-                        <td><button type="button" ng-click="ctrl.edit(key.publickey)" class="btn btn-success custom-width"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
-                        <td><button type="button" ng-click="ctrl.remove(key.publickey)" class="btn btn-danger custom-width"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                        <td><button type="button" ng-click="ctrl.edit(key.publickey)" class="btn custom-width"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
+                        <td><button type="button" ng-click="ctrl.remove(key.publickey)" class="btn custom-width"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
                     </tr>
                 </tbody>
             </table>
@@ -111,8 +111,8 @@
                 </div>
                 <div class="row">
                     <div class="form-actions floatRight">
-                        <input type="submit"  value="{{!ctrl.key.publickey ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid"/>
-                        <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm">Reset Form</button>
+                        <input type="submit"  value="{{!ctrl.key.publickey ? 'Add' : 'Update'}}" class="btn" ng-disabled="myForm.$invalid"/>
+                        <button type="button" ng-click="ctrl.reset()" class="btn">Reset Form</button>
                     </div>
                 </div>
             </form>
