@@ -1,6 +1,6 @@
 body, #mainWrapper {
     height: 70%;
-    background:#38291A;
+    background:#34282C;
     color:#fff;
     /*background-color:   rgb(245, 245, 245);*/
 }
@@ -12,20 +12,20 @@ body, .form-control{
 .btn, 
 .btn.focus {
     color:#fff !important;
-    border-color:#fff;
-    background-image: linear-gradient(to bottom,#614823 0,#38291A 100%);
+    border-color:#fff !important;
+    background-image: linear-gradient(to bottom,#4A465C 0,#34282C 100%) !important;
 }
 
 .btn:hover {
-    color:#B8BE1B;
-    border-color:#B8BE1B;
-    background-image: linear-gradient(to bottom,#614823 0,#38291A 100%);
+    color:#FDD017 !important;
+    border-color:#FDD017 !important;
+    background-image: linear-gradient(to bottom,#4A465C 0,#34282C 100%) !important;
 }
 
-.btn:active {
-    color:#B8BE1B;
-    border-color:#B8BE1B;
-    background-image: linear-gradient(to bottom,#38291A 0,#614823 100%);
+.btn:active, .btn.active {
+    color:#FDD017 !important;
+    border-color:#FDD017 !important;
+    background-image: linear-gradient(to bottom,#34282C 0,#4A465C 100%) !important;
 }
 
 a,
@@ -40,7 +40,7 @@ a:visited:active {
 a:hover,
 a:link:hover, 
 a:visited:hover {
-    color: #B8BE1B;
+    color: #FDD017;
 }
 
 .navbar-nav>li>a,
@@ -49,13 +49,13 @@ a:visited:hover {
 .navbar-nav>li>a:active,
 .navbar-nav>li>a:link:active, 
 .navbar-nav>li>a:visited:active {
-    color: #38291A;
+    color: #34282C;
 }
 
 .navbar-nav>li>a:hover,
 .navbar-nav>li>a:link:hover, 
 .navbar-nav>li>a:visited:hover {
-    color: #B8BE1B;
+    color: #FDD017;
 }
 
 .panel-default {
@@ -68,18 +68,18 @@ a:visited:hover {
 }
 
 .panel-default>.panel-heading {
-    background:#38291A;
+    background:#34282C;
     color:#fff;  
-    background-image: linear-gradient(to bottom,#614823 0,#38291A 100%);
+    background-image: linear-gradient(to bottom,#4A465C 0,#34282C 100%);
 }
 
 b {
-    color:#B8BE1B;  
+    color:#FDD017;  
 }
 
 .panel-default>.panel-body {
     background:#fff;
-    color:#38291A;
+    color:#34282C;
     height:350px;
 }
 
@@ -98,13 +98,13 @@ b {
 .panel-default a:link:active, 
 .panel-default a:visited:active
 {
-    color: #38291A;
+    color: #34282C;
 }
 
 .panel-default a:hover,
 .panel-default a:link:hover, 
 .panel-default a:visited:hover {
-    color: #B8BE1B;
+    color: #FDD017;
 }
 
 .floatRight{
@@ -117,15 +117,15 @@ b {
 }
 
 .formcontainer{
-    background-color: #38291A;
+    background-color: #34282C;
     padding: 20px;
-    border-color: #38291A;
+    border-color: #34282C;
 }
 
 .tablecontainer{
     padding-left: 20px;
     background:#fff;
-    color:#38291A;
+    color:#34282C;
 }
 
 .generic-container {
@@ -165,7 +165,7 @@ b {
 
 .houstonbg a:link, 
 .houstonbg a:visited {
-    color: #B8BE1B;
+    color: #FDD017;
 }
 
 .houstonbg a:link:hover, 
@@ -175,5 +175,5 @@ b {
 
 .houstonbg a:link:active, 
 .houstonbg a:visited:active {
-    color: #B8BE1B;
+    color: #FDD017;
 }
