@@ -45,6 +45,8 @@ public class ProjectionService {
         
         //remake this object using another constructor so that defaults are used.
         ProjectionRequest requestWithDefaults = new ProjectionRequest(request.getSerials(), request.getOperator(), request.getDenominations(), request.getStart(), request.getEnd());
+        //TODO:replace this mess with a set or select case of some kind
+        //need to check if any of the request's parameters are null.
         if (request == null) throw new JsonPojoMismatchException();
         else if (request.getCrypto()==null) request = requestWithDefaults;
         else if (request.getFiat()==null) request = requestWithDefaults;
@@ -52,7 +54,7 @@ public class ProjectionService {
         else if (request.getGpsx()==null) request = requestWithDefaults;
         else if (request.getGpsy()==null) request = requestWithDefaults;
         else if (request.getFrequency()==null) request = requestWithDefaults;
-        
+        //also check if any parameters are empty strings
         if (request.getCrypto().equalsIgnoreCase("")) request = requestWithDefaults;
         else if (request.getFiat().equalsIgnoreCase("")) request = requestWithDefaults;
         else if (request.getHeading().equalsIgnoreCase("")) request = requestWithDefaults;

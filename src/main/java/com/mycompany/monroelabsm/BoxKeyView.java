@@ -23,6 +23,7 @@
  */
 package com.mycompany.monroelabsm;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import org.apache.commons.codec.DecoderException;
 
@@ -62,7 +63,7 @@ public class BoxKeyView {
         return privatekey;
     }
     
-    public BoxKey getBoxKey() throws NoSuchAlgorithmException, DecoderException{
+    public BoxKey getBoxKey() throws NoSuchAlgorithmException, DecoderException, IOException{
         return new BoxKey(seed.getSeed());
     }
 }

@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.codec.DecoderException;
 import com.google.bitcoin.core.*;
+import java.io.IOException;
 import java.math.BigInteger;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -45,24 +46,27 @@ public class BoxKey {
     private byte[] digest = new byte[32];//this is the digest of a SHA256 hash function, aka public key
     private String publicKey;//this is a Base58Check encoded String commonly used to represent bitcoin addresses
     private String privateKey;//this is the private key
+    private ECKey key;
+    private long targetBalance;
+    private long currentBalance;
 
     //copy constructor
-    public BoxKey(BoxKey key) throws NoSuchAlgorithmException {
+    public BoxKey(BoxKey key) throws NoSuchAlgorithmException, IOException {
         this.seed = key.getSeed();
         this.setDigest();
     }
 
-    public BoxKey(byte[] seed) throws NoSuchAlgorithmException {
+    public BoxKey(byte[] seed) throws NoSuchAlgorithmException, IOException {
         this.setSeed(seed);
         this.setDigest();
     }
 
-    public BoxKey(Seed seed) throws NoSuchAlgorithmException {
+    public BoxKey(Seed seed) throws NoSuchAlgorithmException, IOException {
         this.seed = seed;
         this.setDigest();
     }
 
-    public BoxKey(String seed) throws NoSuchAlgorithmException, DecoderException {
+    public BoxKey(String seed) throws NoSuchAlgorithmException, DecoderException, IOException {
         this.setSeed(B58.hexToBytes(seed));
         this.setDigest();
     }
@@ -84,7 +88,7 @@ public class BoxKey {
         return list;
     }
 
-    private void setSeed(byte[] seed) throws NoSuchAlgorithmException {
+    private void setSeed(byte[] seed) throws NoSuchAlgorithmException, IOException {
         //TODO: validate this byte array first!
         this.seed = new Seed(seed);
         this.setDigest();
@@ -98,7 +102,8 @@ public class BoxKey {
         return B58.bytesToHex(digest);
     }
 
-    private void setDigest() throws NoSuchAlgorithmException {
+    private void setDigest() throws NoSuchAlgorithmException, IOException {
+        BCI bci = new BCI();
         this.digest = DigestUtils.sha256(this.seed.getSeed());
         //store private key in ECKey object
         BigInteger bigDig = new BigInteger(1, this.digest);
@@ -110,6 +115,10 @@ public class BoxKey {
         //System.out.println("hash: " + hash);
         this.publicKey = B58.encode(ecKey.getPubKeyHash(), (byte) 0);
         this.privateKey = B58.encode(ecKey.getPrivKeyBytes(), (byte) -128);
+        this.key=ecKey;
+        this.currentBalance = bci.addressBalance(this.publicKey);
+        
+        this.targetBalance = (this.seed.getDenominationByte()) * bci.rateSatoshis();
     }
 
     public String getPublicKey() {
@@ -118,6 +127,18 @@ public class BoxKey {
 
     public String getPrivateKey() {
         return privateKey;
+    }
+    
+    public ECKey getKey() {
+        return key;
+    }
+
+    public long getTargetBalance() {
+        return targetBalance;
+    }
+
+    public long getCurrentBalance() {
+        return currentBalance;
     }
 
     @Override

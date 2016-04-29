@@ -30,6 +30,7 @@ package com.mycompany.monroelabsm;
  * This class performs the actions requested by the controller.
  */
 import com.google.gson.Gson;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +110,7 @@ public class BoxKeyService {
         return null;
     }//returns null if nothing found
 
-    public BoxKeyView saveBoxKey(BoxKeyView view) throws AlreadyExistsException, NoSuchAlgorithmException, DecoderException {
+    public BoxKeyView saveBoxKey(BoxKeyView view) throws AlreadyExistsException, NoSuchAlgorithmException, DecoderException, IOException {
         BoxKey newKey = view.getBoxKey();
         for (BoxKey oldKey : keys) {//search for a key by public key
             if (oldKey.getPublicKey().equalsIgnoreCase(newKey.getPublicKey())) {
@@ -121,7 +122,7 @@ public class BoxKeyService {
         return new BoxKeyView(newKey);
     }
 
-    public BoxKeyView saveBoxKey(String json) throws AlreadyExistsException, JsonPojoMismatchException, NoSuchAlgorithmException, DecoderException {
+    public BoxKeyView saveBoxKey(String json) throws AlreadyExistsException, JsonPojoMismatchException, NoSuchAlgorithmException, DecoderException, IOException {
         //convert string json to boxkey and then save it with previous method.
         BoxKeyView view = new Gson().fromJson(json, BoxKeyView.class);
         if (view == null) {
@@ -130,7 +131,7 @@ public class BoxKeyService {
         return saveBoxKey(view);
     }
 
-    public BoxKeyView updateBoxKey(BoxKeyView view) throws NotFoundException, NoSuchAlgorithmException, DecoderException {
+    public BoxKeyView updateBoxKey(BoxKeyView view) throws NotFoundException, NoSuchAlgorithmException, DecoderException, IOException {
         BoxKey newKey = view.getBoxKey();
         for (BoxKey oldKey : keys) {//search for a key by public key
             if (oldKey.getPublicKey().equalsIgnoreCase(view.getPublicKey())) {
@@ -143,7 +144,7 @@ public class BoxKeyService {
         throw new NotFoundException();
     }
 
-    public BoxKeyView updateBoxKey(String json) throws NotFoundException, JsonPojoMismatchException, NoSuchAlgorithmException, DecoderException {
+    public BoxKeyView updateBoxKey(String json) throws NotFoundException, JsonPojoMismatchException, NoSuchAlgorithmException, DecoderException, IOException {
         BoxKeyView view = new Gson().fromJson(json, BoxKeyView.class);
         if (view == null) {
             throw new JsonPojoMismatchException();
@@ -151,7 +152,7 @@ public class BoxKeyService {
         return updateBoxKey(view);
     }
 
-    public BoxKeyView deleteById(int id) throws NotFoundException, NoSuchAlgorithmException {
+    public BoxKeyView deleteById(int id) throws NotFoundException, NoSuchAlgorithmException, IOException {
         BoxKey deletedKey = null;
         for (BoxKey key : keys) {
             if (key.hashCode() == id) {
@@ -163,11 +164,11 @@ public class BoxKeyService {
     }
 
     //parse id and use the above method
-    public BoxKeyView deleteById(String id_s) throws NotFoundException, NoSuchAlgorithmException {
+    public BoxKeyView deleteById(String id_s) throws NotFoundException, NoSuchAlgorithmException, IOException {
         return this.deleteById(Integer.parseInt(id_s));
     }
 
-    public BoxKeyView deleteByDigest(String digest) throws NoSuchAlgorithmException {
+    public BoxKeyView deleteByDigest(String digest) throws NoSuchAlgorithmException, IOException {
         BoxKey deletedKey = null;
         for (BoxKey key : keys) {
             if (key.getDigestString().equalsIgnoreCase(digest)) {
@@ -179,7 +180,7 @@ public class BoxKeyService {
         return null;//not found
     }
 
-    public BoxKeyView deleteByPublicKey(String pubkey) throws NoSuchAlgorithmException {
+    public BoxKeyView deleteByPublicKey(String pubkey) throws NoSuchAlgorithmException, IOException {
         BoxKey deletedKey = null;
         for (BoxKey key : keys) {
             if (key.getPublicKey().equalsIgnoreCase(pubkey)) {
@@ -191,7 +192,7 @@ public class BoxKeyService {
         return null;//not found
     }
 
-    public BoxKeyView deleteByPrivateKey(String privkey) throws NoSuchAlgorithmException {
+    public BoxKeyView deleteByPrivateKey(String privkey) throws NoSuchAlgorithmException, IOException {
         BoxKey deletedKey = null;
         for (BoxKey key : keys) {
             if (key.getPrivateKey().equalsIgnoreCase(privkey)) {
@@ -209,7 +210,7 @@ public class BoxKeyService {
     }
 
     //this method will clear the memory and insert hard-coded values for testing the CRUD front-end
-    public List<BoxKeyView> reset() throws NoSuchAlgorithmException, DecoderException {
+    public List<BoxKeyView> reset() throws NoSuchAlgorithmException, DecoderException, IOException {
         if (keys != null) {
             keys.clear();
         }

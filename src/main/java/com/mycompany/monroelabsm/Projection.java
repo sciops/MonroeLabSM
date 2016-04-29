@@ -23,6 +23,7 @@
  */
 package com.mycompany.monroelabsm;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class Projection {
     //list of keys generated
     private List<BoxKey> keys;
 
-    public Projection(ProjectionRequest request) throws DecoderException, NoSuchAlgorithmException {
+    public Projection(ProjectionRequest request) throws DecoderException, NoSuchAlgorithmException, IOException {
         keys = new ArrayList();
         
         //temp vars to hold values for each seed. most are the same for all keys
