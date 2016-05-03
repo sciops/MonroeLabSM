@@ -110,14 +110,10 @@ public class BoxKey {
         ECKey ecKey = new ECKey(bigDig);
         //set creation time with utc of the timestamp
         ecKey.setCreationTimeSeconds(60 * Bitwise.getInt(seed.getTime(), 0));
-        byte[] hash = ecKey.getPubKeyHash();
-        //System.out.println("hash length: " + hash.length);
-        //System.out.println("hash: " + hash);
         this.publicKey = B58.encode(ecKey.getPubKeyHash(), (byte) 0);
         this.privateKey = B58.encode(ecKey.getPrivKeyBytes(), (byte) -128);
         this.key=ecKey;
         this.currentBalance = bci.addressBalance(this.publicKey);
-        
         this.targetBalance = (this.seed.getDenominationByte()) * bci.rateSatoshis();
     }
 
