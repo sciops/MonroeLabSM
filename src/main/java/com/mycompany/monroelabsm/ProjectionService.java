@@ -23,10 +23,11 @@
  */
 package com.mycompany.monroelabsm;
 
-import com.google.gson.Gson;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.security.NoSuchAlgorithmException;
 import org.apache.commons.codec.DecoderException;
+import com.google.gson.Gson;
+import java.io.IOException;
 
 /**
  *
@@ -34,12 +35,12 @@ import org.apache.commons.codec.DecoderException;
  */
 public class ProjectionService {
 
-    public List<BoxKeyView> projection(ProjectionRequest request) throws DecoderException, NoSuchAlgorithmException {
+    public List<BoxKeyView> projection(ProjectionRequest request) throws DecoderException, NoSuchAlgorithmException, IOException {
         Projection projection = new Projection(request);
         return projection.getViews();
     }
 
-    public List<BoxKeyView> projection(String json) throws JsonPojoMismatchException, DecoderException, NoSuchAlgorithmException {
+    public List<BoxKeyView> projection(String json) throws JsonPojoMismatchException, DecoderException, NoSuchAlgorithmException, IOException {
         //TODO: validate for empty strings , etc.
         ProjectionRequest request = new Gson().fromJson(json, ProjectionRequest.class);
         
@@ -65,7 +66,7 @@ public class ProjectionService {
         return projection(request);//use above method
     }
 
-    public List<BoxKeyView> projection(List<String> serials, String operator, List<String> denominations, String start, String end) throws DecoderException, NoSuchAlgorithmException {
+    public List<BoxKeyView> projection(List<String> serials, String operator, List<String> denominations, String start, String end) throws DecoderException, NoSuchAlgorithmException, IOException {
         return projection(new ProjectionRequest(serials, operator, denominations, start, end));//use above method
     }
 

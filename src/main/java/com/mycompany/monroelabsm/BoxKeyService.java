@@ -29,11 +29,12 @@ package com.mycompany.monroelabsm;
  *
  * This class performs the actions requested by the controller.
  */
-import com.google.gson.Gson;
+
+import java.util.List;
+import java.util.ArrayList;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
+import com.google.gson.Gson;
 import org.apache.commons.codec.DecoderException;
 
 public class BoxKeyService {

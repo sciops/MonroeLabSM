@@ -31,14 +31,15 @@ package com.mycompany.monroelabsm;
  *
  * TODO: add more encryption methods here for other cryptocurrency types.
  */
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
+
 import java.util.List;
-import org.apache.commons.codec.DecoderException;
-import com.google.bitcoin.core.*;
+import java.util.ArrayList;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.security.NoSuchAlgorithmException;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.codec.DecoderException;
+import com.google.bitcoin.core.*;
 
 public class BoxKey {
 
@@ -114,7 +115,7 @@ public class BoxKey {
         this.privateKey = B58.encode(ecKey.getPrivKeyBytes(), (byte) -128);
         this.key=ecKey;
         this.currentBalance = bci.addressBalance(this.publicKey);
-        this.targetBalance = (this.seed.getDenominationByte()) * bci.rateSatoshis();
+        this.targetBalance = this.seed.getDenominationByte() * bci.rateSatoshis();
     }
 
     public String getPublicKey() {

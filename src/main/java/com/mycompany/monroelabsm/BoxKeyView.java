@@ -35,16 +35,20 @@ import org.apache.commons.codec.DecoderException;
  */
 public class BoxKeyView {
 
-    private SeedView seed;
-    private String digest;
-    private String publickey;//this is a Base58Check encoded String commonly used to represent bitcoin addresses
-    private String privatekey;//this is the private key
+    private final SeedView seed;
+    private final String digest;
+    private final String publickey;//this is a Base58Check encoded String commonly used to represent bitcoin addresses
+    private final String privatekey;//this is the private key
+    private final String targetbalance;
+    private final String currentbalance;
 
     public BoxKeyView(BoxKey key) {
         this.seed = new SeedView(key.getSeed());
         this.digest = key.getDigestString();
         this.publickey = key.getPublicKey();
         this.privatekey = key.getPrivateKey();
+        this.targetbalance = String.valueOf(key.getTargetBalance());
+        this.currentbalance = String.valueOf(key.getCurrentBalance());
     }
 
     public SeedView getSeedView() {
@@ -66,4 +70,13 @@ public class BoxKeyView {
     public BoxKey getBoxKey() throws NoSuchAlgorithmException, DecoderException, IOException{
         return new BoxKey(seed.getSeed());
     }
+
+    public String getTargetbalance() {
+        return targetbalance;
+    }
+
+    public String getCurrentbalance() {
+        return currentbalance;
+    }
+    
 }
